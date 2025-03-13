@@ -1,7 +1,9 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import User, { UserLogin } from "../models/User";
-const API_URL = 'http://localhost:5071/users';
+const API_URL = 'http://localhost:5071/';
+
+
 
 export const fetchUsers = createAsyncThunk('', async (_, thunkAPI) => {
     try {
@@ -32,22 +34,32 @@ export const updateUser = createAsyncThunk('/update', async (user: User, thunkAP
     }
 })
 
-export const login = createAsyncThunk('/login', async (credentials: UserLogin, thunkAPI) => {
+export const login = createAsyncThunk('auth/login', async (credentials: UserLogin, thunkAPI) => {
     try {
-        const response = await axios.post(`${API_URL}/login`, credentials);//it isnt good
-        if (response.data == null) {
-            //treat the logic pare
-        }
-     if(response.data==500)
-        alert("there is a problem try again later")
-    } catch (e) {
-        return thunkAPI.rejectWithValue(e);
+        const response = await axios.post<{ token: string }>(`${API_URL}/auth/login`, credentials);//it isnt good
+        console.log(response);
+        return { token: response.data.token, email: credentials.email };
+    } catch (error:any) {
+        if (error.response) {
+            if (error.response.status === 404) {
+                return thunkAPI.rejectWithValue("User not found");
+            }
+            if (error.response.status === 500) {
+                alert("There is a problem, try again later");
+                return thunkAPI.rejectWithValue("Server error");
+            }
+        } 
+        return thunkAPI.rejectWithValue("Network error");
     }
 })
 
 const UserSlice = createSlice({
     name: 'users',
-    initialState: { list: [] as User[] },
+    initialState: { 
+        list: [] as User[] ,
+            token: null as string | null, 
+            currentUser: null as string | null 
+    },
     reducers: {
 
     },
@@ -61,12 +73,13 @@ const UserSlice = createSlice({
                 () => {
                     alert('failed in getting users something went worng :{')
                 }
-            ).
-            // .addCase(login.fulfilled,
-            //     (state, action) => {
-            //         state.list = [...state, { ...action. }]
-            //     }).
-            addCase(fetchUsers.rejected,
+            )
+            .addCase(login.fulfilled, (state, action: PayloadAction<{ token: string; email: string }>) => {
+                state.token = action.payload.token;
+                state.currentUser = action.payload.email;
+                alert("login successful");
+            }).
+            addCase(login.rejected,
                 () => {
                     alert('failed in login try agaun later:{')
                 })

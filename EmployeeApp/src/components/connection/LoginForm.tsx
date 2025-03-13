@@ -91,15 +91,15 @@
 // export default LoginForm
 import { Modal, Box, TextField, Button, FormHelperText } from "@mui/material";
 import { useState } from "react";
-import { colorStyle, modalStyle } from "../style/style";
+import { colorStyle, modalStyle } from "../../style/style";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
-import { login } from "../store/UserSlice";
+import { login } from "../../store/UserSlice";
 import { useDispatch } from "react-redux";
-import { UserDispatch } from "../store/store";
+import { UserDispatch } from "../../store/store";
 import LoginIcon from '@mui/icons-material/Login';
-import { UserLogin } from "../models/User";
+import { UserLogin } from "../../models/User";
 
 const LoginForm = () => {
     const [open, setOpen] = useState(true);

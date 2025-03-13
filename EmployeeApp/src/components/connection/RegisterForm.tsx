@@ -109,15 +109,15 @@
 // export default RegisterForm
 import { Modal, Box, TextField, Button, FormHelperText } from "@mui/material";
 import { useState } from "react";
-import { colorStyle, modalStyle } from "../style/style";
+import { colorStyle, modalStyle } from "../../style/style";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
 import AddIcon from '@mui/icons-material/Add';
-import User, { UserRole } from "../models/User";
-import { addUser } from "../store/UserSlice";
+import User, { UserRole } from "../../models/User";
+import { addUser } from "../../store/UserSlice";
 import { useDispatch } from "react-redux";
-import { UserDispatch } from "../store/store";
+import { UserDispatch } from "../../store/store";
 
 const RegisterForm = () => {
     const [open, setOpen] = useState(true);
