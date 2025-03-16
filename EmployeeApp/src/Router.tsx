@@ -3,8 +3,8 @@ import { createBrowserRouter } from "react-router";
 import AppLayout from "./AppLayout";
 import RegisterForm from "./components/connection/RegisterForm";
 import LoginForm from "./components/connection/LoginForm";
-import Connect from "./components/connection/connect";
 import HomePage from "./components/HomePage";
+import Connect from "./components/connection/Connect";
 
 export const Router = createBrowserRouter([
     {
