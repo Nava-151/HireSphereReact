@@ -1,0 +1,122 @@
+/* HireSphereLanding.css */
+
+body {
+    background-color: white;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  .landing-page {
+    text-align: center;
+    color: black;
+    padding: 50px 20px;
+    position: relative;
+  }
+  
+  .hero {
+    padding: 50px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .neon-text {
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #00eaff;
+    text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff, 0 0 40px #00eaff;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .cta-button, .feature-card, .testimonial-card, .faq .MuiAccordion-root, .stepper .MuiStep-root {
+    background: linear-gradient(90deg, #00eaff, #00ff99);
+    color: black;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .cta-button:hover, .feature-card:hover, .testimonial-card:hover, .faq .MuiAccordion-root:hover, .stepper .MuiStep-root:hover {
+    box-shadow: 0 0 20px #00eaff;
+    transform: scale(1.1);
+  }
+  
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+  }
+  
+  .feature-card {
+    padding: 30px;
+    border-radius: 10px;
+    width: 280px;
+    transition: transform 0.3s ease-in-out;
+    border: 2px solid #00eaff;
+  }
+  
+  /* Background Animation */
+  @keyframes floatingNodes {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+  }
+  
+  .background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  .glowing-node {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #00eaff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #00eaff;
+    animation: floatingNodes 3s infinite ease-in-out;
+  }
+  
+  /* Navbar Full Width and Styling */
+  .navbar {
+    background: linear-gradient(90deg, #00eaff, #00ff99);
+    box-shadow: 0 0 20px #00eaff;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+  }
+  
+  .navbar a {
+    color: black;
+    text-decoration: none;
+    padding: 15px 30px;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: 1.2rem;
+  }
+  
+  .navbar a:hover {
+    color: white;
+    text-shadow: 0 0 10px #00eaff;
+  }
+  

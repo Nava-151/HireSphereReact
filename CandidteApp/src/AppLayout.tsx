@@ -1,12 +1,12 @@
 import { Outlet } from "react-router"
-import HomePage from "./components/HomePage"
+import Home from "./components/Home"
 
 const AppLayout = () => {
 
     return (
         <>
         
-            <HomePage />
+            <Home />
             <Outlet />
         </>
     )
