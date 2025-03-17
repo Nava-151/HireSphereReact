@@ -46,7 +46,7 @@ body {
   
   .cta-button:hover, .feature-card:hover, .testimonial-card:hover, .faq .MuiAccordion-root:hover, .stepper .MuiStep-root:hover {
     box-shadow: 0 0 20px #00eaff;
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   
   .features {
@@ -91,32 +91,7 @@ body {
     animation: floatingNodes 3s infinite ease-in-out;
   }
   
-  /* Navbar Full Width and Styling */
-  .navbar {
-    background: linear-gradient(90deg, #00eaff, #00ff99);
-    box-shadow: 0 0 20px #00eaff;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 60px;
+
+  .space{
+    margin: 5%;
   }
-  
-  .navbar a {
-    color: black;
-    text-decoration: none;
-    padding: 15px 30px;
-    font-weight: bold;
-    transition: 0.3s;
-    font-size: 1.2rem;
-  }
-  
-  .navbar a:hover {
-    color: white;
-    text-shadow: 0 0 10px #00eaff;
-  }
-  

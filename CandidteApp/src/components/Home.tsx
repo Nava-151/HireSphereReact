@@ -45,27 +45,14 @@ const Home = () => {
 
   return (
     <div>
-      <AppBar position="static"  sx={{ background: "linear-gradient(90deg, #00eaff, #00ff99)" ,color:"black",width:"100vw",top:"0px", left:"0%"}} >
-        <Toolbar className="nav-content">
-          <Typography variant="h6" sx={{ flexGrow: 1,left:"0px" }}>
-            HireSphere
-          </Typography>
-          <Button color="inherit">Home</Button>
-          <Button color="inherit">Gallery</Button>
-          <Button color="inherit">About</Button>
-          <Button color="info" variant="contained">
-            Personal Area
-          </Button>
-        </Toolbar>
-      </AppBar>
 
 
-      <br />
+
       {/* Hero Section */}
       <div className="hero">
         <h1>Smarter Hiring, Faster Decisions</h1>
         <p>AI-powered resume analysis and job matching for tech professionals.</p>
-        <Button variant="contained" color="secondary" size="large" className="cta-button">
+        <Button variant="contained" color="secondary" size="large" className="cta-button" onClick={() => window.location.href = '/register'}>
           Get Started
         </Button>
       </div>
@@ -90,7 +77,8 @@ const Home = () => {
       </Container>
 
 <br />
-
+<br />
+<br />
       {/* Testimonials */}
       <Container className="testimonials">
         <Typography variant="h4">What Our Users Say</Typography>
@@ -105,9 +93,10 @@ const Home = () => {
       </Container>
 
 
-<br />
       {/* How It Works */}
       <Container className="how-it-works">
+      <div className="space">
+
         <Typography variant="h4">How It Works</Typography>
         <Stepper activeStep={-1} alternativeLabel>
           {steps.map((step, index) => (
@@ -116,16 +105,18 @@ const Home = () => {
             </Step>
           ))}
         </Stepper>
+        </div>
       </Container>
 
 
 
-<br />
       {/* FAQ Section */}
       <Container className="faq">
         <Typography variant="h4">Frequently Asked Questions</Typography>
         {faqs.map((faq, index) => (
+            <div className="space">
           <Accordion key={index}>
+            
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography>{faq.question}</Typography>
             </AccordionSummary>
@@ -133,6 +124,8 @@ const Home = () => {
               <Typography>{faq.answer}</Typography>
             </AccordionDetails>
           </Accordion>
+          </div>
+          
         ))}
       </Container>
     </div>
