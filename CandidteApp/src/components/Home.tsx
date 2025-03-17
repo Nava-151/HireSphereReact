@@ -17,8 +17,10 @@ import AnalyticsIcon from "@mui/icons-material/Analytics";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import SpeedIcon from "@mui/icons-material/Speed";
 import "../style/Home.css";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+    const navigate = useNavigate();
   const features = [
     { icon: <AnalyticsIcon fontSize="large" />, title: "AI-Powered Insights", description: "Smart resume & job match analysis" },
     { icon: <VerifiedIcon fontSize="large" />, title: "Code Quality Review", description: "Automated code assessment for developers" },
@@ -49,7 +51,7 @@ const Home = () => {
       <div className="hero">
         <h1>Smarter Hiring, Faster Decisions</h1>
         <p>AI-powered resume analysis and job matching for tech professionals.</p>
-        <Button variant="contained" color="secondary" size="large" className="cta-button" onClick={() => window.location.href = '/register'}>
+        <Button variant="contained" color="secondary" size="large" className="cta-button" onClick={() => {navigate('/register')}}>
           Get Started
         </Button>
       </div>
