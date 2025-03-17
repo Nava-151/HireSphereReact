@@ -1,13 +1,14 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import User, { UserLogin } from "../models/User";
-const API_URL = 'http://localhost:5071/';
+const API_URL = 'http://localhost:5071/auth';
 
 
 
 export const fetchUsers = createAsyncThunk('', async (_, thunkAPI) => {
     try {
         const response = await axios.get(API_URL);
+
         return response.data as User[];
     } catch (e) {
         return thunkAPI.rejectWithValue(e);
@@ -16,9 +17,9 @@ export const fetchUsers = createAsyncThunk('', async (_, thunkAPI) => {
 export const addUser = createAsyncThunk('/register', async (user: User, thunkAPI) => {
     console.log("in add user");
 
+
     try {
         const response = await axios.post(`${API_URL}/register`, user);
-
         return response.data as User;
     } catch (e) {
         return thunkAPI.rejectWithValue(e);
@@ -26,8 +27,9 @@ export const addUser = createAsyncThunk('/register', async (user: User, thunkAPI
 })
 export const updateUser = createAsyncThunk('/update', async (user: User, thunkAPI) => {
     try {
-        const response = await axios.put(`${API_URL}/${user.id}/login`, user,
+        const response= await axios.put(`${API_URL}/${user.id}/login`, user,
             { headers: { "id": user.id! } });// check what will be the call
+
         return response.data as User;
     } catch (e) {
         return thunkAPI.rejectWithValue(e);
@@ -39,7 +41,7 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
         const response = await axios.post<{ token: string }>(`${API_URL}/auth/login`, credentials);//it isnt good
         console.log(response);
         return { token: response.data.token, email: credentials.email };
-    } catch (error:any) {
+    } catch (error: any) {
         if (error.response) {
             if (error.response.status === 404) {
                 return thunkAPI.rejectWithValue("User not found");
@@ -48,17 +50,17 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
                 alert("There is a problem, try again later");
                 return thunkAPI.rejectWithValue("Server error");
             }
-        } 
+        }
         return thunkAPI.rejectWithValue("Network error");
     }
 })
 
 const UserSlice = createSlice({
     name: 'users',
-    initialState: { 
-        list: [] as User[] ,
-            token: null as string | null, 
-            currentUser: null as string | null 
+    initialState: {
+        list: [] as User[],
+        token: null as string | null,
+        currentUser: null as string | null
     },
     reducers: {
 

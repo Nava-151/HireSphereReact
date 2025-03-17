@@ -110,15 +110,15 @@ const Home = () => {
       {/* FAQ Section */}
       <Container className="faq">
         <Typography variant="h4">Frequently Asked Questions</Typography>
-        {faqs.map((faq, index) => (
+        {faqs.map((faqu, index) => (
             <div className="space">
           <Accordion key={index}>
             
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>{faq.question}</Typography>
+              <Typography>{faqu.question}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>{faq.answer}</Typography>
+              <Typography>{faqu.answer}</Typography>
             </AccordionDetails>
           </Accordion>
           </div>
