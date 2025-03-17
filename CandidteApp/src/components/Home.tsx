@@ -1,6 +1,4 @@
 import {
-  AppBar,
-  Toolbar,
   Button,
   Container,
   Grid,
@@ -46,8 +44,7 @@ const Home = () => {
   return (
     <div>
 
-
-
+      <br />
       {/* Hero Section */}
       <div className="hero">
         <h1>Smarter Hiring, Faster Decisions</h1>
