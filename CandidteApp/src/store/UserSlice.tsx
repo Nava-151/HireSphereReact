@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import User, { UserLogin } from "../models/User";
-const API_URL = 'http://localhost:5071/auth';
+const API_URL = 'http://localhost:5071';
 
 
 
@@ -70,6 +70,7 @@ const UserSlice = createSlice({
             .addCase(fetchUsers.fulfilled,
                 (state, action: PayloadAction<User[]>) => {
                     state.list = [...action.payload]
+                    
                 })
             .addCase(fetchUsers.rejected,
                 () => {

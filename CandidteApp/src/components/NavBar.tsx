@@ -18,7 +18,7 @@ const NavBar=()=>{
 
     return(
         <>
-         <AppBar position="static"  sx={{ background: "linear-gradient(90deg, #00eaff, #00ff99)" ,color:"black",width:"100%",top:"0px", left:"0px"}} >
+         <AppBar position="static"   sx={{ background: "linear-gradient(90deg, #00eaff, #00ff99)" ,color:"black",width:"100%",top:"0px", left:"0px"}} >
         <Toolbar className="nav-content">
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             HireSphere

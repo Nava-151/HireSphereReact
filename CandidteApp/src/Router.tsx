@@ -8,6 +8,7 @@ import Connect from "./components/connection/Connect";
 import Blog from "./components/Blog";
 import Home from "./components/Home";
 import Gallery from "./components/Gallery";
+import UploadFile from "./components/File/UploadFile";
 
 
 export const isProtected=()=>{
@@ -23,7 +24,9 @@ export const router = createBrowserRouter([
             { path: "connection", element: <Connect /> },
             { path: "register", element: <RegisterForm /> },
             { path: "login", element: <LoginForm /> },
+            { path: "upload", element: <UploadFile /> },
             { path: "gallery", element: <Gallery /> }
+            
         ],
 
     }
