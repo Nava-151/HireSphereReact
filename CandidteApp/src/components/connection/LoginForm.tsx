@@ -10,11 +10,12 @@ import { useDispatch } from "react-redux";
 import { UserDispatch } from "../../store/store";
 import LoginIcon from '@mui/icons-material/Login';
 import { UserLogin } from "../../models/User";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch<UserDispatch>();
-
+    const navigate = useNavigate();
     const schema = object({
         email: string().min(10, "Email must be at least 10 characters").email("Invalid email").required("Email is required"),
         passwordHash: string().min(5, "Password must be at least 5 characters").required("Password is required"),
@@ -39,7 +40,7 @@ const LoginForm = () => {
         <>
             <Modal
                 open={open}
-                onClose={() => setOpen(false)}
+                onClose={() => { setOpen(false); navigate('/') }}
                 style={{
                     display: "flex",
                     alignItems: "center",
@@ -89,7 +90,7 @@ const LoginForm = () => {
                         >
                             Login
                         </Button>
-                        
+
                     </form>
                 </Box>
             </Modal>

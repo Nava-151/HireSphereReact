@@ -7,6 +7,7 @@ import LoginForm from "./components/connection/LoginForm";
 import Connect from "./components/connection/Connect";
 import Blog from "./components/Blog";
 import Home from "./components/Home";
+import Gallery from "./components/Gallery";
 
 
 export const isProtected=()=>{
@@ -21,7 +22,8 @@ export const router = createBrowserRouter([
             { path: "blog", element: <Blog /> },
             { path: "connection", element: <Connect /> },
             { path: "register", element: <RegisterForm /> },
-            { path: "login", element: <LoginForm /> }
+            { path: "login", element: <LoginForm /> },
+            { path: "gallery", element: <Gallery /> }
         ],
 
     }
