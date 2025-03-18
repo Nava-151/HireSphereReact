@@ -1,21 +1,21 @@
 
-import { Modal, Box, TextField, Button, FormHelperText } from "@mui/material";
+import { Modal, Box, TextField, Button, FormHelperText, InputAdornment } from "@mui/material";
 import { useState } from "react";
-import { colorStyle, modalStyle } from "../../style/style";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
 import { login } from "../../store/UserSlice";
 import { useDispatch } from "react-redux";
-import { UserDispatch } from "../../store/store";
-import LoginIcon from '@mui/icons-material/Login';
+import { AppDispatch } from "../../store/store";
 import { UserLogin } from "../../models/User";
 import { useNavigate } from "react-router-dom";
-
+import LoginIcon from '@mui/icons-material/Login';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
 const LoginForm = () => {
-    const [open, setOpen] = useState(true);
-    const dispatch = useDispatch<UserDispatch>();
     const navigate = useNavigate();
+    const [open, setOpen] = useState(true);
+    const dispatch = useDispatch<AppDispatch>();
     const schema = object({
         email: string().min(10, "Email must be at least 10 characters").email("Invalid email").required("Email is required"),
         passwordHash: string().min(5, "Password must be at least 5 characters").required("Password is required"),
@@ -34,66 +34,86 @@ const LoginForm = () => {
             passwordHash: data.passwordHash,
         };
         dispatch(login(userLogin));
+        navigate('/uploadeFile');
+        
     };
 
     return (
         <>
-            <Modal
-                open={open}
-                onClose={() => { setOpen(false); navigate('/') }}
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+       <Modal
+            open={open}
+            onClose={() => { setOpen(false); navigate('/') }}
+            style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
+            <Box
+                sx={{
+                    bgcolor: 'background.paper',
+                    borderRadius: 2,
+                    boxShadow: 24,
+                    p: 4,
+                    width: { xs: '90%', sm: '400px' },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
                 }}
             >
-                <Box
-                    sx={{
-                        ...modalStyle,
-                        bgcolor: 'background.paper',
-                        borderRadius: 2,
-                        boxShadow: 24,
-                        p: 4,
-                        width: '400px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2,
-                    }}
-                >
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        {/* Email */}
-                        <TextField
-                            label="Email"
-                            type="email"
-                            {...register("email")}
-                            fullWidth
-                            error={!!errors.email}
-                        />
-                        <FormHelperText error>{errors.email?.message}</FormHelperText>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField
+                        label="Email"
+                        type="email"
+                        {...register("email")}
+                        fullWidth
+                        error={!!errors.email}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <EmailIcon color="primary" />
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <FormHelperText error>{errors.email?.message}</FormHelperText>
 
-                        {/* Password */}
-                        <TextField
-                            label="Password"
-                            type="password"
-                            {...register("passwordHash")}
-                            fullWidth
-                            error={!!errors.passwordHash}
-                        />
-                        <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
+                    <TextField
+                        label="Password"
+                        type="password"
+                        {...register("passwordHash")}
+                        fullWidth
+                        error={!!errors.passwordHash}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <LockIcon color="primary" />
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                    <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
 
-                        {/* Submit Button */}
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            startIcon={<LoginIcon />}
-                            sx={colorStyle}
-                        >
-                            Login
-                        </Button>
-
-                    </form>
-                </Box>
-            </Modal>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        startIcon={<LoginIcon />}
+                        sx={{
+                            background: 'linear-gradient(135deg, #00f2fe, #03e7a0)',
+                            color: 'white',
+                            '&:hover': {
+                                background: 'linear-gradient(135deg, #03e7a0, #00f2fe)'
+                            },
+                            padding: '10px 20px',
+                            borderRadius: '8px',
+                            fontWeight: 'bold'
+                        }}
+                    >
+                        Login
+                    </Button>
+                </form>
+            </Box>
+        </Modal>
         </>
     );
 };

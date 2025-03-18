@@ -1,127 +1,25 @@
-// import { Modal, Box, TextField, Button } from "@mui/material"
-// import { useState } from "react";
-// import { colorStyle, modalStyle } from "../style/style";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import { useForm } from "react-hook-form";
-// import { object, string } from "yup";
-// import AddIcon from '@mui/icons-material/Add';
-// import User, { UserRole } from "../models/User";
-// import { addUser } from "../store/UserSlice";
-// import { useDispatch } from "react-redux";
-// import { UserDispatch } from "../store/store";
 
-// const RegisterForm = () => {
-//     const [open, setOpen] = useState(true);
-//     const dispatch = useDispatch<UserDispatch>()
-//     const schema = object().shape(({
-//         fullName: string().min(4).max(50).required(),
-//         email: string().min(10).required().email("Invalid email"),
-//         passwordHash: string().min(5).required(),
-//         phone: string().required()
-
-//     }))
-
-//     const {
-//         formState: { errors },
-//         register,
-//         handleSubmit,
-//     } = useForm({ resolver: yupResolver(schema) })
-//     const onSubmit = async (data: any) => {
-//         console.log("on submit");
-        
-//         const user: User = {
-//             fullname: data.fullName,
-//             email: data.email,
-//             passwordHash: data.passwordHash,
-//             phone: data.phone,
-//             role:UserRole.Candidate
-//         }
-//         dispatch(addUser(user))       
-//     }
-
-
-//     return (
-//         <>
-//             <Modal
-//                 open={open}
-//                 onClose={() => setOpen(false)}
-//                 style={{
-//                     display: "flex",
-//                     alignItems: "center",
-//                     justifyContent: "center",
-//                 }}
-//             >
-//                 <Box
-//                     sx={{
-//                         ...modalStyle,
-//                         bgcolor: 'background.paper',
-//                         borderRadius: 2,
-//                         boxShadow: 24,
-//                         p: 4,
-//                         width: '400px',
-//                         display: 'flex',
-//                         flexDirection: 'column',
-//                         gap: 2,
-//                     }}
-//                 >
-//                     <form onSubmit={handleSubmit(onSubmit)}>
-//                         <TextField
-//                             label="FullName"
-//                             type="text"
-//                             {...register("fullName")}
-//                             fullWidth
-//                         />
-//                         {/* {errors.fullName />} */}
-
-//                         <TextField
-//                             label="Email"
-//                             type="email"
-//                             {...register("email")}
-//                             fullWidth
-//                         />
-//                         {/* {errors.description && <Errors message={errors.description.message || " "} />} */}
-//                         <TextField
-//                             label="Password"
-//                             type="password"
-//                             {...register("passwordHash")}
-//                             fullWidth
-//                         /><TextField
-//                             label="Phone number"
-//                             type="number"
-//                             {...register("phone")}
-//                             fullWidth
-//                         />
-
-//                         <Button
-//                             type="submit"
-//                             variant="contained"
-//                             startIcon={<AddIcon />}
-//                             sx={colorStyle}
-//                         >
-
-//                         </Button>
-//                     </form>
-//                 </Box>
-//             </Modal>
-//         </>
-//     )
-// }
-// export default RegisterForm
-import { Modal, Box, TextField, Button, FormHelperText } from "@mui/material";
+import { Modal, Box, TextField, Button, FormHelperText, InputAdornment } from "@mui/material";
 import { useState } from "react";
-import { colorStyle, modalStyle } from "../../style/style";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
-import AddIcon from '@mui/icons-material/Add';
 import User, { UserRole } from "../../models/User";
 import { addUser } from "../../store/UserSlice";
 import { useDispatch } from "react-redux";
-import { UserDispatch } from "../../store/store";
+import { AppDispatch } from "../../store/store";
+import { useNavigate } from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
+import EmailIcon from '@mui/icons-material/Email';
+import LockIcon from '@mui/icons-material/Lock';
+import PersonIcon from '@mui/icons-material/Person';
+import PhoneIcon from '@mui/icons-material/Phone';
 
 const RegisterForm = () => {
+    const navigate = useNavigate();
+    
     const [open, setOpen] = useState(true);
-    const dispatch = useDispatch<UserDispatch>();
+    const dispatch = useDispatch<AppDispatch>();
 
     // ✅ Define validation schema
     const schema = object({
@@ -148,85 +46,33 @@ const RegisterForm = () => {
             role: UserRole.Candidate,
         };
         dispatch(addUser(user));
+        navigate('/uploade');
+
     };
 
     return (
         <>
-            <Modal
-                open={open}
-                onClose={() => setOpen(false)}
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <Box
-                    sx={{
-                        ...modalStyle,
-                        bgcolor: 'background.paper',
-                        borderRadius: 2,
-                        boxShadow: 24,
-                        p: 4,
-                        width: '400px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2,
-                    }}
-                >
+              <Modal open={open} onClose={() => setOpen(false)}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                <Box sx={{ bgcolor: 'background.paper', borderRadius: 2, boxShadow: 24, p: 4, width: { xs: '90%', sm: '400px' }, display: 'flex', flexDirection: 'column', gap: 2 }}>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        {/* Full Name */}
-                        <TextField
-                            label="Full Name"
-                            type="text"
-                            {...register("fullName")}
-                            fullWidth
-                            error={!!errors.fullName}
-                        />
+                        <TextField label="Full Name" {...register("fullName")} fullWidth error={!!errors.fullName} InputProps={{ startAdornment: (<InputAdornment position="start"><PersonIcon color="primary" /></InputAdornment>) }} />
                         <FormHelperText error>{errors.fullName?.message}</FormHelperText>
 
-                        {/* Email */}
-                        <TextField
-                            label="Email"
-                            type="email"
-                            {...register("email")}
-                            fullWidth
-                            error={!!errors.email}
-                        />
+                        <TextField label="Email" {...register("email")} fullWidth error={!!errors.email} InputProps={{ startAdornment: (<InputAdornment position="start"><EmailIcon color="primary" /></InputAdornment>) }} />
                         <FormHelperText error>{errors.email?.message}</FormHelperText>
 
-                        {/* Password */}
-                        <TextField
-                            label="Password"
-                            type="password"
-                            {...register("passwordHash")}
-                            fullWidth
-                            error={!!errors.passwordHash}
-                        />
+                        <TextField label="Password" type="password" {...register("passwordHash")} fullWidth error={!!errors.passwordHash} InputProps={{ startAdornment: (<InputAdornment position="start"><LockIcon color="primary" /></InputAdornment>) }} />
                         <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
 
-                        {/* Phone Number */}
-                        <TextField
-                            label="Phone Number"
-                            type="text"
-                            {...register("phone")}
-                            fullWidth
-                            error={!!errors.phone}
-                        />
+                        <TextField label="Phone Number" {...register("phone")} fullWidth error={!!errors.phone} InputProps={{ startAdornment: (<InputAdornment position="start"><PhoneIcon color="primary" /></InputAdornment>) }} />
                         <FormHelperText error>{errors.phone?.message}</FormHelperText>
 
-                        {/* Submit Button */}
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            startIcon={<AddIcon />}
-                            sx={colorStyle}
-                        >
-                            Register
-                        </Button>
+                        <Button type="submit" variant="contained" startIcon={<AddIcon />} sx={{ background: 'linear-gradient(135deg, #00f2fe, #03e7a0)', color: 'white', '&:hover': { background: 'linear-gradient(135deg, #03e7a0, #00f2fe)' }, padding: '10px 20px', borderRadius: '8px', fontWeight: 'bold' }}>Register</Button>
                     </form>
                 </Box>
-            </Modal>
+            </Box>
+        </Modal>
         </>
     );
 };

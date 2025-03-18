@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import User, { UserLogin } from "../models/User";
-const API_URL = 'http://localhost:5071';
+const API_URL = 'localhost:5071';
 
 
 
@@ -14,7 +14,7 @@ export const fetchUsers = createAsyncThunk('', async (_, thunkAPI) => {
         return thunkAPI.rejectWithValue(e);
     }
 });
-export const addUser = createAsyncThunk('/register', async (user: User, thunkAPI) => {
+export const addUser = createAsyncThunk('auth/register', async (user: User, thunkAPI) => {
     console.log("in add user");
 
 

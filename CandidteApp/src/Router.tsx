@@ -20,11 +20,9 @@ import UploadFile from "./components/File/UploadFile";
             { path: "blog", element: <Blog /> },
             { path: "register", element: <RegisterForm /> },
             { path: "login", element: <LoginForm /> },
-            { path: "upload", element: <UploadFile /> },
-            { path: "gallery", element: <Gallery /> }
-            
+            { path: "gallery", element: <Gallery /> },
+            {path:"upload",element:<UploadFile/>}
         ],
-
     }
 ]);
 export default Router;

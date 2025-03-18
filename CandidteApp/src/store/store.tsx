@@ -1,14 +1,13 @@
-import { combineSlices, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit/react";
+import FileSlice from "./FileSlice";
 import UserSlice from "./UserSlice";
 
-const store = configureStore(
-    {
-        reducer: combineSlices(UserSlice)
-    });
-
-export type RootState = ReturnType<typeof store.getState>
-
-export type UserDispatch = typeof store.dispatch
-
-export default store;
-
+export const store = configureStore({
+    reducer: {
+      files: FileSlice,
+      user: UserSlice.reducer
+    },
+  });
+  
+  export type RootState = ReturnType<typeof store.getState>;
+  export type AppDispatch = typeof store.dispatch;
