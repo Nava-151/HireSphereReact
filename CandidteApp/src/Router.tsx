@@ -11,14 +11,13 @@ import UploadFile from "./components/File/UploadFile";
 
 
 
-export const Router = createBrowserRouter([
+ const Router = createBrowserRouter([
     {
         path: "/",
         element: <AppLayout />,
         children: [
             { path: "", element: <Home /> },
             { path: "blog", element: <Blog /> },
-            // { path: "connection", element: <Connect /> },
             { path: "register", element: <RegisterForm /> },
             { path: "login", element: <LoginForm /> },
             { path: "upload", element: <UploadFile /> },
@@ -28,6 +27,6 @@ export const Router = createBrowserRouter([
 
     }
 ]);
-
+export default Router;
 
 
