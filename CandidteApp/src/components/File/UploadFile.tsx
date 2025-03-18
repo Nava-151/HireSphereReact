@@ -35,6 +35,8 @@ const FileUploader = () => {
           setProgress(percent);
         }
       };
+      const x=progress;
+      console.log(x);
 
       xhr.onload = () => {
         if (xhr.status === 200) {
@@ -114,10 +116,13 @@ const FileUploader = () => {
           <input type="file" hidden onChange={handleFileChange} id="file-upload" />
           <Button component="label" htmlFor="file-upload" sx={{ mt: 2, bgcolor: "#4CAF50", color: "#fff", '&:hover': { bgcolor: "#388E3C" } }}>
             select file        </Button>
+
+          <Button onClick={handleUpload}  sx={{ color: "#4CAF50", mt: 1, fontWeight: "bold" }}>upload</Button>
           {file && (
             <Typography variant="body2" sx={{ color: "#555", mt: 2, wordBreak: "break-word", textAlign: "center" }}>
               {file.name}
             </Typography>
+
           )}
         </Paper>
       </Box>
