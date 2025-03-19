@@ -3,6 +3,7 @@ import FileSlice from "./FileSlice";
 import UserSlice from "./UserSlice";
 
 export const store = configureStore({
+  
     reducer: {
       files: FileSlice,
       user: UserSlice.reducer

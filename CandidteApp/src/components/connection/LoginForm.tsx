@@ -34,7 +34,7 @@ const LoginForm = () => {
             passwordHash: data.passwordHash,
         };
         dispatch(login(userLogin));
-        navigate('/uploadeFile');
+        navigate('/upload');
         
     };
 

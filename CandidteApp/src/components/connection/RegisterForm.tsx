@@ -17,7 +17,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 
 const RegisterForm = () => {
     const navigate = useNavigate();
-    
+
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -46,33 +46,35 @@ const RegisterForm = () => {
             role: UserRole.Candidate,
         };
         dispatch(addUser(user));
-        navigate('/uploade');
+        if (user.id != null)
+            navigate('/upload');
 
     };
 
     return (
         <>
-              <Modal open={open} onClose={() => setOpen(false)}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-                <Box sx={{ bgcolor: 'background.paper', borderRadius: 2, boxShadow: 24, p: 4, width: { xs: '90%', sm: '400px' }, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <TextField label="Full Name" {...register("fullName")} fullWidth error={!!errors.fullName} InputProps={{ startAdornment: (<InputAdornment position="start"><PersonIcon color="primary" /></InputAdornment>) }} />
-                        <FormHelperText error>{errors.fullName?.message}</FormHelperText>
+            <Modal open={open} onClose={() => setOpen(false)}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                    <Box sx={{ bgcolor: 'background.paper', borderRadius: 2, boxShadow: 24, p: 4, width: { xs: '90%', sm: '400px' }, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <TextField label="Full Name" {...register("fullName")} fullWidth error={!!errors.fullName} InputProps={{ startAdornment: (<InputAdornment position="start"><PersonIcon color="primary" /></InputAdornment>) }} />
+                            <FormHelperText error>{errors.fullName?.message}</FormHelperText>
 
-                        <TextField label="Email" {...register("email")} fullWidth error={!!errors.email} InputProps={{ startAdornment: (<InputAdornment position="start"><EmailIcon color="primary" /></InputAdornment>) }} />
-                        <FormHelperText error>{errors.email?.message}</FormHelperText>
+                            <TextField label="Email" {...register("email")} fullWidth error={!!errors.email} InputProps={{ startAdornment: (<InputAdornment position="start"><EmailIcon color="primary" /></InputAdornment>) }} />
+                            <FormHelperText error>{errors.email?.message}</FormHelperText>
 
-                        <TextField label="Password" type="password" {...register("passwordHash")} fullWidth error={!!errors.passwordHash} InputProps={{ startAdornment: (<InputAdornment position="start"><LockIcon color="primary" /></InputAdornment>) }} />
-                        <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
+                            <TextField label="Password" type="password" {...register("passwordHash")} fullWidth error={!!errors.passwordHash} InputProps={{ startAdornment: (<InputAdornment position="start"><LockIcon color="primary" /></InputAdornment>) }} />
+                            <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
 
-                        <TextField label="Phone Number" {...register("phone")} fullWidth error={!!errors.phone} InputProps={{ startAdornment: (<InputAdornment position="start"><PhoneIcon color="primary" /></InputAdornment>) }} />
-                        <FormHelperText error>{errors.phone?.message}</FormHelperText>
+                            <TextField label="Phone Number" {...register("phone")} fullWidth error={!!errors.phone} InputProps={{ startAdornment: (<InputAdornment position="start"><PhoneIcon color="primary" /></InputAdornment>) }} />
+                            <FormHelperText error>{errors.phone?.message}</FormHelperText>
 
-                        <Button type="submit" variant="contained" startIcon={<AddIcon />} sx={{ background: 'linear-gradient(135deg, #00f2fe, #03e7a0)', color: 'white', '&:hover': { background: 'linear-gradient(135deg, #03e7a0, #00f2fe)' }, padding: '10px 20px', borderRadius: '8px', fontWeight: 'bold' }}>Register</Button>
-                    </form>
+                            <Button type="submit" variant="contained" startIcon={<AddIcon />} sx={{ background: 'linear-gradient(135deg, #00f2fe, #03e7a0)', color: 'white', '&:hover': { background: 'linear-gradient(135deg, #03e7a0, #00f2fe)' }, padding: '10px 20px', borderRadius: '8px', fontWeight: 'bold' }}>Register</Button>
+                            <p>Do you have an account? </p><button onClick={() => navigate("/login")}>login</button>
+                        </form>
+                    </Box>
                 </Box>
-            </Box>
-        </Modal>
+            </Modal>
         </>
     );
 };
