@@ -46,7 +46,6 @@ const RegisterForm = () => {
             role: UserRole.Candidate,
         };
         dispatch(addUser(user));
-        if (user.id != null)
             navigate('/upload');
 
     };

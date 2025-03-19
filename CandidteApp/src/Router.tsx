@@ -8,6 +8,7 @@ import Blog from "./components/Blog";
 import Home from "./components/Home";
 import Gallery from "./components/Gallery";
 import UploadFile from "./components/File/UploadFile";
+import CodingChallenge from "./components/CodingChallenge";
 
 
 
@@ -21,7 +22,8 @@ import UploadFile from "./components/File/UploadFile";
             { path: "register", element: <RegisterForm /> },
             { path: "login", element: <LoginForm /> },
             { path: "gallery", element: <Gallery /> },
-            {path:"upload",element:<UploadFile/>}
+            {path:"upload",element:<UploadFile/>},
+            {path:"tests",element:<CodingChallenge/>}
         ],
     }
 ]);
