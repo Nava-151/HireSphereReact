@@ -20,9 +20,7 @@ const FileUploader = () => {
 
     try {
       // שלב 1: קבלת Presigned URL מהשרת
-      const response = await axios.get('https://localhost:5071/files/upload', {
-        params: { fileName: file.name },
-      });
+      const response = await axios.get('http://localhost:5071/files/upload', { params: { fileName: file.name }});
 
       const presignedUrl = (response.data as { url: string }).url;
 
