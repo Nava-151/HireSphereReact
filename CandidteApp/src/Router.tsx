@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import Gallery from "./components/Gallery";
 import UploadFile from "./components/File/FileUploader";
 import CodingChallenge from "./components/CodingChallenge";
+import CompletionPage from "./components/CompletionPage";
 
 
 
@@ -23,7 +24,9 @@ import CodingChallenge from "./components/CodingChallenge";
             { path: "login", element: <LoginForm /> },
             { path: "gallery", element: <Gallery /> },
             {path:"upload",element:<UploadFile/>},
-            {path:"tests",element:<CodingChallenge/>}
+            {path:"tests",element:<CodingChallenge/>},
+            {path:"end",element:<CompletionPage/>},
+
         ],
     }
 ]);

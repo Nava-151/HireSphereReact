@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import Editor from "@monaco-editor/react";
+import { useNavigate } from "react-router-dom";
 
 interface CodingQuestion {
   title: string;
@@ -44,7 +45,7 @@ const CodingChallenge: React.FC = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [code, setCode] = useState<string>(codingQuestions[0].starterCode);
   const [score, setScore] = useState<number>(0);
-  
+  const navigate = useNavigate();
   const handleSubmit = (): void => {
     try {
       const userFunction = new Function("return " + code)();
@@ -98,6 +99,7 @@ const CodingChallenge: React.FC = () => {
           <Typography variant="h3" sx={{ color: "#00ff99" }}>🎉 Well Done!</Typography>
           <Typography variant="h6" sx={{ color: "#bbb", mt: 2 }}>Your score: {(score / codingQuestions.length) * 100}%</Typography>
           <Button onClick={() => { setCurrentQuestion(0); setScore(0); setCode(codingQuestions[0].starterCode); }} variant="contained" sx={{ mt: 3, background: "linear-gradient(90deg, #00eaff, #00ff99)" }}>🔁 Restart</Button>
+          <Button onClick={() => navigate('/end') } variant="contained" sx={{ mt: 3, background: "linear-gradient(90deg, #00eaff, #00ff99)" }}>✅ apply </Button>
         </Box>
       )}
     </Container>
