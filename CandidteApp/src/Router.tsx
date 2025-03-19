@@ -7,7 +7,7 @@ import LoginForm from "./components/connection/LoginForm";
 import Blog from "./components/Blog";
 import Home from "./components/Home";
 import Gallery from "./components/Gallery";
-import UploadFile from "./components/File/UploadFile";
+import UploadFile from "./components/File/FileUploader";
 import CodingChallenge from "./components/CodingChallenge";
 
 

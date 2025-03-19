@@ -4,6 +4,7 @@ import axios from 'axios';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Box, Typography, Button, Paper } from "@mui/material";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 
 const FileUploader = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -14,7 +15,7 @@ const FileUploader = () => {
       setFile(e.target.files[0]);
     }
   };
-
+const navigate=useNavigate();
   const handleUpload = async () => {
     if (!file) return;
 
@@ -24,7 +25,6 @@ const FileUploader = () => {
 
       const presignedUrl = (response.data as { url: string }).url;
 
-      // שלב 2: יצירת XMLHttpRequest להעלאה עם מעקב התקדמות
       const xhr = new XMLHttpRequest();
 
       xhr.upload.onprogress = (event) => {
@@ -38,41 +38,51 @@ const FileUploader = () => {
 
       xhr.onload = () => {
         if (xhr.status === 200) {
-          alert('הקובץ הועלה בהצלחה!');
+          alert('the file uploaded successfuly');
+          navigate('/tests');
+
         } else {
-          console.error('שגיאה בהעלאה:', xhr.statusText);
+          console.error('error in uploading:', xhr.statusText);
         }
       };
 
       xhr.onerror = () => {
-        console.error('שגיאה ברשת בעת ההעלאה.');
+        console.error(' error in net while uploading  .');
       };
 
       xhr.open('PUT', presignedUrl, true);
       xhr.setRequestHeader('Content-Type', file.type);
       xhr.send(file);
+
     } catch (error) {
-      console.error('שגיאה בקבלת Presigned URL:', error);
+      console.error('error in getting  Presigned URL:', error);
     }
   };
-
 
   return (
     <Box
       display="flex"
+      flexDirection="column"
       justifyContent="center"
       alignItems="center"
       minHeight="100vh"
       width="100vw"
       p={2}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center"
-      }}
+      textAlign="center"
     >
+      <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold", color: "#333" }}>
+        Let's start
+      </Typography>
+      <Typography variant="body1" sx={{ mb: 1, color: "#666" }}>
+        Step number 1
+      </Typography>
+      <Typography variant="body1" sx={{ mb: 1, color: "#666" }}>
+        Upload your resume
+      </Typography>
+      <Typography variant="body2" sx={{ mb: 3, color: "#999" }}>
+        Only .pdf or .docx extensions
+      </Typography>
+      
       <Box
         display="flex"
         flexDirection="column"
@@ -109,18 +119,17 @@ const FileUploader = () => {
         >
           <CloudUploadIcon sx={{ color: "#03A9F4", fontSize: 50, animation: "pulse 1.5s infinite" }} />
           <Typography variant="body1" sx={{ color: "#4CAF50", mt: 1, fontWeight: "bold" }}>
-            drag here or click to upload
+            Drag here or click to upload
           </Typography>
           <input type="file" hidden onChange={handleFileChange} id="file-upload" />
           <Button component="label" htmlFor="file-upload" sx={{ mt: 2, bgcolor: "#4CAF50", color: "#fff", '&:hover': { bgcolor: "#388E3C" } }}>
-            select file        </Button>
-
-          <Button onClick={handleUpload}  sx={{ color: "#4CAF50", mt: 1, fontWeight: "bold" }}>upload</Button>
+            Select file
+          </Button>
+          <Button onClick={handleUpload} sx={{ color: "#4CAF50", mt: 1, fontWeight: "bold" }}>Upload</Button>
           {file && (
             <Typography variant="body2" sx={{ color: "#555", mt: 2, wordBreak: "break-word", textAlign: "center" }}>
               {file.name}
             </Typography>
-
           )}
         </Paper>
       </Box>
