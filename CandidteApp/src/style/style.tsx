@@ -65,3 +65,25 @@ export const backgroundStyle = {
     overflow: 'hidden',
 }
 export const colorStyle = { backgroundColor: '#607d8b', color: 'white', '&:hover': { backgroundColor: '#455a64' } }
+export const paperStyle={
+   
+      width: "100%",
+      maxWidth: 400,
+      height: 250,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      border: "2px dashed #4CAF50",
+      borderRadius: 3,
+      cursor: "pointer",
+      transition: "all 0.3s",
+      '&:hover': {
+        borderColor: "#2196F3",
+        background: "linear-gradient(135deg, #f0f0f0, #e0e0e0)",
+      },
+      position: "relative",
+      overflow: "hidden",
+      textAlign: "center",
+      backgroundColor: "#ffffff" 
+}

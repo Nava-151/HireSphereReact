@@ -5,6 +5,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Box, Typography, Button, Paper } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
+import { paperStyle } from '../../style/style';
 
 const FileUploader = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -17,17 +18,20 @@ const FileUploader = () => {
   };
 const navigate=useNavigate();
   const handleUpload = async () => {
+    
     if (!file) return;
-
     try {
       // שלב 1: קבלת Presigned URL מהשרת
       const response = await axios.get('http://localhost:5071/files/upload', { params: { fileName: file.name }});
 
-      const presignedUrl = (response.data as { url: string }).url;
+      const presignedUrl :URL= response.data as URL;
+      console.log("presignedUrl",presignedUrl);
 
       const xhr = new XMLHttpRequest();
 
       xhr.upload.onprogress = (event) => {
+        console.log("in event");
+        
         if (event.lengthComputable) {
           const percent = Math.round((event.loaded * 100) / event.total);
           setProgress(percent);
@@ -51,13 +55,30 @@ const navigate=useNavigate();
       };
 
       xhr.open('PUT', presignedUrl, true);
-      xhr.setRequestHeader('Content-Type', file.type);
+      // xhr.setRequestHeader('Content-Type', file.type); 
+      console.log("file",file.type);
       xhr.send(file);
+
+      analyzeResume(file.name, +localStorage.getItem('userId')!);  
 
     } catch (error) {
       console.error('error in getting  Presigned URL:', error);
     }
   };
+  const analyzeResume = async (s3Key: string, userId: number) => {
+    console.log("in analyzeResume");
+    
+    try {
+        const response = await axios.post("https://localhost:5071/files/resume/analyze", {
+            s3Key,
+            userId
+        });
+
+        console.log("Analysis result:", response.data);
+    } catch (error) {
+        console.error("Error analyzing resume:", error);
+    }
+};
 
   return (
     <Box
@@ -95,27 +116,7 @@ const navigate=useNavigate();
           component={motion.div}
           whileHover={{ scale: 1.05 }}
           elevation={6}
-          sx={{
-            width: "100%",
-            maxWidth: 400,
-            height: 250,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            border: "2px dashed #4CAF50",
-            borderRadius: 3,
-            cursor: "pointer",
-            transition: "all 0.3s",
-            '&:hover': {
-              borderColor: "#2196F3",
-              background: "linear-gradient(135deg, #f0f0f0, #e0e0e0)",
-            },
-            position: "relative",
-            overflow: "hidden",
-            textAlign: "center",
-            backgroundColor: "#ffffff"
-          }}
+         sx={paperStyle}
         >
           <CloudUploadIcon sx={{ color: "#03A9F4", fontSize: 50, animation: "pulse 1.5s infinite" }} />
           <Typography variant="body1" sx={{ color: "#4CAF50", mt: 1, fontWeight: "bold" }}>
