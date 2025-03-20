@@ -44,7 +44,6 @@ const navigate=useNavigate();
         if (xhr.status === 200) {
           alert('the file uploaded successfuly');
           navigate('/tests');
-
         } else {
           console.error('error in uploading:', xhr.statusText);
         }
@@ -68,12 +67,9 @@ const navigate=useNavigate();
   const analyzeResume = async (s3Key: string, userId: number) => {
     console.log("in analyzeResume");
     
+    // try {const response = await axios.post("http://localhost:5071/files/resume/analyze", { s3Key, userId });
     try {
-        const response = await axios.post("https://localhost:5071/files/resume/analyze", {
-            s3Key,
-            userId
-        });
-
+        const response = await axios.post(`http://localhost:5071/files/resume/analyze?s3Key=${encodeURIComponent(s3Key)}&userId=${userId}`);
         console.log("Analysis result:", response.data);
     } catch (error) {
         console.error("Error analyzing resume:", error);
