@@ -14,33 +14,38 @@ export const fetchUsers = createAsyncThunk('', async (_, thunkAPI) => {
         return thunkAPI.rejectWithValue(e);
     }
 });
-export const addUser = createAsyncThunk('auth/register', async (user: User, thunkAPI) => {
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import User from "../models/User";
+
+const API_URL = "http://localhost:5071";
+
+interface RegisterResponse {
+  id: string;
+  token: string;
+  user: User;
+}
+
+export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
+  "auth/register",
+  async (user, thunkAPI) => {
     try {
-        const response = await axios.post(`${API_URL}/auth/register`, user);
-        console.log(response);
+      const response = await axios.post<RegisterResponse>(`${API_URL}/auth/register`, user);
 
-        // if (typeof response.data === 'object' && response.data !== null && 'id' in response.data) {
-            localStorage.setItem('userId', response.data.id as string);
-        // } else {
-            // throw new Error("Invalid response data");
-        // }
+      if (!response.data || !response.data.id || !response.data.token || !response.data.user) {
+        throw new Error("Invalid response data");
+      }
 
-        // if (typeof response.data === 'object' && response.data !== null && 'token' in response.data) {
-            localStorage.setItem('token', response.data.token as string);
-        // } else {
-            // throw new Error("Invalid response data: token is missing");
-        // }
+      localStorage.setItem("userId", response.data.id);
+      localStorage.setItem("token", response.data.token);
 
-
-        if (typeof response.data === 'object' && response.data !== null && 'user' in response.data) {
-            return response.data.user as User;
-        } else {
-            throw new Error("Invalid response data: user is missing");
-        }
-    } catch (e) {
-        return thunkAPI.rejectWithValue(e);
+      return response.data.user;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || "Registration failed");
     }
-})
+  }
+);
+
 export const updateUser = createAsyncThunk('users/update', async (user: User, thunkAPI) => {
     try {
         localStorage.getItem('userId')
