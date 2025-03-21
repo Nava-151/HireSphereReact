@@ -32,6 +32,7 @@ const LoginForm = () => {
         const userLogin: UserLogin = {
             email: data.email,
             passwordHash: data.passwordHash,
+            role: 0
         };
         dispatch(login(userLogin));
         navigate('/upload');

@@ -10,6 +10,8 @@ import Gallery from "./components/Gallery";
 import UploadFile from "./components/File/FileUploader";
 import CodingChallenge from "./components/CodingChallenge";
 import CompletionPage from "./components/CompletionPage";
+import UpdateDetails from "./components/Candidate/UpdateDetails";
+import ProtectedRoute from "./components/connection/ProtectedRoute";
 
 
 
@@ -23,9 +25,15 @@ import CompletionPage from "./components/CompletionPage";
             { path: "register", element: <RegisterForm /> },
             { path: "login", element: <LoginForm /> },
             { path: "gallery", element: <Gallery /> },
-            {path:"upload",element:<UploadFile/>},
-            {path:"tests",element:<CodingChallenge/>},
-            {path:"end",element:<CompletionPage/>},
+            {
+                element: <ProtectedRoute />,
+                children: [
+                    { path: "upload", element: <UploadFile /> },
+                    { path: "tests", element: <CodingChallenge /> },
+                    { path: "end", element: <CompletionPage /> },
+                    { path: "updateDetails", element: <UpdateDetails /> },
+                ],
+            }
 
         ],
     }

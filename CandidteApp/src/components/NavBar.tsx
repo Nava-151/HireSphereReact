@@ -29,6 +29,7 @@ const NavBar=()=>{
           <Button color="info" variant="contained">
             Personal Area
           </Button>
+          <Button onClick={()=>{navigate('/updateDetails')}}>Update</Button>
         </Toolbar>
       </AppBar>
 

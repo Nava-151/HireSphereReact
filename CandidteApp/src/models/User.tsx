@@ -4,13 +4,14 @@ type User={
     email:string,
     passwordHash:string,
     phone:string,
-    role:UserRole
+    role?:UserRole
 
 }
 export default  User
 export type UserLogin={
     email:string,
     passwordHash:string
+    role:UserRole
 }
 
 export enum UserRole {
