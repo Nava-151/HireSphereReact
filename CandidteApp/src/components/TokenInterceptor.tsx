@@ -1,19 +1,20 @@
 import axios from "axios";
 
-const apiClient = axios.create({
-  baseURL: "http://localhost:5071/", // כתובת הבקשות שלך
+const TokenInterceptor = axios.create({
+  baseURL: "http://localhost:5071", // כתובת הבקשות שלך
 });
 
 // Interceptor להוספת ה-Token אוטומטית, חוץ מהתחברות והרשמה
-apiClient.interceptors.request.use(
+TokenInterceptor.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
+console.log("token interceptor "+token);
 
-    // מסלולים שלא דורשים הוספת Token
-    const authPaths = ["/login", "/register"];
+    const authPaths = ["/login", "/register","/blog"];
 
-    // אם ה-URL אינו בהתחברות או הרשמה ויש Token - נוסיף אותו
     if (!authPaths.some(path => config.url?.includes(path)) && token) {
+      console.log("in interceptor");
+      
     if (config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     } else {
@@ -28,4 +29,5 @@ apiClient.interceptors.request.use(
   }
 );
 
-export default apiClient;
+export default  TokenInterceptor
+  ;

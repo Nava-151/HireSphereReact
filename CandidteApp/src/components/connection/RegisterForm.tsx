@@ -45,7 +45,12 @@ const RegisterForm = () => {
             phone: data.phone,
             role: UserRole.Candidate,
         };
-        dispatch(addUser(user)).finally(() => navigate('/upload'));
+      const resultAasync = await dispatch(addUser(user));
+      console.log(resultAasync);
+      
+      if(resultAasync.type.includes("fulfilled")){
+        navigate('/upload')
+      }
 
     };
 

@@ -1,13 +1,14 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import User, { UserLogin } from "../models/User";
+import TokenInterceptor from "../components/TokenInterceptor";
 const API_URL = 'http://localhost:5071';
 
 
 
 export const fetchUsers = createAsyncThunk('', async (_, thunkAPI) => {
     try {
-        const response = await axios.get(API_URL);
+        const response = await TokenInterceptor.get(`${API_URL}/users`);
 
         return response.data as User[];
     } catch (e) {
@@ -44,7 +45,7 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
 export const updateUser = createAsyncThunk('users/update', async (user: User, thunkAPI) => {
     try {
         localStorage.getItem('userId')
-        const response = await axios.put(`${API_URL}/users/${localStorage.getItem('userId')}`, user);// check what will be the call
+        const response = await TokenInterceptor.put(`${API_URL}/users/${localStorage.getItem('userId')}`, user);// check what will be the call
         return response.data as User;
     } catch (e) {
         return thunkAPI.rejectWithValue(e);

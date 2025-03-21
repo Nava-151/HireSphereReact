@@ -1,8 +1,8 @@
 
 // export default fileSlice.reducer;
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import Files from "../models/Files";
+import TokenInterceptor from "../components/TokenInterceptor";
 const API_URL = 'https://hiresphereapi.onrender.com';
 
 export const uploadFile = createAsyncThunk(
@@ -13,7 +13,7 @@ export const uploadFile = createAsyncThunk(
       formData.append("f", file);
       formData.append("file", JSON.stringify(fileMetadata));
       
-      const response = await axios.post(`${API_URL}/upload`, formData, {
+      const response = await TokenInterceptor.post(`${API_URL}/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -1,11 +1,11 @@
 // React Component
 import React, { useState } from 'react';
-import axios from 'axios';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Box, Typography, Button, Paper } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import { paperStyle } from '../../style/style';
+import TokenInterceptor from '../TokenInterceptor';
 
 const FileUploader = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -22,7 +22,7 @@ const navigate=useNavigate();
     if (!file) return;
     try {
       // שלב 1: קבלת Presigned URL מהשרת
-      const response = await axios.get('http://localhost:5071/files/upload', { params: { fileName: file.name }});
+      const response = await TokenInterceptor.get('http://localhost:5071/files/upload', { params: { fileName: file.name }});
 
       const presignedUrl :URL= response.data as URL;
       console.log("presignedUrl",presignedUrl);
@@ -67,9 +67,8 @@ const navigate=useNavigate();
   const analyzeResume = async (s3Key: string, userId: number) => {
     console.log("in analyzeResume");
     
-    // try {const response = await axios.post("http://localhost:5071/files/resume/analyze", { s3Key, userId });
     try {
-        const response = await axios.post(`http://localhost:5071/files/resume/analyze?s3Key=${encodeURIComponent(s3Key)}&userId=${userId}`);
+        const response = await TokenInterceptor.post(`http://localhost:5071/files/resume/analyze?s3Key=${encodeURIComponent(s3Key)}&userId=${userId}`);
         console.log("Analysis result:", response.data);
     } catch (error) {
         console.error("Error analyzing resume:", error);

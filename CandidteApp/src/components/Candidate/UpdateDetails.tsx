@@ -8,7 +8,7 @@ import User from '../../models/User';
 function UpdateDetails() {
     const dispatch = useDispatch<AppDispatch>();
     const [user, setUser] = useState({
-      fullname: "",
+      fullname: "deafult",
       email: "",
       phone: "",
       passwordHash: ""
@@ -30,7 +30,6 @@ function UpdateDetails() {
         setTimeout(() => setMessage(""), 3000);
       }
     };
-/******  e166e9a1-fe64-4160-9de2-535ca31f5c67  *******/
   
     return (
       <Container maxWidth="sm" sx={{ mt: 5, textAlign: "center", background: "#002b36", p: 4, borderRadius: 2, color: "#fff" }}>
@@ -40,8 +39,8 @@ function UpdateDetails() {
         <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <TextField
             fullWidth
-            label="Full Name"
-            name="fullName"
+            label="Full name"
+            name="fullname"
             value={user.fullname}
             onChange={handleChange}
             margin="normal"

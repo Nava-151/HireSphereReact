@@ -34,8 +34,9 @@ const LoginForm = () => {
             passwordHash: data.passwordHash,
             role: 0
         };
-        dispatch(login(userLogin));
-        navigate('/upload');
+       const response=await dispatch(login(userLogin));
+       if(response.type.includes("fulfilled"))
+            navigate('/upload');
         
     };
 
