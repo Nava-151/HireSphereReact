@@ -45,8 +45,7 @@ const RegisterForm = () => {
             phone: data.phone,
             role: UserRole.Candidate,
         };
-        dispatch(addUser(user));
-            navigate('/upload');
+        dispatch(addUser(user)).finally(() => navigate('/upload'));
 
     };
 

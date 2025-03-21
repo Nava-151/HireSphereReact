@@ -14,11 +14,6 @@ export const fetchUsers = createAsyncThunk('', async (_, thunkAPI) => {
         return thunkAPI.rejectWithValue(e);
     }
 });
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import User from "../models/User";
-
-const API_URL = "http://localhost:5071";
 
 interface RegisterResponse {
   id: string;
