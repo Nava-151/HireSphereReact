@@ -20,7 +20,7 @@ import "../style/Home.css";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const features = [
     { icon: <AnalyticsIcon fontSize="large" />, title: "AI-Powered Insights", description: "Smart resume & job match analysis" },
     { icon: <VerifiedIcon fontSize="large" />, title: "Code Quality Review", description: "Automated code assessment for developers" },
@@ -45,20 +45,16 @@ const Home = () => {
 
   return (
     <div>
-
       <br />
-      {/* Hero Section */}
       <div className="hero">
         <h1>Smarter Hiring, Faster Decisions</h1>
         <p>AI-powered resume analysis and job matching for tech professionals.</p>
-        <Button variant="contained" color="secondary" size="large" className="cta-button" onClick={() => {navigate('/register')}}>
+        <Button variant="contained" color="secondary" size="large" className="cta-button" onClick={() => { navigate('/register') }}>
           Get Started
         </Button>
       </div>
 
-
-<br />
-      {/* Features Section */}
+      <br />
       <Container className="features">
         <Grid container spacing={3}>
           {features.map((feature, index) => (
@@ -75,10 +71,6 @@ const Home = () => {
         </Grid>
       </Container>
 
-<br />
-<br />
-<br />
-      {/* Testimonials */}
       <Container className="testimonials">
         <Typography variant="h4">What Our Users Say</Typography>
         {testimonials.map((testimonial, index) => (
@@ -94,41 +86,37 @@ const Home = () => {
 
       {/* How It Works */}
       <Container className="how-it-works">
-      <div className="space">
+        <div className="space">
 
-        <Typography variant="h4">How It Works</Typography>
-        <Stepper activeStep={-1} alternativeLabel>
-          {steps.map((step, index) => (
-            <Step key={index}>
-              <StepLabel>{step.title}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+          <Typography variant="h4">How It Works</Typography>
+          <Stepper activeStep={-1} alternativeLabel>
+            {steps.map((step, index) => (
+              <Step key={index}>
+                <StepLabel>{step.title}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
         </div>
       </Container>
 
-
-
-      {/* FAQ Section */}
       <Container className="faq">
         <Typography variant="h4">Frequently Asked Questions</Typography>
         {faqs.map((faqu, index) => (
-            <div className="space">
-          <Accordion key={index}>
-            
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>{faqu.question}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>{faqu.answer}</Typography>
-            </AccordionDetails>
-          </Accordion>
+          <div className="space">
+            <Accordion key={index}>
+
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>{faqu.question}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>{faqu.answer}</Typography>
+              </AccordionDetails>
+            </Accordion>
           </div>
-          
+
         ))}
       </Container>
     </div>
   );
 };
-
 export default Home;

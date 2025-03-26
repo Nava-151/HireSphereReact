@@ -43,7 +43,6 @@ import {
           Interview Tips & Gallery
         </Typography>
   
-        {/* ✅ שימוש ב-Box עם Grid רספונסיבי */}
         <Box
           display="grid"
           gridTemplateColumns={{

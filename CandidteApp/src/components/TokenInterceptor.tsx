@@ -8,18 +8,14 @@ const TokenInterceptor = axios.create({
 TokenInterceptor.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-console.log("token interceptor "+token);
-
-    const authPaths = ["/login", "/register","/blog"];
-
+    console.log("token interceptor " + token);
+    const authPaths = ["/login", "/register", "/blog"];
     if (!authPaths.some(path => config.url?.includes(path)) && token) {
-      console.log("in interceptor");
-      
-    if (config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    } else {
-      config.headers = { Authorization: `Bearer ${token}` };
-    }
+      if (config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      } else {
+        config.headers = { Authorization: `Bearer ${token}` };
+      }
     }
 
     return config;
@@ -29,5 +25,4 @@ console.log("token interceptor "+token);
   }
 );
 
-export default  TokenInterceptor
-  ;
+export default TokenInterceptor;

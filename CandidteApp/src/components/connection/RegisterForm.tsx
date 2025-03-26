@@ -14,6 +14,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
+import { buttonStyle } from "../../style/style";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ const RegisterForm = () => {
     // ✅ Define validation schema
     const schema = object({
         fullName: string().min(4, "Full name must be at least 4 characters").max(50, "Full name is too long").required("Full name is required"),
-        email: string().min(10, "Email must be at least 10 characters").email("Invalid email").required("Email is required"),
+        email: string().min(9, "Email must be at least 9 characters").email("Invalid email").required("Email is required"),
         passwordHash: string().min(5, "Password must be at least 5 characters").required("Password is required"),
         phone: string().matches(/^\d{10}$/, "Phone number must be exactly 10 digits").required("Phone number is required"),
     });
@@ -72,8 +73,8 @@ const RegisterForm = () => {
                             <TextField label="Phone Number" {...register("phone")} fullWidth error={!!errors.phone} InputProps={{ startAdornment: (<InputAdornment position="start"><PhoneIcon color="primary" /></InputAdornment>) }} />
                             <FormHelperText error>{errors.phone?.message}</FormHelperText>
 
-                            <Button type="submit" variant="contained" startIcon={<AddIcon />} sx={{ background: 'linear-gradient(135deg, #00f2fe, #03e7a0)', color: 'white', '&:hover': { background: 'linear-gradient(135deg, #03e7a0, #00f2fe)' }, padding: '10px 20px', borderRadius: '8px', fontWeight: 'bold' }}>Register</Button>
-                            <p>Do you have an account? </p><button onClick={() => navigate("/login")}>login</button>
+                            <Button type="submit" variant="contained" startIcon={<AddIcon />} sx={buttonStyle}>Register</Button>
+                            <p>Do you have an account? </p><Button sx={buttonStyle} onClick={() => navigate("/login")}>login</Button>
                         </form>
                     </Box>
                 </Box>

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
+import { formBox } from "../../style/style";
 const LoginForm = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
@@ -51,18 +52,7 @@ const LoginForm = () => {
                 justifyContent: "center",
             }}
         >
-            <Box
-                sx={{
-                    bgcolor: 'background.paper',
-                    borderRadius: 2,
-                    boxShadow: 24,
-                    p: 4,
-                    width: { xs: '90%', sm: '400px' },
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 2,
-                }}
-            >
+            <Box sx={formBox}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                         label="Email"

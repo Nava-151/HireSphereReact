@@ -7,73 +7,83 @@ import { useNavigate } from 'react-router-dom';
 import { paperStyle } from '../../style/style';
 import TokenInterceptor from '../TokenInterceptor';
 
+//check and move it to redux
+export  const  upload = async (file: File | null) => {
+
+  if (!file) return;
+  try {
+    // שלב 1: קבלת Presigned URL מהשרת
+    const response = await TokenInterceptor.get('http://localhost:5071/files/upload', { params: { fileName: file.name } });
+
+    const presignedUrl: URL = response.data as URL;
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.upload.onprogress = (event) => {
+      console.log("in event");
+
+      if (event.lengthComputable) {
+        const percent = Math.round((event.loaded * 100) / event.total);
+        // setProgress(percent);
+      }
+    };
+    // const x = progress;
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        alert('the file uploaded successfuly');
+        return true;
+      } else {
+        
+        console.error('error in uploading:', xhr.statusText);4
+        return false;
+      }
+    };
+
+    xhr.onerror = () => {
+      console.error(' error in net while uploading  .');
+    };
+
+    xhr.open('PUT', presignedUrl, true);
+    // xhr.setRequestHeader('Content-Type', file.type); 
+    // console.log("file", file.type);
+    xhr.send(file);
+
+
+  } catch (error) {
+    console.error('error in getting  Presigned URL:', error);
+  }
+};
+
 const FileUploader = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [progress, setProgress] = useState(0);
+  const navigate = useNavigate();
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
   };
-const navigate=useNavigate();
-  const handleUpload = async () => {
-    
-    if (!file) return;
+  const handleUpload = () => {
+    upload(file);
+    navigate('/tests');
+
+    if (file) {
+      analyzeResume({ s3Key: file.name, userId: Number(localStorage.getItem('userId')) || 0 });
+    } else {
+      console.error("File is null or undefined.");
+    }
+  }
+//check if i need to use redux
+  const analyzeResume = async (requestBody: { s3Key: string, userId: number }) => {
     try {
-      // שלב 1: קבלת Presigned URL מהשרת
-      const response = await TokenInterceptor.get('http://localhost:5071/files/upload', { params: { fileName: file.name }});
-
-      const presignedUrl :URL= response.data as URL;
-      console.log("presignedUrl",presignedUrl);
-
-      const xhr = new XMLHttpRequest();
-
-      xhr.upload.onprogress = (event) => {
-        console.log("in event");
-        
-        if (event.lengthComputable) {
-          const percent = Math.round((event.loaded * 100) / event.total);
-          setProgress(percent);
-        }
-      };
-      const x=progress;
-      console.log(x);
-
-      xhr.onload = () => {
-        if (xhr.status === 200) {
-          alert('the file uploaded successfuly');
-          navigate('/tests');
-        } else {
-          console.error('error in uploading:', xhr.statusText);
-        }
-      };
-
-      xhr.onerror = () => {
-        console.error(' error in net while uploading  .');
-      };
-
-      xhr.open('PUT', presignedUrl, true);
-      // xhr.setRequestHeader('Content-Type', file.type); 
-      console.log("file",file.type);
-      xhr.send(file);
-
-      analyzeResume(file.name, +localStorage.getItem('userId')!);  
-
+      const response = await TokenInterceptor.post(`http://localhost:5071/files/resume/analyze`, requestBody);
+      console.log("Analysis result:", response.data);
     } catch (error) {
-      console.error('error in getting  Presigned URL:', error);
+      console.error("Error analyzing resume:", error);
     }
   };
-  const analyzeResume = async (s3Key: string, userId: number) => {
-    console.log("in analyzeResume");
-    
-    try {
-        const response = await TokenInterceptor.post(`http://localhost:5071/files/resume/analyze?s3Key=${encodeURIComponent(s3Key)}&userId=${userId}`);
-        console.log("Analysis result:", response.data);
-    } catch (error) {
-        console.error("Error analyzing resume:", error);
-    }
-};
 
   return (
     <Box
@@ -98,7 +108,7 @@ const navigate=useNavigate();
       <Typography variant="body2" sx={{ mb: 3, color: "#999" }}>
         Only .pdf or .docx extensions
       </Typography>
-      
+
       <Box
         display="flex"
         flexDirection="column"
@@ -111,7 +121,7 @@ const navigate=useNavigate();
           component={motion.div}
           whileHover={{ scale: 1.05 }}
           elevation={6}
-         sx={paperStyle}
+          sx={paperStyle}
         >
           <CloudUploadIcon sx={{ color: "#03A9F4", fontSize: 50, animation: "pulse 1.5s infinite" }} />
           <Typography variant="body1" sx={{ color: "#4CAF50", mt: 1, fontWeight: "bold" }}>

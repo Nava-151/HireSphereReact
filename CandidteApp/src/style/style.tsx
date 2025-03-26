@@ -25,6 +25,13 @@ export const listRecipe = {
     boxShadow: 1, // Optional: to add some shadow
     borderRadius: 1 // Optional: to add rounded corners
 }
+export const buttonStyle = {
+    background: 'linear-gradient(135deg, #00f2fe, #03e7a0)', 
+    color: 'white', '&:hover': { background: 'linear-gradient(135deg, #03e7a0, #00f2fe)' }, 
+    padding: '10px 20px', 
+    borderRadius: '8px', 
+    fontWeight: 'bold' 
+}
 
 export const linkStyle = {
 
@@ -65,25 +72,36 @@ export const backgroundStyle = {
     overflow: 'hidden',
 }
 export const colorStyle = { backgroundColor: '#607d8b', color: 'white', '&:hover': { backgroundColor: '#455a64' } }
-export const paperStyle={
-   
-      width: "100%",
-      maxWidth: 400,
-      height: 250,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      border: "2px dashed #4CAF50",
-      borderRadius: 3,
-      cursor: "pointer",
-      transition: "all 0.3s",
-      '&:hover': {
+export const paperStyle = {
+
+    width: "100%",
+    maxWidth: 400,
+    height: 250,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "2px dashed #4CAF50",
+    borderRadius: 3,
+    cursor: "pointer",
+    transition: "all 0.3s",
+    '&:hover': {
         borderColor: "#2196F3",
         background: "linear-gradient(135deg, #f0f0f0, #e0e0e0)",
-      },
-      position: "relative",
-      overflow: "hidden",
-      textAlign: "center",
-      backgroundColor: "#ffffff" 
+    },
+    position: "relative",
+    overflow: "hidden",
+    textAlign: "center",
+    backgroundColor: "#ffffff"
+}
+export const formBox = {
+
+    bgcolor: 'background.paper',
+    borderRadius: 2,
+    boxShadow: 24,
+    p: 4,
+    width: { xs: '90%', sm: '400px' },
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
 }

@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 
 const ProtectedRoute = () => {
     const token = useSelector((state: any) => state.user.token
-    )||localStorage.getItem("token"); // בדיקה אם יש משתמש מחובר
-    console.log(token+" IN INTERCEPTOR");
-    
+    )||localStorage.getItem("token"); 
     return token ? <Outlet /> : <Navigate to="/login" replace />;
 };
 

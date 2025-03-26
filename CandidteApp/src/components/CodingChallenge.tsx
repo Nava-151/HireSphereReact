@@ -60,7 +60,7 @@ const CodingChallenge: React.FC = () => {
     try {
       const userFunction = new Function("return " + code)();
       const { testCases } = codingQuestions[currentQuestion];
-      
+
       let isCorrect = true;
       for (const testCase of testCases) {
         const userOutput = userFunction(...testCase.input);
@@ -69,7 +69,6 @@ const CodingChallenge: React.FC = () => {
           break;
         }
       }
-
       if (isCorrect) {
         setScore((prevScore) => prevScore + 1);
       }
@@ -96,7 +95,7 @@ const CodingChallenge: React.FC = () => {
             <Typography variant="body1">{codingQuestions[currentQuestion].description}</Typography>
             <Typography variant="body2" sx={{ fontStyle: "italic", color: "#bbb", mt: 1 }}>{codingQuestions[currentQuestion].example}</Typography>
           </Box>
-            <Box sx={{ mt: 3, width: { xs: "90%", md: "70%" }, height: "300px", border: "2px solid #00eaff" }}>
+          <Box sx={{ mt: 3, width: { xs: "90%", md: "70%" }, height: "300px", border: "2px solid #00eaff" }}>
             <Editor
               height="100%"
               defaultLanguage="javascript"
@@ -105,7 +104,7 @@ const CodingChallenge: React.FC = () => {
               onChange={(value: string | undefined) => setCode(value || "")}
               options={{ fontSize: 16, minimap: { enabled: false } }}
             />
-            </Box>
+          </Box>
           <Button onClick={handleSubmit} variant="contained" sx={{ mt: 3, background: "linear-gradient(90deg, #00ff99, #00eaff)" }}>Submit</Button>
         </>
       ) : (
@@ -113,7 +112,7 @@ const CodingChallenge: React.FC = () => {
           <Typography variant="h3" sx={{ color: "#00ff99" }}>🎉 Well Done!</Typography>
           <Typography variant="h6" sx={{ color: "#bbb", mt: 2 }}>Your score: {(score / codingQuestions.length) * 100}%</Typography>
           <Button onClick={() => { setCurrentQuestion(0); setScore(0); setCode(codingQuestions[0].starterCode); }} variant="contained" sx={{ mt: 3, background: "linear-gradient(90deg, #00eaff, #00ff99)" }}>🔁 Restart</Button>
-          <Button onClick={() => navigate('/end') } variant="contained" sx={{ mt: 3, background: "linear-gradient(90deg, #00eaff, #00ff99)" }}>✅ Apply</Button>
+          <Button onClick={() => navigate('/end')} variant="contained" sx={{ mt: 3, background: "linear-gradient(90deg, #00eaff, #00ff99)" }}>✅ Apply</Button>
         </Box>
       )}
     </Container>
