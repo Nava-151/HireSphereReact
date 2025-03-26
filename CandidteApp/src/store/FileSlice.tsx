@@ -94,7 +94,7 @@ const API_URL = 'http://localhost:5071';
 // Upload file to S3
 export const uploadFile = createAsyncThunk(
   "files/uploadFile",
-  async ({ file, fileMetadata }: { file: File; fileMetadata: object }, { rejectWithValue, dispatch }) => {
+  async ({ file, fileMetadata }: { file: File; fileMetadata: object }, { rejectWithValue }) => {
     try {
       const formData = new FormData();
       formData.append("f", file);
