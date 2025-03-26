@@ -23,7 +23,9 @@ export  const  upload = async (file: File | null) => {
       console.log("in event");
 
       if (event.lengthComputable) {
-        const percent = Math.round((event.loaded * 100) / event.total);
+        console.log("in event2");
+        
+        // const percent = Math.round((event.loaded * 100) / event.total);
         // setProgress(percent);
       }
     };
