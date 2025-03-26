@@ -46,7 +46,7 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
 
             localStorage.setItem("userId", response.data.id);
             localStorage.setItem("token", response.data.token);
-
+            console.log(response.data);
             return response.data.user;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.message || "Registration failed");
@@ -58,6 +58,7 @@ export const updateUser = createAsyncThunk('users/update', async (user: User, th
     try {
         const userId = localStorage.getItem('userId');
         const response = await TokenInterceptor.put(`${API_URL}/users/${userId}`, user);
+        
         return response.data as User;
     } catch (e) {
         return thunkAPI.rejectWithValue(e);
