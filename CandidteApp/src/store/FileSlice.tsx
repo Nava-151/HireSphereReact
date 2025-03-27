@@ -4,8 +4,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Files from "../models/Files";
 import TokenInterceptor from "../components/TokenInterceptor";
 
-const API_URL =  process.env.REACT_APP_API_URL;
-console.log('API URL:', process.env.REACT_APP_API_URL);  // Check in the browser console if the value is logged
+const API_URL =  process.env.VITE_API_URL;
+console.log('API URL:', process.env.VITE_API_URL);  // Check in the browser console if the value is logged
 
 
 // Upload file to S3
