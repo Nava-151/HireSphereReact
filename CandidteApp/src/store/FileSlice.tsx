@@ -7,7 +7,6 @@ import TokenInterceptor from "../components/TokenInterceptor";
 // const API_URL =  process.env.VITE_API_URL;
 const API_URL = import.meta.env.VITE_API_URL;
 
-console.log('API URL:', import.meta.env.VITE_API_URL);  // Check in the browser console if the value is logged
 
 
 // Upload file to S3
@@ -18,7 +17,6 @@ export const uploadFile = createAsyncThunk(
       const formData = new FormData();
       formData.append("f", file);
       formData.append("file", JSON.stringify(fileMetadata));
-      console.log();
       
       const response = await TokenInterceptor.post(`${API_URL}/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },

@@ -29,9 +29,9 @@ export const fetchUserById = createAsyncThunk<User, number, { rejectValue: strin
 );
 
 interface RegisterResponse {
-  id: string;
-  token: string;
-  user: User;
+    id: string;
+    token: string;
+    user: User;
 }
 
 export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
@@ -46,7 +46,6 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
 
             localStorage.setItem("userId", response.data.id);
             localStorage.setItem("token", response.data.token);
-            console.log(response.data);
             return response.data.user;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.message || "Registration failed");
@@ -58,7 +57,7 @@ export const updateUser = createAsyncThunk('users/update', async (user: User, th
     try {
         const userId = localStorage.getItem('userId');
         const response = await TokenInterceptor.put(`${API_URL}/users/${userId}`, user);
-        
+
         return response.data as User;
     } catch (e) {
         return thunkAPI.rejectWithValue(e);
@@ -67,14 +66,12 @@ export const updateUser = createAsyncThunk('users/update', async (user: User, th
 
 export const login = createAsyncThunk('auth/login', async (credentials: UserLogin, thunkAPI) => {
     try {
-        console.log("in login");
-
         const response = await axios.post<{ token: string }>(`${API_URL}/auth/login`, credentials);
-        console.log(response);
         return { token: response.data.token, email: credentials.email };
     } catch (error: any) {
         if (error.response) {
             if (error.response.status === 404) {
+                alert('please register first');
                 return thunkAPI.rejectWithValue("User not found");
             }
             if (error.response.status === 500) {

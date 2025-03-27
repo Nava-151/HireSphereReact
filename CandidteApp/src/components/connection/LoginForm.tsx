@@ -29,7 +29,6 @@ const LoginForm = () => {
     } = useForm({ resolver: yupResolver(schema) });
 
     const onSubmit = async (data: any) => {
-        console.log("on submit");
         const userLogin: UserLogin = {
             email: data.email,
             passwordHash: data.passwordHash,

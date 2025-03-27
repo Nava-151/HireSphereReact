@@ -9,7 +9,6 @@ const TokenInterceptor = axios.create({
 TokenInterceptor.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-    console.log("token interceptor " + token);
     const authPaths = ["/login", "/register", "/blog"];
     if (!authPaths.some(path => config.url?.includes(path)) && token) {
       if (config.headers) {

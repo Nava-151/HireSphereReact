@@ -37,8 +37,6 @@ const RegisterForm = () => {
     } = useForm({ resolver: yupResolver(schema) });
 
     const onSubmit = async (data: any) => {
-        console.log("on submit");
-
         const user: User = {
             fullname: data.fullName,
             email: data.email,
@@ -46,12 +44,10 @@ const RegisterForm = () => {
             phone: data.phone,
             role: UserRole.Candidate,
         };
-      const resultAasync = await dispatch(addUser(user));
-      console.log(resultAasync);
-      
-      if(resultAasync.type.includes("fulfilled")){
-        navigate('/upload')
-      }
+        const resultAasync = await dispatch(addUser(user));
+        if (resultAasync.type.includes("fulfilled")) {
+            navigate('/upload')
+        }
 
     };
 

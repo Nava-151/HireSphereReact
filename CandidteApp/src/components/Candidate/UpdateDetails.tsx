@@ -50,7 +50,7 @@ function UpdateDetails() {
       const file = e.target.files[0];
       setResume(file);
       handleResumeRemove();
-      console.log("succeeded deleting file");
+      ("succeeded deleting file");
       uploadToS3(resume);
     }
   };

@@ -14,8 +14,8 @@ export const uploadToS3 = async (file: File | null): Promise<boolean> => {
   if (!file) return false;
   try {
     // Request Presigned URL from the server
-    const response = await TokenInterceptor.get('https://hiresphereapi.onrender.com/files/upload', { 
-      params: { fileName: file.name } 
+    const response = await TokenInterceptor.get('https://hiresphereapi.onrender.com/files/upload', {
+      params: { fileName: file.name }
     });
 
     const presignedUrl: URL = response.data as URL;
@@ -24,7 +24,6 @@ export const uploadToS3 = async (file: File | null): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       xhr.onload = () => {
         if (xhr.status === 200) {
-          console.log('File uploaded successfully to S3');
           resolve(true);
         } else {
           console.error('Upload error:', xhr.statusText);
@@ -63,10 +62,7 @@ const FileUploader = () => {
       console.error("No file selected.");
       return;
     }
-
     const uploadSuccess = await uploadToS3(file); // <-- Call S3 upload function
-console.log(file+ "****************************** the ");
-
     if (uploadSuccess) {
       // Prepare metadata for Redux
       const fileMetadata = {
@@ -76,8 +72,8 @@ console.log(file+ "****************************** the ");
         size: file.size,
       };
 
-      dispatch(addFile(fileMetadata) as any); 
-      navigate('/tests'); 
+      dispatch(addFile(fileMetadata) as any);
+      navigate('/tests');
     }
   };
 
@@ -92,7 +88,7 @@ console.log(file+ "****************************** the ");
       p={2}
       textAlign="center"
     >
-      
+
       <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold", color: "#333" }}>
         Let's start
       </Typography>
