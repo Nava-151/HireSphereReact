@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const TokenInterceptor = axios.create({
-  baseURL: "http://localhost:5071", // כתובת הבקשות שלך
+  baseURL: "https://hirespherereact.onrender.com", // כתובת הבקשות שלך
+  
 });
 
 // Interceptor להוספת ה-Token אוטומטית, חוץ מהתחברות והרשמה
