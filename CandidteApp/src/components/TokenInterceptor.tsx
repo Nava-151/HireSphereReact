@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const TokenInterceptor = axios.create({
-  baseURL: "https://hirespherereact.onrender.com", // כתובת הבקשות שלך
+  baseURL: "https://hiresphereapi.onrender.com", // כתובת הבקשות שלך
   
 });
 

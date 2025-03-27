@@ -14,7 +14,7 @@ export const uploadToS3 = async (file: File | null): Promise<boolean> => {
   if (!file) return false;
   try {
     // Request Presigned URL from the server
-    const response = await TokenInterceptor.get('https://hirespherereact.onrender.com/files/upload', { 
+    const response = await TokenInterceptor.get('https://hiresphereapi.onrender.com/files/upload', { 
       params: { fileName: file.name } 
     });
 
