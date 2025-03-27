@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import User, { UserLogin } from "../models/User";
 import TokenInterceptor from "../components/TokenInterceptor";
 
-const API_URL = process.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const fetchUsers = createAsyncThunk('users/fetchAll', async (_, thunkAPI) => {
     try {
