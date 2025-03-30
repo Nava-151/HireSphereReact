@@ -28,7 +28,7 @@ const firstLetter=localStorage.getItem('name');
           <Button onClick={goToHome} color="inherit">Home</Button>
           <Button onClick={goToGallery} color="inherit">Gallery</Button>
           <Button onClick={goToBlog} color="inherit">Blog</Button>
-          {userId&&
+          {(+(userId||"0"))>0&&
           <>
 
           <Button color={"inherit"} onClick={() => { navigate('/upload') }}>Upload file</Button>

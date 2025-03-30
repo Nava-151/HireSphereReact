@@ -1,23 +1,148 @@
 
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import Files from "../models/Files";
+// import TokenInterceptor from "../components/TokenInterceptor";
+
+// // const API_URL =  process.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
+
+
+
+// // Upload file to S3
+// export const uploadFile = createAsyncThunk(
+//   "files/uploadFile",
+//   async ({ file, fileMetadata }: { file: File; fileMetadata: object }, { rejectWithValue }) => {
+//     try {
+//       const formData = new FormData();
+//       formData.append("f", file);
+//       formData.append("file", JSON.stringify(fileMetadata));
+
+//       const response = await TokenInterceptor.post(`${API_URL}/upload`, formData, {
+//         headers: { "Content-Type": "multipart/form-data" },
+//       });
+//       return response.data;
+//     } catch (error: any) {
+//       return rejectWithValue(error.response?.data || "Upload failed");
+//     }
+//   }
+// );
+
+// // Add file metadata to DB
+// export const addFile = createAsyncThunk(
+//   "files/addFile",
+//   async (fileMetadata: { fileName: string; fileType: string; ownerId: number; size: number }, { rejectWithValue }) => {
+//     try {
+//       const response = await TokenInterceptor.post(`${API_URL}/files`, fileMetadata);
+//       return response.data;
+//     } catch (error: any) {
+//       return rejectWithValue(error.response?.data || "Failed to save file metadata");
+//     }
+//   }
+// );
+
+// // Delete file
+// export const deleteFile = createAsyncThunk(
+//   "files/deleteFile",
+//   async ({ ownerId }: { ownerId: number }, { rejectWithValue }) => {
+//     try {
+//       const response = await TokenInterceptor.delete(`${API_URL}/files/${ownerId}`);
+
+//       if (response.status === 200) {
+//         return { ownerId, message: response.data };
+//       } else {
+//         return rejectWithValue("File not found");
+//       }
+//     } catch (error: any) {
+//       return rejectWithValue(error.response?.data || "Error deleting file");
+//     }
+//   }
+// );
+
+// const FileSlice = createSlice({
+//   name: "files",
+//   initialState: {
+//     files: [] as Files[],
+//     isLoading: false,
+//     error: "",
+//   },
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(uploadFile.pending, (state) => {
+//         state.isLoading = true;
+//         state.error = "";
+//       })
+//       .addCase(uploadFile.fulfilled, (state, action) => {
+//         state.isLoading = false;
+//         state.files.push(action.payload as Files);
+//       })
+//       .addCase(uploadFile.rejected, (state, action) => {
+//         state.isLoading = false;
+//         state.error = action.payload as string;
+//       })
+//       .addCase(addFile.pending, (state) => {
+//         state.isLoading = true;
+//       })
+//       .addCase(addFile.fulfilled, (state, action) => {
+//         state.isLoading = false;
+//         state.files.push(action.payload as Files);
+//       })
+//       .addCase(addFile.rejected, (state, action) => {
+//         state.isLoading = false;
+//         state.error = action.payload as string;
+//       })
+//       .addCase(deleteFile.pending, (state) => {
+//         state.isLoading = true;
+//       })
+//       .addCase(deleteFile.fulfilled, (state, action) => {
+//         state.isLoading = false;
+//         state.files = state.files.filter((file) => file.ownerId !== action.payload.ownerId);
+//       })
+//       .addCase(deleteFile.rejected, (state, action) => {
+//         state.isLoading = false;
+//         state.error = action.payload as string;
+//       });
+//   },
+// });
+
+// export default FileSlice.reducer;
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import Files from "../models/Files";
 import TokenInterceptor from "../components/TokenInterceptor";
 
-// const API_URL =  process.env.VITE_API_URL;
 const API_URL = import.meta.env.VITE_API_URL;
 
+interface FileMetadata {
+  fileName: string;
+  fileType: string;
+  ownerId: number;
+  size: number;
+}
 
+interface FileState {
+  files: Files[];
+  isLoading: boolean;
+  error: string | null;
+  presignedUrl: string | null;
+}
+
+const initialState: FileState = {
+  files: [],
+  isLoading: false,
+  error: null,
+  presignedUrl: null,
+};
 
 // Upload file to S3
 export const uploadFile = createAsyncThunk(
   "files/uploadFile",
-  async ({ file, fileMetadata }: { file: File; fileMetadata: object }, { rejectWithValue }) => {
+  async ({ file, fileMetadata }: { file: File; fileMetadata: FileMetadata }, { rejectWithValue }) => {
     try {
       const formData = new FormData();
       formData.append("f", file);
       formData.append("file", JSON.stringify(fileMetadata));
-      
+
       const response = await TokenInterceptor.post(`${API_URL}/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -31,7 +156,7 @@ export const uploadFile = createAsyncThunk(
 // Add file metadata to DB
 export const addFile = createAsyncThunk(
   "files/addFile",
-  async (fileMetadata: { fileName: string; fileType: string; ownerId: number; size: number }, { rejectWithValue }) => {
+  async (fileMetadata: FileMetadata, { rejectWithValue }) => {
     try {
       const response = await TokenInterceptor.post(`${API_URL}/files`, fileMetadata);
       return response.data;
@@ -59,19 +184,30 @@ export const deleteFile = createAsyncThunk(
   }
 );
 
+// Fetch presigned URL for viewing file
+export const fetchPresignedUrl = createAsyncThunk(
+  "files/fetchPresignedUrl",
+  async (ownerId: number, { rejectWithValue }) => {
+    try {
+      const response = await TokenInterceptor.get(`${API_URL}/files/view`, {
+        params: { ownerId},
+      });
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Failed to fetch presigned URL");
+    }
+  }
+);
+
 const FileSlice = createSlice({
   name: "files",
-  initialState: {
-    files: [] as Files[],
-    isLoading: false,
-    error: "",
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(uploadFile.pending, (state) => {
         state.isLoading = true;
-        state.error = "";
+        state.error = null;
       })
       .addCase(uploadFile.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -95,11 +231,23 @@ const FileSlice = createSlice({
       .addCase(deleteFile.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteFile.fulfilled, (state, action) => {
+      .addCase(deleteFile.fulfilled, (state, action: PayloadAction<{ ownerId: number }>) => {
         state.isLoading = false;
         state.files = state.files.filter((file) => file.ownerId !== action.payload.ownerId);
       })
       .addCase(deleteFile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchPresignedUrl.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchPresignedUrl.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.presignedUrl = action.payload as string;
+      })
+      .addCase(fetchPresignedUrl.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });
