@@ -70,7 +70,7 @@ const Home = () => {
           ))}
         </Grid>
       </Container>
-      
+
       <br />
       <Container className="testimonials">
         <Typography variant="h4">What Our Users Say</Typography>
@@ -91,7 +91,8 @@ const Home = () => {
 
           <Typography variant="h4">How It Works</Typography>
           <Stepper activeStep={-1} alternativeLabel>
-            {steps.map((step, index) => (
+            {steps
+            .map((step, index) => (
               <Step key={index}>
                 <StepLabel>{step.title}</StepLabel>
               </Step>

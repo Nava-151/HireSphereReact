@@ -43,7 +43,7 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
             if (!response.data || !response.data.id || !response.data.token || !response.data.user) {
                 throw new Error("Invalid response data");
             }
-
+            localStorage.setItem("name", user.fullname);
             localStorage.setItem("userId", response.data.id);
             localStorage.setItem("token", response.data.token);
             return response.data.user;
@@ -66,8 +66,14 @@ export const updateUser = createAsyncThunk('users/update', async (user: User, th
 
 export const login = createAsyncThunk('auth/login', async (credentials: UserLogin, thunkAPI) => {
     try {
-        const response = await axios.post<{ token: string }>(`${API_URL}/auth/login`, credentials);
+        const response = await axios.post<{ token: string , id:number}>(`${API_URL}/auth/login`, credentials);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.id.toString());
+        const userResponse = await thunkAPI.dispatch(fetchUserById(response.data.id)).unwrap();
+        localStorage.setItem("name", userResponse.fullname);
+
         return { token: response.data.token, email: credentials.email };
+        
     } catch (error: any) {
         if (error.response) {
             if (error.response.status === 404) {
