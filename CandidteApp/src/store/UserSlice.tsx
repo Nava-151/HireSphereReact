@@ -1,8 +1,8 @@
-
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import User, { UserLogin } from "../models/User";
 import TokenInterceptor from "../components/TokenInterceptor";
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,7 +15,6 @@ export const fetchUsers = createAsyncThunk('users/fetchAll', async (_, thunkAPI)
     }
 });
 
-// ** New function: Fetch user by ID **
 export const fetchUserById = createAsyncThunk<User, number, { rejectValue: string }>(
     'users/fetchById',
     async (userId, thunkAPI) => {
@@ -57,7 +56,6 @@ export const updateUser = createAsyncThunk('users/update', async (user: User, th
     try {
         const userId = localStorage.getItem('userId');
         const response = await TokenInterceptor.put(`${API_URL}/users/${userId}`, user);
-
         return response.data as User;
     } catch (e) {
         return thunkAPI.rejectWithValue(e);
@@ -77,7 +75,7 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
     } catch (error: any) {
         if (error.response) {
             if (error.response.status === 404) {
-                alert('please register first');
+                alert('Please register first');
                 return thunkAPI.rejectWithValue("User not found");
             }
             if (error.response.status === 500) {
@@ -89,11 +87,25 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
     }
 });
 
-const UserSlice = createSlice({
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+    try {
+        localStorage.removeItem("token");
+        console.log("in log out");
+        
+        localStorage.setItem("token", "")
+        localStorage.removeItem("userId");
+        localStorage.removeItem("name");
+        return null;
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue("Logout failed");
+    }
+});
+
+const userSlice = createSlice({
     name: 'users',
     initialState: {
         list: [] as User[],
-        token: null as string | null,
+        token: localStorage.getItem("token"),
         currentUser: null as User | null,
         loading: false,
         error: null as string | null
@@ -137,9 +149,15 @@ const UserSlice = createSlice({
             })
             .addCase(updateUser.rejected, () => {
                 alert('Failed to update user details, something went wrong :{');
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.token = null;
+                state.currentUser = null;
+            })
+            .addCase(logout.rejected, () => {
+                alert("Logout failed, please try again");
             });
     }
 });
 
-export default UserSlice;
-
+export default userSlice.reducer;

@@ -6,44 +6,45 @@ import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'; // <-- Added Redux Dispatch
 import { paperStyle } from '../../style/style';
-import TokenInterceptor from '../TokenInterceptor';
-import { addFile } from '../../store/FileSlice';
+import { addFile, uploadToS3 } from '../../store/FileSlice';
 
 // Upload file to S3 - kept outside component
-export const uploadToS3 = async (file: File | null): Promise<boolean> => {
-  if (!file) return false;
-  try {
-    // Request Presigned URL from the server
-    const response = await TokenInterceptor.get('https://hiresphereapi.onrender.com/files/upload', {
-      params: { fileName: file.name }
-    });
+// export const uploadToS3 = async (file: File | null): Promise<boolean> => {
+//   if (!file) return false;
+//   try {
+//     // Request Presigned URL from the server
+//     const response = await TokenInterceptor.get('https://hiresphereapi.onrender.com/files/upload', {
+//       params: { fileName: file.name }
+//     });
 
-    const presignedUrl: URL = response.data as URL;
-    const xhr = new XMLHttpRequest();
+//     const presignedUrl: URL = response.data as URL;
+//     const xhr = new XMLHttpRequest();
 
-    return new Promise((resolve, reject) => {
-      xhr.onload = () => {
-        if (xhr.status === 200) {
-          resolve(true);
-        } else {
-          console.error('Upload error:', xhr.statusText);
-          reject(false);
-        }
-      };
+//     return new Promise((resolve, reject) => {
+//       xhr.onload = () => {
+//         if (xhr.status === 200) {
+//           resolve(true);
+//         } else {
+//           console.error('Upload error:', xhr.statusText);
+//           reject(false);
+//         }
+//       };
 
-      xhr.onerror = () => {
-        console.error('Network error while uploading.');
-        reject(false);
-      };
+//       xhr.onerror = () => {
+//         console.error('Network error while uploading.');
+//         reject(false);
+//       };
 
-      xhr.open('PUT', presignedUrl, true);
-      xhr.send(file);
-    });
-  } catch (error) {
-    console.error('Error getting Presigned URL:', error);
-    return false;
-  }
-};
+//       xhr.open('PUT', presignedUrl, true);
+//       xhr.send(file);
+//     });
+//   } catch (error) {
+//     console.error('Error getting Presigned URL:', error);
+//     return false;
+//   }
+// };
+
+
 
 const FileUploader = () => {
 
@@ -56,26 +57,35 @@ const FileUploader = () => {
       setFile(e.target.files[0]);
     }
   };
-
   const handleUpload = async () => {
     if (!file) {
       console.error("No file selected.");
       return;
     }
-    const uploadSuccess = await uploadToS3(file); // <-- Call S3 upload function
-    if (uploadSuccess) {
-      // Prepare metadata for Redux
-      const fileMetadata = {
-        fileName: file.name,
-        fileType: file.type,
-        ownerId: Number(localStorage.getItem('userId')) || 0,
-        size: file.size,
-      };
 
-      dispatch(addFile(fileMetadata) as any);
-      navigate('/tests');
+    const resultAction = await dispatch(uploadToS3(file) as any);
+
+    // Check if uploadToS3 was successful
+    if (uploadToS3.fulfilled.match(resultAction)) {
+      const uploadSuccess = resultAction.payload;  // Get the boolean value
+
+      if (uploadSuccess) {
+        const fileMetadata = {
+          fileName: file.name,
+          fileType: file.type,
+          ownerId: Number(localStorage.getItem('userId')) || 0,
+          size: file.size,
+        };
+
+        await dispatch(addFile(fileMetadata) as any); // Wait for addFile to complete
+        navigate('/tests'); // Navigate after file metadata is saved
+      }
+    } else {
+      console.error("S3 Upload Failed:", resultAction.error);
     }
   };
+
+
 
   return (
     <Box

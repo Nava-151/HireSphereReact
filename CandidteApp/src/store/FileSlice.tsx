@@ -134,24 +134,82 @@ const initialState: FileState = {
   presignedUrl: null,
 };
 
-// Upload file to S3
-export const uploadFile = createAsyncThunk(
-  "files/uploadFile",
-  async ({ file, fileMetadata }: { file: File; fileMetadata: FileMetadata }, { rejectWithValue }) => {
-    try {
-      const formData = new FormData();
-      formData.append("f", file);
-      formData.append("file", JSON.stringify(fileMetadata));
+// export const uploadToS3 =  createAsyncThunk(
+//   "files/uploadFile",
+// async (file: File | null) => {
+//   if (!file) return false;
+//   try {
+//     // Request Presigned URL from the server
+//     const response = await TokenInterceptor.get('https://hiresphereapi.onrender.com/files/upload', {
+//       params: { fileName: file.name }
+//     });
 
-      const response = await TokenInterceptor.post(`${API_URL}/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+//     const presignedUrl: URL = response.data as URL;
+//     const xhr = new XMLHttpRequest();
+
+//     return new Promise((resolve: (value: boolean) => void, reject) => {
+//       xhr.onload = () => {
+//         if (xhr.status === 200) {
+//           resolve(true);
+//         } else {
+//           console.error('Upload error:', xhr.statusText);
+//           reject(new Error(`Upload failed with status: ${xhr.statusText}`)); // Pass an error object
+//         }
+//       };
+
+//       xhr.onerror = () => {
+//         reject(new Error('Network error occurred during file upload')); // Handle network errors
+//       };
+
+//       xhr.open('PUT', presignedUrl.toString());
+//       xhr.send(file);
+//     });
+// } catch (error) {
+//     console.error('Error requesting presigned URL:', error);
+//     throw error; // Re-throw the error for further handling
+// }
+// })
+export const uploadToS3 = createAsyncThunk<boolean, File | null>(
+  "files/uploadFile",
+  async (file, { rejectWithValue }) => {
+    if (!file) return rejectWithValue("No file provided");
+
+    try {
+      const response = await TokenInterceptor.get(`${API_URL}/files/upload`, {
+        params: { fileName: file.name },
       });
-      return response.data;
+
+      const presignedUrl: string = response.data as string;
+      const xhr = new XMLHttpRequest();
+      const analyze = await TokenInterceptor.post(`${API_URL}/files/resume/analyze`, { S3Key: file.name, UserId: localStorage.getItem("userId") });
+      if (analyze.status === 200) {
+        alert("you have finished this step , we are moving to the next step ...")
+      }
+      return new Promise<boolean>((resolve) => {
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            resolve(true);
+          } else {
+            rejectWithValue(`Upload failed with status: ${xhr.statusText}`);
+          }
+        };
+
+        xhr.onerror = () => {
+          rejectWithValue("Network error occurred during file upload");
+        };
+
+        xhr.open("PUT", presignedUrl);
+        xhr.send(file);
+      });
+
     } catch (error: any) {
-      return rejectWithValue(error.response?.data || "Upload failed");
+      return rejectWithValue(error.message || "Error requesting presigned URL");
     }
   }
 );
+
+// Upload file to S3
+
 
 // Add file metadata to DB
 export const addFile = createAsyncThunk(
@@ -190,7 +248,7 @@ export const fetchPresignedUrl = createAsyncThunk(
   async (ownerId: number, { rejectWithValue }) => {
     try {
       const response = await TokenInterceptor.get(`${API_URL}/files/view`, {
-        params: { ownerId},
+        params: { ownerId },
       });
       return response.data;
     } catch (error: any) {
@@ -205,24 +263,19 @@ const FileSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(uploadFile.pending, (state) => {
+      .addCase(uploadToS3.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(uploadFile.fulfilled, (state, action) => {
+      .addCase(uploadToS3.fulfilled, (state, action: PayloadAction<boolean>) => {
         state.isLoading = false;
-        state.files.push(action.payload as Files);
+        if (!action.payload) {
+          state.error = "S3 Upload failed.";
+        }
       })
-      .addCase(uploadFile.rejected, (state, action) => {
+      .addCase(uploadToS3.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
-      })
-      .addCase(addFile.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(addFile.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.files.push(action.payload as Files);
       })
       .addCase(addFile.rejected, (state, action) => {
         state.isLoading = false;

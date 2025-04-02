@@ -1,10 +1,24 @@
 import { AppBar, Toolbar, Typography, Button, Avatar } from "@mui/material"
 import {  purple } from "@mui/material/colors";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../store/UserSlice";
 
 const NavBar = () => {
   const navigate = useNavigate();
-
+  const dispatch=useDispatch<any>();
+  const handleLogout = () => {
+    console.log("in logout");
+    
+    dispatch(logout())
+      .unwrap()
+      .then(() => {
+        navigate('/login');
+      })
+      .catch(() => {
+        alert('Logout failed, please try again');
+      });
+  };
   const goToBlog = (): void => {
     navigate('/blog');
   }
@@ -34,6 +48,8 @@ const firstLetter=localStorage.getItem('name');
           <Button color={"inherit"} onClick={() => { navigate('/upload') }}>Upload file</Button>
           <Button onClick={() => { navigate('/updateDetails') }}>Update</Button>
           <Avatar sx={{ bgcolor: purple[500] }}>{firstLetter?firstLetter[0].toLocaleUpperCase():"U"}</Avatar>
+
+          <Button color={"info"} onClick={handleLogout}>logOut</Button>
 
           </>}
 

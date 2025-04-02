@@ -5,9 +5,8 @@ import { fetchUserById, updateUser } from "../../store/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
 import User from "../../models/User";
-import { deleteFile, fetchPresignedUrl } from "../../store/FileSlice";
+import { deleteFile, fetchPresignedUrl, uploadToS3 } from "../../store/FileSlice";
 import { RemoveCircleOutline, Update } from "@mui/icons-material";
-import { uploadToS3 } from "../File/FileUploader";
 
 function UpdateDetails() {
   const dispatch = useDispatch<AppDispatch>();
@@ -88,7 +87,7 @@ function UpdateDetails() {
       const file = e.target.files[0];
       setResume(file);
       handleResumeRemove();
-      uploadToS3(resume);
+      dispatch(uploadToS3(resume) as any);
     }
   };
 
@@ -133,6 +132,8 @@ function UpdateDetails() {
             <div>
               <button onClick={handleClick} disabled={isLoading}
                 style={{
+                  background:'none',
+                  color:'white',
                   padding: '10px 20px',  
                   cursor: 'pointer',
                   borderRadius: '5px',
@@ -155,5 +156,4 @@ function UpdateDetails() {
     </Container>
   );
 }
-
 export default UpdateDetails;
