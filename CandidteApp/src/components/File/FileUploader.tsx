@@ -4,9 +4,10 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Box, Typography, Button, Paper } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux'; // <-- Added Redux Dispatch
-import { paperStyle } from '../../style/style';
+import { useDispatch, useSelector } from 'react-redux'; // <-- Added Redux Dispatch
+import { paperStyle, upload } from '../../style/style';
 import { addFile, uploadToS3 } from '../../store/FileSlice';
+import { RootState } from '../../store/store';
 
 // Upload file to S3 - kept outside component
 // export const uploadToS3 = async (file: File | null): Promise<boolean> => {
@@ -51,6 +52,8 @@ const FileUploader = () => {
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch(); // <-- Added Redux Dispatch
+  const selector = useSelector((state: RootState) => state.files);
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -62,7 +65,11 @@ const FileUploader = () => {
       console.error("No file selected.");
       return;
     }
-
+    if (selector.uploadedOnce == true) {
+      alert("you uploaded file already ' you can update it in the personal area '");
+      navigate('/tests');
+      return;
+    }
     const resultAction = await dispatch(uploadToS3(file) as any);
 
     // Check if uploadToS3 was successful
@@ -88,17 +95,7 @@ const FileUploader = () => {
 
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-      width="100vw"
-      p={2}
-      textAlign="center"
-    >
-
+    <Box sx={{upload}}>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold", color: "#333" }}>
         Let's start
       </Typography>

@@ -83,10 +83,17 @@ function UpdateDetails() {
 
 
   const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("in change");
+    
     if (e.target.files && e.target.files.length > 0) {
+      console.log(e.target.files[0]);
+      
       const file = e.target.files[0];
       setResume(file);
       handleResumeRemove();
+
+      console.log("remove");
+      
       dispatch(uploadToS3(resume) as any);
     }
   };
@@ -97,6 +104,8 @@ function UpdateDetails() {
       console.error("Owner ID not found");
       return;
     }
+    console.log("before delete dispatch");
+    
     dispatch(deleteFile({ ownerId: Number(userId) }));
   };
 

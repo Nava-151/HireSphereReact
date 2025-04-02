@@ -125,6 +125,8 @@ interface FileState {
   isLoading: boolean;
   error: string | null;
   presignedUrl: string | null;
+  uploadedOnce:boolean;
+
 }
 
 const initialState: FileState = {
@@ -132,6 +134,7 @@ const initialState: FileState = {
   isLoading: false,
   error: null,
   presignedUrl: null,
+  uploadedOnce:false
 };
 
 // export const uploadToS3 =  createAsyncThunk(
@@ -234,6 +237,8 @@ export const deleteFile = createAsyncThunk(
       if (response.status === 200) {
         return { ownerId, message: response.data };
       } else {
+console.log("res statts: "+response.status);
+
         return rejectWithValue("File not found");
       }
     } catch (error: any) {
@@ -272,6 +277,7 @@ const FileSlice = createSlice({
         if (!action.payload) {
           state.error = "S3 Upload failed.";
         }
+        state.uploadedOnce=true;
       })
       .addCase(uploadToS3.rejected, (state, action) => {
         state.isLoading = false;
@@ -287,6 +293,7 @@ const FileSlice = createSlice({
       .addCase(deleteFile.fulfilled, (state, action: PayloadAction<{ ownerId: number }>) => {
         state.isLoading = false;
         state.files = state.files.filter((file) => file.ownerId !== action.payload.ownerId);
+        state.uploadedOnce=false;
       })
       .addCase(deleteFile.rejected, (state, action) => {
         state.isLoading = false;

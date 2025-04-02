@@ -105,3 +105,12 @@ export const formBox = {
     flexDirection: 'column',
     gap: 2,
 }
+export const upload={   display:"flex",
+    flexDirection:"column",
+    justifyContent:"center",
+    alignItems:"center",
+    minHeight:"100vh",
+    width:"100vw",
+    p:2,
+    textAlign:"center"
+}
