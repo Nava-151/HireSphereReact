@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
-import { formBox } from "../../style/style";
+import { buttonStyle, formBox } from "../../style/style";
 const LoginForm = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
@@ -34,77 +34,79 @@ const LoginForm = () => {
             passwordHash: data.passwordHash,
             role: 0
         };
-       const response=await dispatch(login(userLogin));
-       if(response.type.includes("fulfilled"))
+        const response = await dispatch(login(userLogin));
+        if (response.type.includes("fulfilled"))
             navigate('/upload');
-        
+
     };
 
     return (
         <>
-       <Modal
-            open={open}
-            onClose={() => { setOpen(false); navigate('/') }}
-            style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
-        >
-            <Box sx={formBox}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField
-                        label="Email"
-                        type="email"
-                        {...register("email")}
-                        fullWidth
-                        error={!!errors.email}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <EmailIcon color="primary" />
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                    <FormHelperText error>{errors.email?.message}</FormHelperText>
+            <Modal
+                open={open}
+                onClose={() => { setOpen(false); navigate('/') }}
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <Box sx={formBox}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <TextField
+                            label="Email"
+                            type="email"
+                            {...register("email")}
+                            fullWidth
+                            error={!!errors.email}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <EmailIcon color="primary" />
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
+                        <FormHelperText error>{errors.email?.message}</FormHelperText>
 
-                    <TextField
-                        label="Password"
-                        type="password"
-                        {...register("passwordHash")}
-                        fullWidth
-                        error={!!errors.passwordHash}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <LockIcon color="primary" />
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                    <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
+                        <TextField
+                            label="Password"
+                            type="password"
+                            {...register("passwordHash")}
+                            fullWidth
+                            error={!!errors.passwordHash}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <LockIcon color="primary" />
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
+                        <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
 
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        startIcon={<LoginIcon />}
-                        sx={{
-                            background: 'linear-gradient(135deg, #00f2fe, #03e7a0)',
-                            color: 'white',
-                            '&:hover': {
-                                background: 'linear-gradient(135deg, #03e7a0, #00f2fe)'
-                            },
-                            padding: '10px 20px',
-                            borderRadius: '8px',
-                            fontWeight: 'bold'
-                        }}
-                    >
-                        Login
-                    </Button>
-                </form>
-            </Box>
-        </Modal>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            startIcon={<LoginIcon />}
+                            sx={{
+                                background: 'linear-gradient(135deg, #00f2fe, #03e7a0)',
+                                color: 'white',
+                                '&:hover': {
+                                    background: 'linear-gradient(135deg, #03e7a0, #00f2fe)'
+                                },
+                                padding: '10px 20px',
+                                borderRadius: '8px',
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            Login
+                        </Button>
+                        <p>Don you have an account? </p><Button sx={buttonStyle} onClick={() => navigate("/register")}>register</Button>
+
+                    </form>
+                </Box>
+            </Modal>
         </>
     );
 };

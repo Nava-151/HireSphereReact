@@ -105,6 +105,16 @@ export const formBox = {
     flexDirection: 'column',
     gap: 2,
 }
+export const footer={ backgroundColor: "#222",
+    color: "#fff",
+    py: 4,
+    textAlign: "center",
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    zIndex: 1300}
+    
 export const upload={   display:"flex",
     flexDirection:"column",
     justifyContent:"center",

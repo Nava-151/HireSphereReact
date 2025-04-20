@@ -1,7 +1,6 @@
 
 
 import { createBrowserRouter } from "react-router-dom";
-import AppLayout from "./AppLayout";
 import RegisterForm from "./components/connection/RegisterForm";
 import LoginForm from "./components/connection/LoginForm";
 import Blog from "./components/Blog";
@@ -12,6 +11,7 @@ import CodingChallenge from "./components/CodingChallenge";
 import CompletionPage from "./components/CompletionPage";
 import UpdateDetails from "./components/Candidate/UpdateDetails";
 import ProtectedRoute from "./components/connection/ProtectedRoute";
+import AppLayout from "./AppLayout";
 
 
 

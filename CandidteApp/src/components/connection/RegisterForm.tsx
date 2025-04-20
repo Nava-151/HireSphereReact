@@ -1,6 +1,7 @@
 
+// export default RegisterForm;
 import { Modal, Box, TextField, Button, FormHelperText, InputAdornment } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // ✅ ייבוא useEffect
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
@@ -18,11 +19,23 @@ import { buttonStyle } from "../../style/style";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
-
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch<AppDispatch>();
 
-    // ✅ Define validation schema
+    // ✅ הוספת class ל-body כשהמודל פתוח
+    useEffect(() => {
+        if (open) {
+            document.body.classList.add("modal-open");
+        } else {
+            document.body.classList.remove("modal-open");
+        }
+
+        return () => {
+            document.body.classList.remove("modal-open");
+        };
+    }, [open]);
+
+    // ✅ סכמת ולידציה
     const schema = object({
         fullName: string().min(4, "Full name must be at least 4 characters").max(50, "Full name is too long").required("Full name is required"),
         email: string().min(9, "Email must be at least 9 characters").email("Invalid email").required("Email is required"),
@@ -48,34 +61,31 @@ const RegisterForm = () => {
         if (resultAasync.type.includes("fulfilled")) {
             navigate('/upload')
         }
-
     };
 
     return (
-        <>
-            <Modal open={open} onClose={() => setOpen(false)}>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-                    <Box sx={{ bgcolor: 'background.paper', borderRadius: 2, boxShadow: 24, p: 4, width: { xs: '90%', sm: '400px' }, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <TextField label="Full Name" {...register("fullName")} fullWidth error={!!errors.fullName} InputProps={{ startAdornment: (<InputAdornment position="start"><PersonIcon color="primary" /></InputAdornment>) }} />
-                            <FormHelperText error>{errors.fullName?.message}</FormHelperText>
+        <Modal open={open} onClose={() => setOpen(false)}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                <Box sx={{ bgcolor: 'background.paper', borderRadius: 2, boxShadow: 24, p: 4, width: { xs: '90%', sm: '400px' }, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <TextField label="Full Name" {...register("fullName")} fullWidth error={!!errors.fullName} InputProps={{ startAdornment: (<InputAdornment position="start"><PersonIcon color="primary" /></InputAdornment>) }} />
+                        <FormHelperText error>{errors.fullName?.message}</FormHelperText>
 
-                            <TextField label="Email" {...register("email")} fullWidth error={!!errors.email} InputProps={{ startAdornment: (<InputAdornment position="start"><EmailIcon color="primary" /></InputAdornment>) }} />
-                            <FormHelperText error>{errors.email?.message}</FormHelperText>
+                        <TextField label="Email" {...register("email")} fullWidth error={!!errors.email} InputProps={{ startAdornment: (<InputAdornment position="start"><EmailIcon color="primary" /></InputAdornment>) }} />
+                        <FormHelperText error>{errors.email?.message}</FormHelperText>
 
-                            <TextField label="Password" type="password" {...register("passwordHash")} fullWidth error={!!errors.passwordHash} InputProps={{ startAdornment: (<InputAdornment position="start"><LockIcon color="primary" /></InputAdornment>) }} />
-                            <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
+                        <TextField label="Password" type="password" {...register("passwordHash")} fullWidth error={!!errors.passwordHash} InputProps={{ startAdornment: (<InputAdornment position="start"><LockIcon color="primary" /></InputAdornment>) }} />
+                        <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
 
-                            <TextField label="Phone Number" {...register("phone")} fullWidth error={!!errors.phone} InputProps={{ startAdornment: (<InputAdornment position="start"><PhoneIcon color="primary" /></InputAdornment>) }} />
-                            <FormHelperText error>{errors.phone?.message}</FormHelperText>
+                        <TextField label="Phone Number" {...register("phone")} fullWidth error={!!errors.phone} InputProps={{ startAdornment: (<InputAdornment position="start"><PhoneIcon color="primary" /></InputAdornment>) }} />
+                        <FormHelperText error>{errors.phone?.message}</FormHelperText>
 
-                            <Button type="submit" variant="contained" startIcon={<AddIcon />} sx={buttonStyle}>Register</Button>
-                            <p>Do you have an account? </p><Button sx={buttonStyle} onClick={() => navigate("/login")}>login</Button>
-                        </form>
-                    </Box>
+                        <Button type="submit" variant="contained" startIcon={<AddIcon />} sx={buttonStyle}>Register</Button>
+                        <p>Do you have an account? </p><Button sx={buttonStyle} onClick={() => navigate("/login")}>login</Button>
+                    </form>
                 </Box>
-            </Modal>
-        </>
+            </Box>
+        </Modal>
     );
 };
 
