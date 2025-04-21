@@ -11,6 +11,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Box,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
@@ -44,7 +45,7 @@ const Home = () => {
   ];
 
   return (
-    <div>
+    <div className="main-container">
       <br />
       <div className="hero">
         <h1>Smarter Hiring, Faster Decisions</h1>
@@ -117,8 +118,10 @@ const Home = () => {
           </div>
 
         ))}
+        <Box sx={{ height: "350px" }}></Box>
       </Container>
     </div>
+
   );
 };
 export default Home;
