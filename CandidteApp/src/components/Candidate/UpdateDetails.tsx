@@ -45,6 +45,7 @@ function UpdateDetails() {
   const error = useSelector((state: any) => state.files.error);
 
   const handleClick = () => {
+    console.log("in click");
     dispatch(fetchPresignedUrl(+(localStorage.getItem("userId") || "0")) as any);
   };
 

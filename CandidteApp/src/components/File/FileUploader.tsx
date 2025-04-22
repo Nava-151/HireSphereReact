@@ -9,43 +9,6 @@ import { paperStyle, upload } from '../../style/style';
 import { addFile, uploadToS3 } from '../../store/FileSlice';
 import { RootState } from '../../store/store';
 
-// Upload file to S3 - kept outside component
-// export const uploadToS3 = async (file: File | null): Promise<boolean> => {
-//   if (!file) return false;
-//   try {
-//     // Request Presigned URL from the server
-//     const response = await TokenInterceptor.get('https://hiresphereapi.onrender.com/files/upload', {
-//       params: { fileName: file.name }
-//     });
-
-//     const presignedUrl: URL = response.data as URL;
-//     const xhr = new XMLHttpRequest();
-
-//     return new Promise((resolve, reject) => {
-//       xhr.onload = () => {
-//         if (xhr.status === 200) {
-//           resolve(true);
-//         } else {
-//           console.error('Upload error:', xhr.statusText);
-//           reject(false);
-//         }
-//       };
-
-//       xhr.onerror = () => {
-//         console.error('Network error while uploading.');
-//         reject(false);
-//       };
-
-//       xhr.open('PUT', presignedUrl, true);
-//       xhr.send(file);
-//     });
-//   } catch (error) {
-//     console.error('Error getting Presigned URL:', error);
-//     return false;
-//   }
-// };
-
-
 
 const FileUploader = () => {
 
@@ -70,9 +33,11 @@ const FileUploader = () => {
       navigate('/tests');
       return;
     }
-    const resultAction = await dispatch(uploadToS3(file) as any);
+    console.log("Uploading file:", file);
 
-    // Check if uploadToS3 was successful
+    const resultAction = await dispatch(uploadToS3(file) as any);
+    console.log("Result Action:", resultAction);
+
     if (uploadToS3.fulfilled.match(resultAction)) {
       const uploadSuccess = resultAction.payload;  // Get the boolean value
 
@@ -95,7 +60,7 @@ const FileUploader = () => {
 
 
   return (
-    <Box sx={{upload}}>
+    <Box sx={{ upload }}>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold", color: "#333" }}>
         Let's start
       </Typography>
