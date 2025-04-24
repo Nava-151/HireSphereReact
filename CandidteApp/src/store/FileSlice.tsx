@@ -172,6 +172,48 @@ const initialState: FileState = {
 //     throw error; // Re-throw the error for further handling
 // }
 // })
+
+
+
+// export const uploadToS3 = createAsyncThunk<boolean, File | null>(
+//   "files/uploadFile",
+//   async (file, { rejectWithValue }) => {
+//     if (!file) return rejectWithValue("No file provided");
+
+//     try {
+//       const response = await TokenInterceptor.get(`${API_URL}/files/upload`, {
+//         params: { fileName: file.name },
+//       });
+
+//       const presignedUrl: string = response.data as string;
+//       const xhr = new XMLHttpRequest();
+//       const analyze = await TokenInterceptor.post(`${API_URL}/files/resume/analyze`, { S3Key: file.name, UserId: localStorage.getItem("userId") });
+//       if (analyze.status === 200) {
+//         alert("you have finished this step , we are moving to the next step ...")
+//       }
+//       return new Promise<boolean>((resolve) => {
+//         xhr.onload = () => {
+//           if (xhr.status === 200) {
+//             resolve(true);
+//           } else {
+//             rejectWithValue(`Upload failed with status: ${xhr.statusText}`);
+//           }
+//         };
+
+//         xhr.onerror = () => {
+//           rejectWithValue("Network error occurred during file upload");
+//         };
+
+//         xhr.open("PUT", presignedUrl);
+//         xhr.send(file);
+//       });
+
+//     } catch (error: any) {
+//       return rejectWithValue(error.message || "Error requesting presigned URL");
+//     }
+//   }
+// );
+
 export const uploadToS3 = createAsyncThunk<boolean, File | null>(
   "files/uploadFile",
   async (file, { rejectWithValue }) => {
@@ -183,27 +225,30 @@ export const uploadToS3 = createAsyncThunk<boolean, File | null>(
       });
 
       const presignedUrl: string = response.data as string;
-      const xhr = new XMLHttpRequest();
-      const analyze = await TokenInterceptor.post(`${API_URL}/files/resume/analyze`, { S3Key: file.name, UserId: localStorage.getItem("userId") });
-      if (analyze.status === 200) {
-        alert("you have finished this step , we are moving to the next step ...")
-      }
-      return new Promise<boolean>((resolve) => {
-        xhr.onload = () => {
-          if (xhr.status === 200) {
-            resolve(true);
-          } else {
-            rejectWithValue(`Upload failed with status: ${xhr.statusText}`);
-          }
-        };
+console.log(presignedUrl+" presignedUrl");
 
-        xhr.onerror = () => {
-          rejectWithValue("Network error occurred during file upload");
-        };
-
-        xhr.open("PUT", presignedUrl);
-        xhr.send(file);
+      const uploadRes = await fetch(presignedUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": file.type,
+        },
+        body: file,
       });
+
+      if (!uploadRes.ok) {
+        return rejectWithValue("Upload to S3 failed" +uploadRes);
+      }
+
+      const analyze = await TokenInterceptor.post(`${API_URL}/files/resume/analyze`, {
+        S3Key: file.name,
+        UserId: localStorage.getItem("userId")
+      });
+
+      if (analyze.status === 200) {
+        alert("you have finished this step, we are moving to the next step...");
+      }
+
+      return true;
 
     } catch (error: any) {
       return rejectWithValue(error.message || "Error requesting presigned URL");
@@ -211,7 +256,6 @@ export const uploadToS3 = createAsyncThunk<boolean, File | null>(
   }
 );
 
-// Upload file to S3
 
 
 // Add file metadata to DB
