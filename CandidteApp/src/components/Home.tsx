@@ -147,7 +147,6 @@ const Home = () => {
           );
         })}
       </Container>
-      <Box sx={{ height: "350px" }}></Box>
     </Box>
   );
 };
