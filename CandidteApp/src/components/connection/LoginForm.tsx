@@ -1,4 +1,3 @@
-
 import { Modal, Box, TextField, Button, FormHelperText, InputAdornment } from "@mui/material";
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,7 +11,8 @@ import { useNavigate } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
-import { buttonStyle, formBox } from "../../style/style";
+import {  formBox } from "../../style/style";
+
 const LoginForm = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
@@ -37,7 +37,6 @@ const LoginForm = () => {
         const response = await dispatch(login(userLogin));
         if (response.type.includes("fulfilled"))
             navigate('/upload');
-
     };
 
     return (
@@ -59,6 +58,7 @@ const LoginForm = () => {
                             {...register("email")}
                             fullWidth
                             error={!!errors.email}
+                            sx={{ mb: 2 }} // Add margin bottom for spacing
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -75,6 +75,7 @@ const LoginForm = () => {
                             {...register("passwordHash")}
                             fullWidth
                             error={!!errors.passwordHash}
+                            sx={{ mb: 2 }} // Add margin bottom for spacing
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -97,12 +98,13 @@ const LoginForm = () => {
                                 },
                                 padding: '10px 20px',
                                 borderRadius: '8px',
-                                fontWeight: 'bold'
+                                fontWeight: 'bold',
+                                mt: 2 // Add margin top for spacing
                             }}
                         >
                             Login
                         </Button>
-                        <p>Don you have an account? </p><Button sx={buttonStyle} onClick={() => navigate("/register")}>register</Button>
+                        <p>Don't you have an account?</p> <Button  onClick={() => navigate("/register")}>Register</Button>
 
                     </form>
                 </Box>

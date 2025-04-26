@@ -39,18 +39,18 @@ const FileUploader = () => {
     console.log("Result Action:", resultAction);
 
     if (uploadToS3.fulfilled.match(resultAction)) {
-      const uploadSuccess = resultAction.payload;  // Get the boolean value
+      const uploadSuccess = resultAction.payload; 
 
       if (uploadSuccess) {
         const fileMetadata = {
           fileName: file.name,
           fileType: file.type,
-          ownerId: Number(localStorage.getItem('userId')) || 0,
+          ownerId: +sessionStorage.getItem('userId')!,
           size: file.size,
         };
 
-        await dispatch(addFile(fileMetadata) as any); // Wait for addFile to complete
-        navigate('/tests'); // Navigate after file metadata is saved
+        await dispatch(addFile(fileMetadata) as any); 
+        navigate('/tests'); 
       }
     } else {
       console.error("S3 Upload Failed:", resultAction.error);
@@ -90,7 +90,7 @@ const FileUploader = () => {
         >
           <CloudUploadIcon sx={{ color: "#03A9F4", fontSize: 50, animation: "pulse 1.5s infinite" }} />
           <Typography variant="body1" sx={{ color: "#4CAF50", mt: 1, fontWeight: "bold" }}>
-            Drag here or click to upload
+            Click to upload
           </Typography>
           <input type="file" hidden onChange={handleFileChange} id="file-upload" />
           <Button component="label" htmlFor="file-upload" sx={{ mt: 2, bgcolor: "#4CAF50", color: "#fff", '&:hover': { bgcolor: "#388E3C" } }}>

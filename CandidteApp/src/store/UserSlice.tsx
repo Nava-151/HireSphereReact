@@ -42,9 +42,9 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
             if (!response.data || !response.data.id || !response.data.token || !response.data.user) {
                 throw new Error("Invalid response data");
             }
-            localStorage.setItem("name", user.fullname);
-            localStorage.setItem("userId", response.data.id);
-            localStorage.setItem("token", response.data.token);
+            sessionStorage.setItem("name", user.fullname);
+            sessionStorage.setItem("userId", response.data.id);
+            sessionStorage.setItem("token", response.data.token);
             return response.data.user;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.message || "Registration failed");
@@ -54,7 +54,7 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
 
 export const updateUser = createAsyncThunk('users/update', async (user: User, thunkAPI) => {
     try {
-        const userId = localStorage.getItem('userId');
+        const userId = sessionStorage.getItem('userId');
         const response = await TokenInterceptor.put(`${API_URL}/users/${userId}`, user);
         return response.data as User;
     } catch (e) {
@@ -65,10 +65,10 @@ export const updateUser = createAsyncThunk('users/update', async (user: User, th
 export const login = createAsyncThunk('auth/login', async (credentials: UserLogin, thunkAPI) => {
     try {
         const response = await axios.post<{ token: string , id:number}>(`${API_URL}/auth/login`, credentials);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userId", response.data.id.toString());
+        sessionStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("userId", response.data.id.toString());
         const userResponse = await thunkAPI.dispatch(fetchUserById(response.data.id)).unwrap();
-        localStorage.setItem("name", userResponse.fullname);
+        sessionStorage.setItem("name", userResponse.fullname);
 
         return { token: response.data.token, email: credentials.email };
         
@@ -89,12 +89,12 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
 
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     try {
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         console.log("in log out");
         
-        localStorage.setItem("token", "")
-        localStorage.removeItem("userId");
-        localStorage.removeItem("name");
+        sessionStorage.setItem("token", "")
+        sessionStorage.removeItem("userId");
+        sessionStorage.removeItem("name");
         return null;
     } catch (error: any) {
         return thunkAPI.rejectWithValue("Logout failed");
@@ -105,7 +105,7 @@ const userSlice = createSlice({
     name: 'users',
     initialState: {
         list: [] as User[],
-        token: localStorage.getItem("token"),
+        token: sessionStorage.getItem("token"),
         currentUser: null as User | null,
         loading: false,
         error: null as string | null

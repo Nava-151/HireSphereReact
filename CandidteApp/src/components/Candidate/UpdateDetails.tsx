@@ -9,7 +9,7 @@ import { RemoveCircleOutline, Update } from "@mui/icons-material";
 
 function UpdateDetails() {
   const dispatch = useDispatch<AppDispatch>();
-  const userId: number = +(localStorage.getItem("userId") || "0");
+  const userId: number = +sessionStorage.getItem("userId")!
   const userFromStore = useSelector((state: RootState) => state.user.currentUser);
   const [user, setUser] = useState<User>({
     fullname: " ",
@@ -43,7 +43,7 @@ function UpdateDetails() {
   const isLoading = useSelector((state: any) => state.files.isLoading);
 
   const handleClick = () => {
-    dispatch(fetchPresignedUrl(+(localStorage.getItem("userId") || "0")) as any);
+    dispatch(fetchPresignedUrl(+sessionStorage.getItem("userId")!));
   };
 
   useEffect(() => {
