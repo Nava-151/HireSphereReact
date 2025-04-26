@@ -20,9 +20,13 @@ import SpeedIcon from "@mui/icons-material/Speed";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 const Home = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const features = [
     { icon: <AnalyticsIcon fontSize="large" />, title: "AI-Powered Insights", description: "Smart resume & job match analysis" },
     { icon: <VerifiedIcon fontSize="large" />, title: "Code Quality Review", description: "Automated code assessment for developers" },
@@ -53,7 +57,6 @@ const Home = () => {
 
   return (
     <Box sx={{ p: 4, backgroundColor: "#fff" }}>
-      {/* Hero Section */}
       <Box sx={{ textAlign: "center", mb: 6 }}>
         <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2 }}>
           Smarter Hiring, Faster Decisions
@@ -73,9 +76,9 @@ const Home = () => {
 
       {/* Features Section */}
       <Container sx={{ textAlign: "center", mb: 6 }}>
-        <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={3} justifyContent="center">
+        <Box display="flex" flexDirection={isMobile ? "column" : "row"} gap={3} justifyContent="center">
           {features.map((feature, index) => (
-            <Card key={index} sx={{ p: 2, width: 300, mx: "auto", backgroundColor: "#f0f0f0" }}>
+            <Card key={index} sx={{ p: 2, width: isMobile ? "100%" : 300, mx: "auto", backgroundColor: "#f0f0f0" }}>
               <CardContent>
                 {feature.icon}
                 <Typography variant="h6" sx={{ mt: 1 }}>{feature.title}</Typography>
