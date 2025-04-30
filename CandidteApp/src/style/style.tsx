@@ -1,4 +1,3 @@
-import zIndex from "@mui/material/styles/zIndex";
 
 export const modalStyle = {
     position: 'absolute',
