@@ -1,3 +1,4 @@
+import zIndex from "@mui/material/styles/zIndex";
 
 export const modalStyle = {
     position: 'absolute',
@@ -76,7 +77,7 @@ export const paperStyle = {
 
     width: "100%",
     maxWidth: 400,
-    height: 250,
+    minHeight: 250,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -119,8 +120,9 @@ export const upload={   display:"flex",
     flexDirection:"column",
     justifyContent:"center",
     alignItems:"center",
-    minHeight:"100vh",
+    minHeight:"100%",
     width:"100vw",
+    zIndex:-15,
     p:2,
     textAlign:"center"
 }

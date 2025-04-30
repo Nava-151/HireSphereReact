@@ -60,7 +60,7 @@ const FileUploader = () => {
 
 
   return (
-    <Box sx={{ upload }}>
+    <Box sx={{ ...upload }}>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold", color: "#333" }}>
         Let's start
       </Typography>

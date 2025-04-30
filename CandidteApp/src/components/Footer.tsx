@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
                   display: "flex",
                   flexDirection: "column",
                   gap: "6px",
-                  maxWidth: "250px", // הקטנה נוספת
+                  maxWidth: "250px", 
                 }}
               >
                 <TextField

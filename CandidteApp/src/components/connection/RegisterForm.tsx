@@ -1,5 +1,5 @@
 import { Modal, Box, TextField, Button, FormHelperText, InputAdornment } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";  // ✅ ייבוא useRef
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
@@ -19,11 +19,14 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch<AppDispatch>();
+    const modalRef = useRef<HTMLDivElement>(null);  // Create a ref for modal box
 
-    const handleClose = () => {
-        setOpen(false);
-        // נווט חזרה לדף הבית או לדף אחר כדי לסגור באמת
-        navigate("/");
+    // Handle clicking outside the modal to close it
+    const handleClose = (event: React.MouseEvent<HTMLElement>) => {
+        if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+            setOpen(false);
+            navigate("/");
+        }
     };
 
     useEffect(() => {
@@ -66,106 +69,109 @@ const RegisterForm = () => {
     };
 
     if (!open) {
-        return null; // אל תציג כלום אם המודל סגור
+        return null; // Don't render modal if closed
     }
 
     return (
         <Modal open={open} onClose={handleClose}>
             <Box 
-                sx={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    height: '100vh', 
-                    px: 2 
-                }}
+            sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                height: '100vh', 
+                px: 2 
+            }}
+            onClick={handleClose}  // Handle click outside
             >
-                <Box 
-                    sx={{ 
-                        bgcolor: 'background.paper', 
-                        borderRadius: 3, 
-                        boxShadow: 6, 
-                        p: { xs: 3, sm: 4 }, 
-                        width: { xs: '100%', sm: '400px' }, 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        gap: 2 
-                    }}
-                >
-                    <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                        <TextField 
-                            label="Full Name" 
-                            {...register("fullName")} 
-                            fullWidth 
-                            error={!!errors.fullName} 
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <PersonIcon color="primary" />
-                                    </InputAdornment>
-                                )
-                            }} 
-                        />
-                        <FormHelperText error>{errors.fullName?.message}</FormHelperText>
+            <Box 
+                ref={modalRef}  // Assign ref to the modal box to detect outside clicks
+                sx={{ 
+                bgcolor: 'background.paper', 
+                borderRadius: 3, 
+                boxShadow: 6, 
+                p: { xs: 3, sm: 4 }, 
+                width: { xs: '100%', sm: '400px' }, 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: 2 
+                }}
+                onClick={(e) => e.stopPropagation()}  // Prevent click inside modal from closing it
+            >
+                <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <TextField 
+                    label="Full Name" 
+                    {...register("fullName")} 
+                    fullWidth 
+                    error={!!errors.fullName} 
+                    InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                        <PersonIcon color="primary" />
+                        </InputAdornment>
+                    )
+                    }} 
+                />
+                <FormHelperText error>{errors.fullName?.message}</FormHelperText>
 
-                        <TextField 
-                            label="Email" 
-                            {...register("email")} 
-                            fullWidth 
-                            error={!!errors.email} 
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <EmailIcon color="primary" />
-                                    </InputAdornment>
-                                )
-                            }} 
-                        />
-                        <FormHelperText error>{errors.email?.message}</FormHelperText>
+                <TextField 
+                    label="Email" 
+                    {...register("email")} 
+                    fullWidth 
+                    error={!!errors.email} 
+                    InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                        <EmailIcon color="primary" />
+                        </InputAdornment>
+                    )
+                    }} 
+                />
+                <FormHelperText error>{errors.email?.message}</FormHelperText>
 
-                        <TextField 
-                            label="Password" 
-                            type="password" 
-                            {...register("passwordHash")} 
-                            fullWidth 
-                            error={!!errors.passwordHash} 
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <LockIcon color="primary" />
-                                    </InputAdornment>
-                                )
-                            }} 
-                        />
-                        <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
+                <TextField 
+                    label="Password" 
+                    type="password" 
+                    {...register("passwordHash")} 
+                    fullWidth 
+                    error={!!errors.passwordHash} 
+                    InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                        <LockIcon color="primary" />
+                        </InputAdornment>
+                    )
+                    }} 
+                />
+                <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
 
-                        <TextField 
-                            label="Phone Number" 
-                            {...register("phone")} 
-                            fullWidth 
-                            error={!!errors.phone} 
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <PhoneIcon color="primary" />
-                                    </InputAdornment>
-                                )
-                            }} 
-                        />
-                        <FormHelperText error>{errors.phone?.message}</FormHelperText>
+                <TextField 
+                    label="Phone Number" 
+                    {...register("phone")} 
+                    fullWidth 
+                    error={!!errors.phone} 
+                    InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                        <PhoneIcon color="primary" />
+                        </InputAdornment>
+                    )
+                    }} 
+                />
+                <FormHelperText error>{errors.phone?.message}</FormHelperText>
 
-                        <Button type="submit" variant="contained" startIcon={<AddIcon />} sx={{ ...buttonStyle, mt: 2 }}>
-                            Register
-                        </Button>
+                <Button type="submit" variant="contained" startIcon={<AddIcon />} sx={{ ...buttonStyle, mt: 2 }}>
+                    Register
+                </Button>
 
-                        <Box sx={{ textAlign: 'center', mt: 2 }}>
-                            <p style={{ marginBottom: 8 }}>Already have an account?</p>
-                            <Button onClick={() => navigate("/login")} variant="outlined" fullWidth>
-                                Login
-                            </Button>
-                        </Box>
-                    </form>
+                <Box sx={{ textAlign: 'center', mt: 2 }}>
+                    <p style={{ marginBottom: 8 }}>Already have an account?</p>
+                    <Button onClick={() => navigate("/login")} variant="outlined" fullWidth>
+                    Login
+                    </Button>
                 </Box>
+                </form>
+            </Box>
             </Box>
         </Modal>
     );
