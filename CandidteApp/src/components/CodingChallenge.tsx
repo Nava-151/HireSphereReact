@@ -87,7 +87,7 @@ const CodingChallenge: React.FC = () => {
 
   return (
     <>
-      <Container sx={{ py: 5, minHeight: "100vh",backgroundColor:"red", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center",width:"100vw",height:"100vh" }}>
+      <Container sx={{ py: 5, minHeight: "100vh",width:"100vw",  color: "#fff", display: "flex", flexDirection: "column", alignItems: "center"}}>
         {currentQuestion < codingQuestions.length ? (
           <>
             <Typography variant="h4" sx={{ textAlign: "center", mb: 3, color: "#00eaff" }}>🚀 Coding Challenge {currentQuestion + 1}/{codingQuestions.length}</Typography>

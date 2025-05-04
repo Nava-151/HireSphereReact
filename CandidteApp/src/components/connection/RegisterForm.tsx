@@ -1,11 +1,11 @@
 import { Modal, Box, TextField, Button, FormHelperText, InputAdornment } from "@mui/material";
-import { useState, useEffect, useRef } from "react";  // ✅ ייבוא useRef
+import { useState, useEffect, useRef } from "react";  
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
 import User, { UserRole } from "../../models/User";
 import { addUser } from "../../store/UserSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
@@ -14,13 +14,17 @@ import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { buttonStyle } from "../../style/style";
+import Spinner from "../Spinner";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch<AppDispatch>();
     const modalRef = useRef<HTMLDivElement>(null);  // Create a ref for modal box
-
+    const isLoading = useSelector((state: { loading: { isLoading: boolean } }) => state.loading.isLoading);
+  
+  
+    if (isLoading) return <Spinner />;
     // Handle clicking outside the modal to close it
     const handleClose = (event: React.MouseEvent<HTMLElement>) => {
         if (modalRef.current && !modalRef.current.contains(event.target as Node)) {

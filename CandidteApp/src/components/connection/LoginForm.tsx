@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
 import { login } from "../../store/UserSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { UserLogin } from "../../models/User";
 import { useNavigate } from "react-router-dom";
@@ -12,13 +12,16 @@ import LoginIcon from '@mui/icons-material/Login';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import { formBox } from "../../style/style";
+import Spinner from "../Spinner";
 
 const LoginForm = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch<AppDispatch>();
-    const modalRef = useRef<HTMLDivElement>(null); // Create a ref
-
+    const modalRef = useRef<HTMLDivElement>(null); 
+    const isLoading = useSelector((state: any) => state.user.loading);
+  
+    
     const schema = object({
         email: string().min(10, "Email must be at least 10 characters").email("Invalid email").required("Email is required"),
         passwordHash: string().min(5, "Password must be at least 5 characters").required("Password is required"),
@@ -47,7 +50,7 @@ const LoginForm = () => {
             navigate("/");
         }
     };
-
+    if (isLoading) return <Spinner />;
     if (!open) return null; // Don't render if closed
 
     return (

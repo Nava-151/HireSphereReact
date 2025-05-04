@@ -6,7 +6,7 @@ export const store = configureStore({
   
     reducer: {
       files: FileSlice,
-      user: UserSlice
+      user: UserSlice,
     },
   });
   
