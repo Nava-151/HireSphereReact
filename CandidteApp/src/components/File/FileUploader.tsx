@@ -9,9 +9,8 @@ import { paperStyle, upload } from '../../style/style';
 import { addFile, uploadToS3 } from '../../store/FileSlice';
 import { RootState } from '../../store/store';
 
-
 const FileUploader = () => {
-
+  const Swal = require('sweetalert2')
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch(); // <-- Added Redux Dispatch
@@ -29,7 +28,11 @@ const FileUploader = () => {
       return;
     }
     if (selector.uploadedOnce == true) {
-      alert("you uploaded file already ' you can update it in the personal area '");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "you uploaded file already!",
+      });
       navigate('/tests');
       return;
     }
@@ -39,7 +42,7 @@ const FileUploader = () => {
     console.log("Result Action:", resultAction);
 
     if (uploadToS3.fulfilled.match(resultAction)) {
-      const uploadSuccess = resultAction.payload; 
+      const uploadSuccess = resultAction.payload;
 
       if (uploadSuccess) {
         const fileMetadata = {
@@ -49,8 +52,8 @@ const FileUploader = () => {
           size: file.size,
         };
 
-        await dispatch(addFile(fileMetadata) as any); 
-        navigate('/tests'); 
+        await dispatch(addFile(fileMetadata) as any);
+        navigate('/tests');
       }
     } else {
       console.error("S3 Upload Failed:", resultAction.error);

@@ -1,4 +1,5 @@
 
+import Swal from 'sweetalert2'
 
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import Files from "../models/Files";
@@ -61,7 +62,11 @@ console.log(presignedUrl+" presignedUrl");
       });
 
       if (analyze.status === 200) {
-        alert("you have finished this step, we are moving to the next step...");
+        Swal.fire({
+          title: "Great we have finished!",
+          icon: "success",
+          draggable: true
+        });
       }
 
       return true;

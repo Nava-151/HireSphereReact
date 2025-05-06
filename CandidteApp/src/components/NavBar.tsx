@@ -7,8 +7,10 @@ import { logout } from "../store/UserSlice";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from "react";
 import { useTheme, useMediaQuery } from '@mui/material';
+import Swal from 'sweetalert2';
 
 const NavBar = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
   const theme = useTheme();
@@ -31,7 +33,11 @@ const NavBar = () => {
         navigate('/login');
       })
       .catch(() => {
-        alert('Logout failed, please try again');
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
       });
   };
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import User, { UserLogin } from "../models/User";
 import TokenInterceptor from "../components/TokenInterceptor";
+import Swal from 'sweetalert2';
 
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -75,11 +76,19 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
     } catch (error: any) {
         if (error.response) {
             if (error.response.status === 404) {
-                alert('Please register first');
+                Swal.fire({
+                    title: "User not found",
+                    text: "please register first",
+                    icon: "error"
+                  });
                 return thunkAPI.rejectWithValue("User not found");
             }
             if (error.response.status === 500) {
-                alert("There is a problem, try again later");
+                Swal.fire({
+                    title: "There is an error on our side",
+                    text: "try again later",
+                    icon: "error"
+                  });
                 return thunkAPI.rejectWithValue("Server error");
             }
         }
@@ -90,8 +99,6 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     try {
         sessionStorage.removeItem("token");
-        console.log("in log out");
-        
         sessionStorage.setItem("token", "")
         sessionStorage.removeItem("userId");
         sessionStorage.removeItem("name");
@@ -133,7 +140,11 @@ const userSlice = createSlice({
             })
             .addCase(login.fulfilled, (state, action: PayloadAction<{ token: string; email: string }>) => {
                 state.token = action.payload.token;
-                alert("Login successful");
+                Swal.fire({
+                    title: "Welcome back!",
+                    text: "lets continoue",
+                    icon: "error"
+                  });
             })
             .addCase(login.rejected, () => {
                 alert('Login failed, try again later :{');
@@ -142,20 +153,32 @@ const userSlice = createSlice({
                 state.list.push(action.payload);
             })
             .addCase(addUser.rejected, () => {
-                alert('Failed to register, try again later :{');
+                Swal.fire({
+                    title: "Did you register?",
+                    text: "Please register first",
+                    icon: "question"
+                  });
             })
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.list = state.list.map(user => user.id === action.payload.id ? action.payload : user);
             })
             .addCase(updateUser.rejected, () => {
-                alert('Failed to update user details, something went wrong :{');
+                Swal.fire({
+                    title: "The update failed...",
+                    text: "try again later",
+                    icon: "error"
+                  });
             })
             .addCase(logout.fulfilled, (state) => {
                 state.token = null;
                 state.currentUser = null;
             })
             .addCase(logout.rejected, () => {
-                alert("Logout failed, please try again");
+                Swal.fire({
+                    title: "The logout failled",
+                    text: "try again soon",
+                    icon: "error"
+                  });
             });
     }
 });

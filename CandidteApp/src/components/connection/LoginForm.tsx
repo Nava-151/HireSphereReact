@@ -13,6 +13,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import { formBox } from "../../style/style";
 import Spinner from "../Spinner";
+import Swal from 'sweetalert2';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -52,8 +53,10 @@ const LoginForm = () => {
     };
     if (isLoading) return <Spinner />;
     if (!open) return null; // Don't render if closed
-
+    
     return (
+        <>
+        
         <Modal
             open={open}
             onClose={() => { setOpen(false); navigate('/') }}
@@ -134,6 +137,7 @@ const LoginForm = () => {
                 </Box>
             </Box>
         </Modal>
+        </>
     );
 };
 

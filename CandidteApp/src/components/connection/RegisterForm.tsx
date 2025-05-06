@@ -20,8 +20,8 @@ const RegisterForm = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
     const dispatch = useDispatch<AppDispatch>();
-    const modalRef = useRef<HTMLDivElement>(null);  // Create a ref for modal box
-    const isLoading = useSelector((state: { loading: { isLoading: boolean } }) => state.loading.isLoading);
+    const modalRef = useRef<HTMLDivElement>(null);  
+    const isLoading = useSelector((state: { isLoading: boolean  }) => state.isLoading);
   
   
     if (isLoading) return <Spinner />;
