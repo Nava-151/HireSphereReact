@@ -13,7 +13,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 import { formBox } from "../../style/style";
 import Spinner from "../Spinner";
-import Swal from 'sweetalert2';
 
 const LoginForm = () => {
     const navigate = useNavigate();
