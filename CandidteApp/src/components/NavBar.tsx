@@ -89,12 +89,14 @@ const NavBar = () => {
             <Button onClick={() => navigate('/')} color="inherit">Home</Button>
             <Button onClick={() => navigate('/gallery')} color="inherit">Gallery</Button>
             <Button onClick={() => navigate('/blog')} color="inherit">Blog</Button>
+            <Button onClick={() => navigate('/interview')} color="inherit">Interview</Button>
+
             {(+(userId || "0")) > 0 && (
               <>
                 <Button onClick={() => navigate('/upload')} color="inherit">Upload file</Button>
                 <Button onClick={() => navigate('/updateDetails')} color="inherit">Update</Button>
                 <Avatar sx={{ bgcolor: purple[500], mx: 1 }}>
-                  {firstLetter ? firstLetter[0].toLocaleUpperCase() : "U"}
+                  {firstLetter&&firstLetter!="undefined" ? firstLetter[0].toLocaleUpperCase() : "U"}
                 </Avatar>
                 <Button onClick={handleLogout} color="info">Logout</Button>
               </>

@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux'; // <-- Added Redux Dispa
 import { paperStyle, upload } from '../../style/style';
 import { addFile, uploadToS3 } from '../../store/FileSlice';
 import { RootState } from '../../store/store';
+import Swal from 'sweetalert2';
 
 const FileUploader = () => {
-  const Swal = require('sweetalert2')
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch(); // <-- Added Redux Dispatch

@@ -14,6 +14,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { formBox } from "../../style/style";
 import Spinner from "../Spinner";
 
+
 const LoginForm = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);

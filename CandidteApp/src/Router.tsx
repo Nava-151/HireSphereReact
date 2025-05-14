@@ -12,6 +12,7 @@ import CompletionPage from "./components/CompletionPage";
 import UpdateDetails from "./components/Candidate/UpdateDetails";
 import ProtectedRoute from "./components/connection/ProtectedRoute";
 import AppLayout from "./AppLayout";
+import { VideoCallComponent } from "./components/features/VideoCall";
 
 
 
@@ -32,6 +33,7 @@ import AppLayout from "./AppLayout";
                     { path: "tests", element: <CodingChallenge /> },
                     { path: "end", element: <CompletionPage /> },
                     { path: "updateDetails", element: <UpdateDetails /> },
+                    {path:"interview", element:<VideoCallComponent/>}
                 ],
             }
 
