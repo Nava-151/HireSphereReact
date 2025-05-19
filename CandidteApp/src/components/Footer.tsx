@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
       <Box
         component="footer"
         sx={{
-          position: "fixed",
+          position: "static",
           bottom: 0,
           left: 0,
           width: "100%",

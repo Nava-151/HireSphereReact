@@ -13,6 +13,7 @@ import UpdateDetails from "./components/Candidate/UpdateDetails";
 import ProtectedRoute from "./components/connection/ProtectedRoute";
 import AppLayout from "./AppLayout";
 import { VideoCallComponent } from "./components/features/VideoCall";
+import FileUploadGuard from "./components/File/FileUploadGuard";
 
 
 
@@ -29,7 +30,8 @@ import { VideoCallComponent } from "./components/features/VideoCall";
             {
                 element: <ProtectedRoute />,
                 children: [
-                    { path: "upload", element: <UploadFile /> },
+                    
+                    { path: "upload", element: <FileUploadGuard><UploadFile /></FileUploadGuard> },
                     { path: "tests", element: <CodingChallenge /> },
                     { path: "end", element: <CompletionPage /> },
                     { path: "updateDetails", element: <UpdateDetails /> },

@@ -14,7 +14,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<any>();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md')); // מתחת ל-900px בערך
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -75,6 +75,8 @@ const NavBar = () => {
               <MenuItem onClick={() => goTo('/')}>Home</MenuItem>
               <MenuItem onClick={() => goTo('/gallery')}>Gallery</MenuItem>
               <MenuItem onClick={() => goTo('/blog')}>Blog</MenuItem>
+              <Button onClick={() => navigate('/interview')} color="inherit">Interview</Button>
+
               {(+(userId || "0")) > 0 && (
                 <>
                   <MenuItem onClick={() => goTo('/upload')}>Upload file</MenuItem>
@@ -96,7 +98,7 @@ const NavBar = () => {
                 <Button onClick={() => navigate('/upload')} color="inherit">Upload file</Button>
                 <Button onClick={() => navigate('/updateDetails')} color="inherit">Update</Button>
                 <Avatar sx={{ bgcolor: purple[500], mx: 1 }}>
-                  {firstLetter&&firstLetter!="undefined" ? firstLetter[0].toLocaleUpperCase() : "U"}
+                  {firstLetter && firstLetter != "undefined" ? firstLetter[0].toLocaleUpperCase() : "U"}
                 </Avatar>
                 <Button onClick={handleLogout} color="info">Logout</Button>
               </>

@@ -144,3 +144,136 @@ export class VideoCallService {
     };
   }
 }
+// import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+
+// export class VideoCallService {
+//   public connection!: HubConnection;
+//   public peerConnection!: RTCPeerConnection;
+//   public localStream!: MediaStream;
+//   public remoteCallerId: string | null = null;
+//   public remoteVideoRef: React.RefObject<HTMLVideoElement> | null = null;
+
+//   constructor(private hubUrl: string) {}
+
+//   async init(userId: string) {
+//     this.connection = new HubConnectionBuilder()
+//       .withUrl(this.hubUrl)
+//       .build();
+
+//     this.connection.on("ReceiveOffer", async (callerId: string, offer: string) => {
+//       console.log("📞 קיבלנו Offer מ:", callerId);
+//       this.remoteCallerId = callerId;
+//       await this.handleOffer(offer);
+//     });
+
+//     this.connection.on("ReceiveAnswer", async (answer: string) => {
+//       console.log("📞 קיבלנו Answer");
+//       const remoteDesc = new RTCSessionDescription(JSON.parse(answer));
+//       await this.peerConnection.setRemoteDescription(remoteDesc);
+//     });
+
+//     this.connection.on("ReceiveIceCandidate", async (candidate: string) => {
+//       console.log("🌍 קיבלנו ICE Candidate");
+//       try {
+//         await this.peerConnection.addIceCandidate(new RTCIceCandidate(JSON.parse(candidate)));
+//       } catch (err) {
+//         console.error("שגיאה ב-addIceCandidate:", err);
+//       }
+//     });
+
+//     this.connection.on("ReceiveEndCall", () => {
+//       console.log("🔚 השיחה הסתיימה");
+//       this.endCall();
+//     });
+
+//     await this.connection.start();
+//     console.log("✅ חיבור SignalR התחיל");
+//     await this.connection.invoke("Register", userId);
+//   }
+
+//   private createPeerConnection() {
+//     console.log("🎬 יצירת peerConnection");
+//     this.peerConnection = new RTCPeerConnection({
+//       iceServers: [
+//         { urls: "stun:stun.l.google.com:19302" },
+//         { urls: "stun:stun1.l.google.com:19302" },
+//       ]
+//     });
+
+//     this.peerConnection.onicecandidate = (event) => {
+//       if (event.candidate && this.remoteCallerId) {
+//         console.log("➡️ שליחת ICE Candidate ל", this.remoteCallerId);
+//         this.connection.invoke("SendIceCandidate", this.remoteCallerId, JSON.stringify(event.candidate));
+//       }
+//     };
+
+//     this.peerConnection.ontrack = (event) => {
+//       console.log("🎯 ontrack – הגיע סטרים מרוחק");
+//       const [stream] = event.streams;
+//       if (this.remoteVideoRef?.current) {
+//         console.log("🎥 הצגת וידאו מרוחק");
+//         this.remoteVideoRef.current.srcObject = stream;
+//       } else {
+//         console.warn("⚠️ remoteVideoRef לא מוגדר בעת קבלת וידאו");
+//       }
+//     };
+//   }
+
+//   async startCall(targetUserId: string, localStream: MediaStream) {
+//     console.log("📞 ייזום שיחה ל:", targetUserId);
+//     this.remoteCallerId = targetUserId;
+//     this.localStream = localStream;
+//     this.createPeerConnection();
+
+//     this.localStream.getTracks().forEach(track => {
+//       console.log("➕ הוספת טרק מקומי ל-peer", track.kind);
+//       this.peerConnection.addTrack(track, this.localStream);
+//     });
+
+//     const offer = await this.peerConnection.createOffer();
+//     await this.peerConnection.setLocalDescription(offer);
+//     console.log("📤 שולח Offer:", offer);
+//     await this.connection.invoke("SendOffer", targetUserId, JSON.stringify(offer));
+//   }
+
+//    async handleOffer(offer: string) {
+//     console.log("📥 טיפול ב-Offer");
+//     this.createPeerConnection();
+//     this.localStream.getTracks().forEach(track => {
+//       console.log("➕ הוספת טרק מקומי בעת מענה", track.kind);
+//       this.peerConnection.addTrack(track, this.localStream);
+//     });
+
+//     const remoteDesc = new RTCSessionDescription(JSON.parse(offer));
+//     await this.peerConnection.setRemoteDescription(remoteDesc);
+//     console.log("📥 Offer הוגדר כ-RemoteDescription");
+
+//     const answer = await this.peerConnection.createAnswer();
+//     await this.peerConnection.setLocalDescription(answer);
+//     console.log("📤 שליחת Answer:", answer);
+//     await this.connection.invoke("SendAnswer", this.remoteCallerId, JSON.stringify(answer));
+//   }
+
+//   async setLocalStream(stream: MediaStream) {
+//     console.log("🎥 הגדרת סטרים מקומי");
+//     this.localStream = stream;
+//   }
+
+//   endCall() {
+//     console.log("🔚 ניתוק השיחה");
+//     this.peerConnection?.close();
+//     this.peerConnection = undefined!;
+//     this.remoteCallerId = null;
+//     if (this.remoteVideoRef?.current) {
+//       this.remoteVideoRef.current.srcObject = null;
+//     }
+//   }
+
+//   async sendEndCall() {
+//     if (this.remoteCallerId) {
+//       console.log("🛑 שליחת בקשת סיום שיחה ל", this.remoteCallerId);
+//       await this.connection.invoke("SendEndCall", this.remoteCallerId);
+//       this.endCall();
+//     }
+//   }
+// }

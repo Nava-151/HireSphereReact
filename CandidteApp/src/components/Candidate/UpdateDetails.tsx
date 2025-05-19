@@ -12,7 +12,7 @@ function UpdateDetails() {
   const userId: number = +sessionStorage.getItem("userId")!
   const userFromStore = useSelector((state: RootState) => state.user.currentUser);
   const [user, setUser] = useState<User>({
-    fullname: " ",
+    fullName: " ",
     email: "",
     phone: "",
     passwordHash: "",
@@ -31,7 +31,7 @@ function UpdateDetails() {
   useEffect(() => {
     if (userFromStore) {
       setUser({
-        fullname: userFromStore.fullname || "",
+        fullName: userFromStore.fullName || "",
         email: userFromStore.email || "",
         phone: userFromStore.phone || "",
         passwordHash: "",
@@ -120,7 +120,7 @@ function UpdateDetails() {
         Update Personal Details
       </Typography>
       <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <TextField fullWidth label="Full name" name="fullname" value={user.fullname} onChange={handleChange} margin="normal" sx={{ background: "#fff", borderRadius: 1 }} />
+        <TextField fullWidth label="Full name" name="fullname" value={user.fullName} onChange={handleChange} margin="normal" sx={{ background: "#fff", borderRadius: 1 }} />
         <TextField fullWidth label="Email" name="email" type="email" value={user.email} onChange={handleChange} margin="normal" sx={{ background: "#fff", borderRadius: 1 }} error={!!errors.email} helperText={errors.email} />
         <TextField fullWidth label="Phone" name="phone" value={user.phone} onChange={handleChange} margin="normal" sx={{ background: "#fff", borderRadius: 1 }} error={!!errors.phone} helperText={errors.phone} />
         <TextField fullWidth label="Password" name="passwordHash" type="password" value={user.passwordHash} onChange={handleChange} margin="normal" sx={{ background: "#fff", borderRadius: 1 }} placeholder="Enter a new password (optional)" error={!!errors.passwordHash} helperText={errors.passwordHash} />

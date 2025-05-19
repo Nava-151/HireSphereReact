@@ -1,6 +1,5 @@
 
-import Swal from 'sweetalert2'
-
+import Swal from 'sweetalert2';
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import Files from "../models/Files";
 import TokenInterceptor from "../components/TokenInterceptor";
@@ -19,8 +18,7 @@ interface FileState {
   isLoading: boolean;
   error: string | null;
   presignedUrl: string | null;
-  uploadedOnce:boolean;
-
+  uploadedOnce: boolean;
 }
 
 const initialState: FileState = {
@@ -28,8 +26,22 @@ const initialState: FileState = {
   isLoading: false,
   error: null,
   presignedUrl: null,
-  uploadedOnce:false
+  uploadedOnce: false
 };
+
+// קריאה חדשה: שליפת כל הקבצים לפי משתמש
+export const getFilesByUserId = createAsyncThunk(
+  "files/getFilesByUserId",
+  async (userId: number, { rejectWithValue }) => {
+    try {
+      const response = await TokenInterceptor.get(`${API_URL}/files/${userId}`);
+      // console.log("רקדפםמדק גשאש"+response.data);
+      return response.data as Files[];
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Failed to fetch files");
+    }
+  }
+);
 
 export const uploadToS3 = createAsyncThunk<boolean, File | null>(
   "files/uploadFile",
@@ -42,7 +54,7 @@ export const uploadToS3 = createAsyncThunk<boolean, File | null>(
       });
 
       const presignedUrl: string = response.data as string;
-console.log(presignedUrl+" presignedUrl");
+      console.log(presignedUrl + " presignedUrl");
 
       const uploadRes = await fetch(presignedUrl, {
         method: "PUT",
@@ -53,7 +65,7 @@ console.log(presignedUrl+" presignedUrl");
       });
 
       if (!uploadRes.ok) {
-        return rejectWithValue("Upload to S3 failed" +uploadRes);
+        return rejectWithValue("Upload to S3 failed" + uploadRes);
       }
 
       const analyze = await TokenInterceptor.post(`${API_URL}/files/resume/analyze`, {
@@ -77,9 +89,6 @@ console.log(presignedUrl+" presignedUrl");
   }
 );
 
-
-
-// Add file metadata to DB
 export const addFile = createAsyncThunk(
   "files/addFile",
   async (fileMetadata: FileMetadata, { rejectWithValue }) => {
@@ -92,18 +101,14 @@ export const addFile = createAsyncThunk(
   }
 );
 
-// Delete file
 export const deleteFile = createAsyncThunk(
   "files/deleteFile",
   async ({ ownerId }: { ownerId: number }, { rejectWithValue }) => {
     try {
       const response = await TokenInterceptor.delete(`${API_URL}/files/${ownerId}`);
-
       if (response.status === 200) {
         return { ownerId, message: response.data };
       } else {
-console.log("res statts: "+response.status);
-
         return rejectWithValue("File not found");
       }
     } catch (error: any) {
@@ -112,7 +117,6 @@ console.log("res statts: "+response.status);
   }
 );
 
-// Fetch presigned URL for viewing file
 export const fetchPresignedUrl = createAsyncThunk(
   "files/fetchPresignedUrl",
   async (ownerId: number, { rejectWithValue }) => {
@@ -142,7 +146,7 @@ const FileSlice = createSlice({
         if (!action.payload) {
           state.error = "S3 Upload failed.";
         }
-        state.uploadedOnce=true;
+        state.uploadedOnce = true;
       })
       .addCase(uploadToS3.rejected, (state, action) => {
         state.isLoading = false;
@@ -158,7 +162,7 @@ const FileSlice = createSlice({
       .addCase(deleteFile.fulfilled, (state, action: PayloadAction<{ ownerId: number }>) => {
         state.isLoading = false;
         state.files = state.files.filter((file) => file.ownerId !== action.payload.ownerId);
-        state.uploadedOnce=false;
+        state.uploadedOnce = false;
       })
       .addCase(deleteFile.rejected, (state, action) => {
         state.isLoading = false;
@@ -175,6 +179,25 @@ const FileSlice = createSlice({
       .addCase(fetchPresignedUrl.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+      .addCase(getFilesByUserId.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getFilesByUserId.fulfilled, (state, action: PayloadAction<Files[]>) => {
+        console.log("in fullified getFilesByUserId", action.payload+"action.payload");
+        state.isLoading = false;
+        state.files = action.payload;
+        console.log("state.files", action.payload);
+        
+        console.log(state.files);
+        
+        state.uploadedOnce = state.files[0]?.ownerId!=0; 
+      })
+      .addCase(getFilesByUserId.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+        state.uploadedOnce = false;
       });
   },
 });

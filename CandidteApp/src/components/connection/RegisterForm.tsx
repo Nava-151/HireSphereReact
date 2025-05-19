@@ -60,7 +60,7 @@ const RegisterForm = () => {
 
     const onSubmit = async (data: any) => {
         const user: User = {
-            fullname: data.fullName,
+            fullName: data.fullName,
             email: data.email,
             passwordHash: data.passwordHash,
             phone: data.phone,

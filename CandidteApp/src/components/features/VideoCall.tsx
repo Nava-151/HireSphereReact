@@ -20,6 +20,7 @@ export const VideoCallComponent = () => {
         console.log(localVideoRef.current);
         
         if (videoCallService.localStream && localVideoRef.current) {
+            console.log("inside if who needs to open the camera");
             localVideoRef.current!.srcObject = videoCallService.localStream;
         }
     }, [isInCall]);
@@ -29,12 +30,16 @@ export const VideoCallComponent = () => {
             await videoCallService.connect();
 
             videoCallService.connection.on("ReceiveOffer", async (callerId, offer) => {
+                console.log("in recive offer");
+                
                 dispatch(receiveOffer({ callerId, offer }));
                 await videoCallService.answerCall(callerId, offer);
                 dispatch(startCall());
             });
 
             videoCallService.connection.on("ReceiveAnswer", (answer) => {
+                console.log("in recive answer ");
+                
                 dispatch(receiveAnswer(answer));
             });
             videoCallService.setRemoteTrackHandler(remoteVideoRef);
@@ -43,16 +48,7 @@ export const VideoCallComponent = () => {
         startConnection();
     }, []);
 
-    const start = async () => {
-        //change it later
-        await videoCallService.initiateCall("30"); // רק לצורך בדיקה
-        videoCallService.setRemoteTrackHandler(remoteVideoRef);
-        dispatch(startCall());
-
-        if (localVideoRef.current) {
-            localVideoRef.current.srcObject = videoCallService.localStream;
-        }
-    };
+   
 
     const joinCall = async () => {
         if (!callerId) return;
@@ -73,15 +69,11 @@ export const VideoCallComponent = () => {
         <Box p={4}>
             <Paper elevation={3} sx={{ padding: 4, borderRadius: 4 }}>
                 <Typography variant="h5" gutterBottom>
-                    שיחת וידאו
+                    Video Call
                 </Typography>
-
                 {!isInCall && (
-                    <Button variant="contained" color="primary" onClick={start} sx={{ mb: 2 }}>
-                        start meeting
-                    </Button>
+                  <Box>wait until your employer invites you</Box>
                 )}
-
                 {!isInCall && callerId && (
                     <Button variant="outlined" color="success" onClick={joinCall} sx={{ mb: 2, ml: 2 }}>
                         📞 join

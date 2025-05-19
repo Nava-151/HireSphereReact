@@ -7,9 +7,15 @@ import { Box } from "@mui/material";
 const AppLayout = () => {
     return (
         <>
+          <Box
+            display="flex"
+            flexDirection="column"
+            minHeight="100vh"
+        >
             <NavBar />
             <Outlet />
-            <Box sx={{ height: "350px" }}></Box>
+        </Box>
+            
             <Footer />
         </>
     );

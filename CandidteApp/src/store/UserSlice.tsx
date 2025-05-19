@@ -43,7 +43,8 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
             if (!response.data || !response.data.id || !response.data.token || !response.data.user) {
                 throw new Error("Invalid response data");
             }
-            sessionStorage.setItem("name", user.fullname);
+            
+            sessionStorage.setItem("name", user.fullName);
             sessionStorage.setItem("userId", response.data.id);
             sessionStorage.setItem("token", response.data.token);
             return response.data.user;
@@ -69,7 +70,9 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
         sessionStorage.setItem("token", response.data.token);
         sessionStorage.setItem("userId", response.data.id.toString());
         const userResponse = await thunkAPI.dispatch(fetchUserById(response.data.id)).unwrap();
-        sessionStorage.setItem("name", userResponse.fullname);
+        console.log(userResponse);
+        
+        sessionStorage.setItem("name", userResponse.fullName);
 
         return { token: response.data.token, email: credentials.email };
         
@@ -143,7 +146,7 @@ const userSlice = createSlice({
                 Swal.fire({
                     title: "Welcome back!",
                     text: "lets continoue",
-                    icon: "error"
+                    icon: "success"
                   });
             })
             .addCase(login.rejected, () => {

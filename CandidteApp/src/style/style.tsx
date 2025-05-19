@@ -26,11 +26,11 @@ export const listRecipe = {
     borderRadius: 1 // Optional: to add rounded corners
 }
 export const buttonStyle = {
-    background: 'linear-gradient(135deg, #00f2fe, #03e7a0)', 
-    color: 'white', '&:hover': { background: 'linear-gradient(135deg, #03e7a0, #00f2fe)' }, 
-    padding: '10px 20px', 
-    borderRadius: '8px', 
-    fontWeight: 'bold' 
+    background: 'linear-gradient(135deg, #00f2fe, #03e7a0)',
+    color: 'white', '&:hover': { background: 'linear-gradient(135deg, #03e7a0, #00f2fe)' },
+    padding: '10px 20px',
+    borderRadius: '8px',
+    fontWeight: 'bold'
 }
 
 export const linkStyle = {
@@ -73,7 +73,8 @@ export const backgroundStyle = {
 }
 export const colorStyle = { backgroundColor: '#607d8b', color: 'white', '&:hover': { backgroundColor: '#455a64' } }
 export const paperStyle = {
-
+    p: { xs: 2, sm: 3 },
+    boxSizing: 'border-box',
     width: "100%",
     maxWidth: 400,
     minHeight: 250,
@@ -105,7 +106,8 @@ export const formBox = {
     flexDirection: 'column',
     gap: 2,
 }
-export const footer={ backgroundColor: "#222",
+export const footer = {
+    backgroundColor: "#222",
     color: "#fff",
     py: 4,
     textAlign: "center",
@@ -113,15 +115,19 @@ export const footer={ backgroundColor: "#222",
     bottom: 0,
     left: 0,
     width: "100%",
-    zIndex: 1300}
-    
-export const upload={   display:"flex",
-    flexDirection:"column",
-    justifyContent:"center",
-    alignItems:"center",
-    minHeight:"100%",
-    width:"100vw",
-    zIndex:-15,
-    p:2,
-    textAlign:"center"
+    zIndex: 1300
+}
+
+export const upload = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "100%",
+    width: "100vw",
+    zIndex: -15,
+    p: 2,
+    textAlign: "center",
+    px: { xs: 2, sm: 4 },
+    py: { xs: 3, sm: 6 },
 }
