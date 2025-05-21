@@ -1,6 +1,6 @@
 
 import { AppBar, Toolbar, Typography, Button, Avatar, IconButton, Menu, MenuItem } from "@mui/material";
-import { purple } from "@mui/material/colors";
+import {  red } from "@mui/material/colors";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../store/UserSlice";
@@ -75,7 +75,8 @@ const NavBar = () => {
               <MenuItem onClick={() => goTo('/')}>Home</MenuItem>
               <MenuItem onClick={() => goTo('/gallery')}>Gallery</MenuItem>
               <MenuItem onClick={() => goTo('/blog')}>Blog</MenuItem>
-              <Button onClick={() => navigate('/interview')} color="inherit">Interview</Button>
+              <MenuItem onClick={() => goTo('/tests')}>Tests</MenuItem>
+              <MenuItem onClick={() => goTo('/interview')}>Interview</MenuItem>
 
               {(+(userId || "0")) > 0 && (
                 <>
@@ -91,13 +92,14 @@ const NavBar = () => {
             <Button onClick={() => navigate('/')} color="inherit">Home</Button>
             <Button onClick={() => navigate('/gallery')} color="inherit">Gallery</Button>
             <Button onClick={() => navigate('/blog')} color="inherit">Blog</Button>
+            <Button onClick={() => navigate('/tests')} color="inherit">Tests</Button>
             <Button onClick={() => navigate('/interview')} color="inherit">Interview</Button>
 
             {(+(userId || "0")) > 0 && (
               <>
                 <Button onClick={() => navigate('/upload')} color="inherit">Upload file</Button>
                 <Button onClick={() => navigate('/updateDetails')} color="inherit">Update</Button>
-                <Avatar sx={{ bgcolor: purple[500], mx: 1 }}>
+                <Avatar sx={{ bgcolor: red[500], mx: 1 }}>
                   {firstLetter && firstLetter != "undefined" ? firstLetter[0].toLocaleUpperCase() : "U"}
                 </Avatar>
                 <Button onClick={handleLogout} color="info">Logout</Button>
