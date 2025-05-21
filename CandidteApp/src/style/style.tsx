@@ -21,9 +21,9 @@ export const listRecipe = {
     top: '50%',
     transform: 'translateY(-50%)',
     padding: 2,
-    backgroundColor: 'white', // Optional: to make it more visible
-    boxShadow: 1, // Optional: to add some shadow
-    borderRadius: 1 // Optional: to add rounded corners
+    backgroundColor: 'white', 
+    boxShadow: 1, 
+    borderRadius: 1 
 }
 export const buttonStyle = {
     background: 'linear-gradient(135deg, #00f2fe, #03e7a0)',
@@ -96,15 +96,12 @@ export const paperStyle = {
     backgroundColor: "#ffffff"
 }
 export const formBox = {
-
+    display: 'flex', flexDirection: 'column', gap: '3rem' ,
     bgcolor: 'background.paper',
     borderRadius: 2,
     boxShadow: 24,
     p: 4,
     width: { xs: '90%', sm: '400px' },
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 2,
 }
 export const footer = {
     backgroundColor: "#222",
@@ -119,13 +116,11 @@ export const footer = {
 }
 
 export const upload = {
-    display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100%",
     width: "100vw",
-    zIndex: -15,
     p: 2,
     textAlign: "center",
     px: { xs: 2, sm: 4 },

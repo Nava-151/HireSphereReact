@@ -24,10 +24,9 @@ export const VideoCallComponent = () => {
             localVideoRef.current!.srcObject = videoCallService.localStream;
         }
     }, [isInCall]);
-
-    useEffect(() => {
-        const startConnection = async () => {
+  const startConnection = async () => {
             await videoCallService.connect();
+console.log("after connect");
 
             videoCallService.connection.on("ReceiveOffer", async (callerId, offer) => {
                 console.log("in recive offer");
@@ -45,6 +44,8 @@ export const VideoCallComponent = () => {
             videoCallService.setRemoteTrackHandler(remoteVideoRef);
         };
 
+    useEffect(() => {
+      
         startConnection();
     }, []);
 

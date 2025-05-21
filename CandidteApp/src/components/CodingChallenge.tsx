@@ -17,7 +17,6 @@ const codingQuestions: CodingQuestion[] = [
     description: "Write a function that reverses a string.",
     example: "Example: reverseString('hello') → 'olleh'",
     starterCode: `function reverseString(str) {
-  // Your code here
 }`,
     testCases: [
       { input: ["hello"], output: "olleh" },
@@ -29,7 +28,6 @@ const codingQuestions: CodingQuestion[] = [
     description: "Write a function that returns the largest number in an array.",
     example: "Example: findMax([1, 5, 3, 9, 2]) → 9",
     starterCode: `function findMax(arr) {
-  // Your code here
 }`,
     testCases: [
       { input: [[1, 5, 3, 9, 2]], output: 9 },
@@ -41,7 +39,6 @@ const codingQuestions: CodingQuestion[] = [
     description: "Write a function that returns the sum of all elements in an array.",
     example: "Example: sumArray([1, 2, 3, 4]) → 10",
     starterCode: `function sumArray(arr) {
-  // Your code here
 }`,
     testCases: [
       { input: [[1, 2, 3, 4]], output: 10 },
@@ -59,7 +56,6 @@ const CodingChallenge: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<number>(180); // 3 דקות
   const navigate = useNavigate();
 
-  // טיימר
   useEffect(() => {
     if (currentQuestion >= codingQuestions.length) return;
     const timer = setInterval(() => {

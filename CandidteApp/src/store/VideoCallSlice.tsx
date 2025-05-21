@@ -1,4 +1,3 @@
-// src/features/videoCall/videoCallSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface VideoCallState {

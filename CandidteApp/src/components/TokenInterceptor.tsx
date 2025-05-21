@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const TokenInterceptor = axios.create({
-  baseURL: "https://hiresphereapi.onrender.com", // כתובת הבקשות שלך
+  baseURL: "https://hiresphereapi.onrender.com", 
   
 });
 
-// Interceptor להוספת ה-Token אוטומטית, חוץ מהתחברות והרשמה
 TokenInterceptor.interceptors.request.use(
   (config) => {
     const token = sessionStorage.getItem("token");

@@ -29,13 +29,11 @@ const initialState: FileState = {
   uploadedOnce: false
 };
 
-// קריאה חדשה: שליפת כל הקבצים לפי משתמש
 export const getFilesByUserId = createAsyncThunk(
   "files/getFilesByUserId",
   async (userId: number, { rejectWithValue }) => {
     try {
       const response = await TokenInterceptor.get(`${API_URL}/files/${userId}`);
-      // console.log("רקדפםמדק גשאש"+response.data);
       return response.data as Files[];
     } catch (error: any) {
       return rejectWithValue(error.response?.data || "Failed to fetch files");

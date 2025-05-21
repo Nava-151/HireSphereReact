@@ -1,4 +1,4 @@
-import { Container, Typography, Box, TextField, Button, Grid } from "@mui/material";
+import { Container, Typography, Box, TextField, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { fetchUserById, updateUser } from "../../store/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,10 +9,13 @@ import { RemoveCircleOutline, Update } from "@mui/icons-material";
 
 function UpdateDetails() {
   const dispatch = useDispatch<AppDispatch>();
-  const userId: number = +sessionStorage.getItem("userId")!
+  const userId = Number(sessionStorage.getItem("userId"));
   const userFromStore = useSelector((state: RootState) => state.user.currentUser);
+  const presignedUrl = useSelector((state: RootState) => state.files.presignedUrl);
+  const isLoading = useSelector((state: RootState) => state.files.isLoading);
+
   const [user, setUser] = useState<User>({
-    fullName: " ",
+    fullName: "",
     email: "",
     phone: "",
     passwordHash: "",
@@ -39,124 +42,106 @@ function UpdateDetails() {
     }
   }, [userFromStore]);
 
-  const presignedUrl = useSelector((state: any) => state.files.presignedUrl);
-  const isLoading = useSelector((state: any) => state.files.isLoading);
-
-  const handleClick = () => {
-    dispatch(fetchPresignedUrl(+sessionStorage.getItem("userId")!));
-  };
-
   useEffect(() => {
     if (presignedUrl) {
       window.open(presignedUrl, "_blank");
     }
   }, [presignedUrl]);
 
-  const validateEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  const validatePhone = (phone: string) => {
-    return /^\d{9,15}$/.test(phone);
-  };
-
-  const validatePassword = (password: string) => {
-    return password.length === 0 || password.length >= 4;
-  };
+  const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validatePhone = (phone: string) => /^\d{9,15}$/.test(phone);
+  const validatePassword = (password: string) => password.length === 0 || password.length >= 4;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUser((prev) => ({ ...prev, [name]: value }));
 
-    if (name === "email") {
-      setErrors((prevErrors) => ({ ...prevErrors, email: validateEmail(value) ? "" : "Invalid email format" }));
-    }
-    if (name === "phone") {
-      setErrors((prevErrors) => ({ ...prevErrors, phone: validatePhone(value) ? "" : "Phone number must be 9-15 digits" }));
-    }
-    if (name === "passwordHash") {
-      setErrors((prevErrors) => ({ ...prevErrors, passwordHash: validatePassword(value) ? "" : "Password must be at least 4 characters" }));
-    }
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      email: name === "email" ? (validateEmail(value) ? "" : "Invalid email format") : prevErrors.email,
+      phone: name === "phone" ? (validatePhone(value) ? "" : "Phone must be 9-15 digits") : prevErrors.phone,
+      passwordHash:
+        name === "passwordHash" ? (validatePassword(value) ? "" : "Password must be at least 4 characters") : prevErrors.passwordHash,
+    }));
   };
 
   const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
       setResume(file);
-      handleResumeRemove();
-      dispatch(uploadToS3(resume) as any);
+
+      dispatch(deleteFile({ ownerId: userId }));
+
+      dispatch(uploadToS3(file) as any);
     }
   };
 
   const handleResumeRemove = () => {
     setResume(null);
-    if (!userId) {
-      console.error("Owner ID not found");
-      return;
-    }
-    dispatch(deleteFile({ ownerId: Number(userId) }));
+    dispatch(deleteFile({ ownerId: userId }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleDownload = () => {
+    dispatch(fetchPresignedUrl(userId));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (errors.email || errors.phone || errors.passwordHash) {
       setMessage("Please fix errors before submitting.");
       return;
     }
-    try {
-      dispatch(updateUser(user as User));
-      setMessage("Details updated successfully!");
-    } catch (error) {
-      setMessage("Error updating details. Please try again.");
-    } finally {
-      setTimeout(() => setMessage(""), 3000);
-    }
+
+    dispatch(updateUser(user))
+      .then(() => setMessage("Details updated successfully!"))
+      .catch(() => setMessage("Error updating details."))
+      .finally(() => {
+        setTimeout(() => setMessage(""), 3000);
+      });
   };
 
-
   return (
-    <Container maxWidth="sm" sx={{ mt: 5, textAlign: "center", background: "#002b36", p: 4, borderRadius: 2, color: "#fff" }}>
-      <Typography variant="h4" gutterBottom sx={{ color: "#00eaff" }}>
-        Update Personal Details
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <TextField fullWidth label="Full name" name="fullname" value={user.fullName} onChange={handleChange} margin="normal" sx={{ background: "#fff", borderRadius: 1 }} />
-        <TextField fullWidth label="Email" name="email" type="email" value={user.email} onChange={handleChange} margin="normal" sx={{ background: "#fff", borderRadius: 1 }} error={!!errors.email} helperText={errors.email} />
-        <TextField fullWidth label="Phone" name="phone" value={user.phone} onChange={handleChange} margin="normal" sx={{ background: "#fff", borderRadius: 1 }} error={!!errors.phone} helperText={errors.phone} />
-        <TextField fullWidth label="Password" name="passwordHash" type="password" value={user.passwordHash} onChange={handleChange} margin="normal" sx={{ background: "#fff", borderRadius: 1 }} placeholder="Enter a new password (optional)" error={!!errors.passwordHash} helperText={errors.passwordHash} />
-        <Box sx={{ mt: 2, textAlign: "center" }}>
-          <input type="file" accept=".pdf,.doc,.docx" onChange={handleResumeChange} style={{ display: "none" }} id="resume-upload" />
-          <Grid container justifyContent="center" spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Button
-                variant="outlined"
-                onClick={handleClick}
-                disabled={isLoading}
-                fullWidth
-                sx={{
-                  background: "none",
-                  color: "white",
-                  padding: "10px 20px",
-                  cursor: "pointer",
-                  borderRadius: "5px",
-                  margin: "5px",
-                }}
-              >
-                {isLoading ? "Loading..." : "Open File"}
-              </Button>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <label htmlFor="resume-upload">
-                <Update sx={{ mr: 1 }} />
-              </label>
-              <RemoveCircleOutline sx={{ ml: 1, cursor: "pointer" }} onClick={handleResumeRemove} />
-            </Grid>
-          </Grid>
-          {isLoading || resume && <Typography sx={{ color: "#00ff99" }}>📄 {resume ? resume.name : "No resume uploaded"}</Typography>}
+    <Container maxWidth="sm">
+      <Box mt={5} component="form" onSubmit={handleSubmit}>
+        <Typography variant="h4" mb={3}>Update Your Details</Typography>
+
+        <TextField fullWidth label="Full Name" name="fullName" value={user.fullName} onChange={handleChange} margin="normal" />
+        <TextField fullWidth label="Email" name="email" value={user.email} onChange={handleChange} margin="normal" error={!!errors.email} helperText={errors.email} />
+        <TextField fullWidth label="Phone" name="phone" value={user.phone} onChange={handleChange} margin="normal" error={!!errors.phone} helperText={errors.phone} />
+        <TextField fullWidth label="New Password" name="passwordHash" value={user.passwordHash} onChange={handleChange} margin="normal" type="password" error={!!errors.passwordHash} helperText={errors.passwordHash} />
+
+        <Box mt={2}>
+          <Button variant="outlined" component="label">
+            Upload Resume
+            <input type="file" hidden onChange={handleResumeChange} />
+          </Button>
+
+          {resume && (
+            <Button color="error" startIcon={<RemoveCircleOutline />} onClick={handleResumeRemove} sx={{ ml: 2 }}>
+              Remove Resume
+            </Button>
+          )}
         </Box>
-        <Button type="submit" variant="contained" sx={{ mt: 2, background: "linear-gradient(90deg, #00ff99, #00eaff)" }}>Update</Button>
+
+        <Box mt={2}>
+          <Button variant="contained" onClick={handleDownload} disabled={isLoading}>
+            {isLoading ? "Loading..." : "Download Resume"}
+          </Button>
+        </Box>
+
+        <Box mt={3}>
+          <Button type="submit" variant="contained" color="primary" startIcon={<Update />}>
+            Save Changes
+          </Button>
+        </Box>
+
+        {message && (
+          <Typography color="secondary" mt={2}>
+            {message}
+          </Typography>
+        )}
       </Box>
-      {message && <Typography sx={{ mt: 2, color: "#00ff99" }}>{message}</Typography>}
     </Container>
   );
 }

@@ -1,4 +1,3 @@
-// SpinnerOverlay.jsx
 import { CircularProgress, Typography, Backdrop } from '@mui/material';
 
 const Spinner = () => {

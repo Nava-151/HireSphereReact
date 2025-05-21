@@ -57,6 +57,8 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
 export const updateUser = createAsyncThunk('users/update', async (user: User, thunkAPI) => {
     try {
         const userId = sessionStorage.getItem('userId');
+        console.log("in updateUser", userId);
+        
         const response = await TokenInterceptor.put(`${API_URL}/users/${userId}`, user);
         return response.data as User;
     } catch (e) {

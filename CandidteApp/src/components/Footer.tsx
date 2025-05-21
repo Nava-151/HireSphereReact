@@ -1,4 +1,3 @@
-// export default Footer;
 import React, { useState } from "react";
 import { Box, Container, Typography, IconButton, TextField, Button } from "@mui/material";
 import { GitHub, LinkedIn, Twitter } from "@mui/icons-material";
