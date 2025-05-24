@@ -1,20 +1,4 @@
-// import React from "react";
-// import { Container, Typography, Button } from "@mui/material";
-// import { useNavigate } from "react-router-dom";
 
-// const CompletionPage: React.FC = () => {
-//   const navigate = useNavigate();
-
-//   return (
-//     <Container sx={{ py: 5, minHeight: "100vh", background: "#fff", color: "black", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-//       <Typography variant="h3" sx={{ color: "#00ff99", textAlign: "center" }}>🎉 Thank You !</Typography>
-//       <Typography variant="h6" sx={{ color: "#bbb", mt: 2, textAlign: "center" }}>We have finished  the process we hope the employers to contact uou soon</Typography>
-//       <Button onClick={() => navigate("/")} variant="contained" sx={{ mt: 4, background: "linear-gradient(90deg, #00eaff, #00ff99)" }}>🏠 Back to Home</Button>
-//     </Container>
-//   );
-// };
-
-// export default CompletionPage;
 import React, { useEffect } from "react";
 import { 
   Container, 
@@ -38,7 +22,6 @@ const CompletionPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Trigger confetti effect when component mounts
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
     
@@ -55,12 +38,11 @@ const CompletionPage: React.FC = () => {
       
       const particleCount = 50 * (timeLeft / duration);
       
-      // Create confetti with custom colors
       confetti({
         particleCount,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#00eaff', '#00ff99', '#ffffff'],
+        colors: ['#00eaff', '#00ff99', '#ffffff',"red","yellow"],
         disableForReducedMotion: true
       });
       
@@ -127,7 +109,7 @@ const CompletionPage: React.FC = () => {
                 WebkitTextFillColor: "transparent"
               }}
             >
-              🎉 Application Complete!
+               Progress Complete!
             </Typography>
             
             <Typography 
@@ -140,7 +122,7 @@ const CompletionPage: React.FC = () => {
                 mx: "auto"
               }}
             >
-              Congratulations! Your application has been successfully submitted and is now being reviewed by potential employers.
+              Congratulations! Your hiring proccess has been successfully submitted and is now being reviewed by potential employers.
             </Typography>
           </Box>
           
@@ -191,18 +173,6 @@ const CompletionPage: React.FC = () => {
             </List>
           </Box>
           
-          <Box 
-            sx={{ 
-              background: "linear-gradient(90deg, rgba(0,234,255,0.1), rgba(0,255,153,0.1))",
-              p: 3,
-              borderRadius: 2,
-              mb: 4
-            }}
-          >
-            <Typography variant="body1" sx={{ fontWeight: 500, color: "#444" }}>
-              💡 <strong>Pro Tip:</strong> Keep your profile updated and check your email regularly for communications from potential employers. Make sure to add our domain to your safe senders list.
-            </Typography>
-          </Box>
           
           <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 3 }}>
             <Button 
@@ -230,9 +200,7 @@ const CompletionPage: React.FC = () => {
       </Fade>
       
       <Typography variant="body2" sx={{ mt: 4, color: "#888", textAlign: "center" }}>
-        © {new Date().getFullYear()} Your Company Name. All rights reserved.
-        <br />
-        Need help? <a href="#" style={{ color: "#00eaff", textDecoration: "none" }}>Contact Support</a>
+        © {new Date().getFullYear()} HireSphere. All rights reserved.
       </Typography>
     </Container>
   );

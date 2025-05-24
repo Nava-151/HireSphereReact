@@ -53,7 +53,7 @@ const CodingChallenge: React.FC = () => {
   const [score, setScore] = useState<number>(0);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [output, setOutput] = useState<any>(null);
-  const [timeLeft, setTimeLeft] = useState<number>(180); // 3 דקות
+  const [timeLeft, setTimeLeft] = useState<number>(180); 
   const navigate = useNavigate();
 
   useEffect(() => {
