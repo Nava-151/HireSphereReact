@@ -12,9 +12,9 @@ import FileUploadGuard from "./components/File/FileUploadGuard";
 import VideoCall from "./components/NavBarComponents/VideoCall";
 import Home from "./components/HomePage/Home";
 
-import RegisterForm from "./components/Connection/RegisterForm";
-import LoginForm from "./components/Connection/LoginForm";
-import ProtectedRoute from "./components/Connection/ProtectedRoute";
+import RegisterForm from "./components/connection/RegisterForm";
+import LoginForm from "./components/connection/LoginForm";
+import ProtectedRoute from "./components/connection/ProtectedRoute";
 
 
 
