@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import User, { UserLogin } from "../models/User";
-import TokenInterceptor from "../components/TokenInterceptor";
+import TokenInterceptor from "./TokenInterceptor";
 import Swal from 'sweetalert2';
 
 

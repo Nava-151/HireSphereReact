@@ -1,12 +1,6 @@
-import {
-  Container,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  CardMedia,
-} from "@mui/material";
+
 import { motion } from "framer-motion";
+import { Box, Card, CardContent, CardMedia, Container, Typography } from "../../MuiImports";
 
 const tips = [
   {

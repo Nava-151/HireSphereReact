@@ -1,4 +1,3 @@
-import { Container, Typography, Box, TextField, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { fetchUserById, updateUser } from "../../store/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +5,8 @@ import { AppDispatch, RootState } from "../../store/store";
 import User from "../../models/User";
 import { deleteFile, fetchPresignedUrl, uploadToS3 } from "../../store/FileSlice";
 import { RemoveCircleOutline, Update } from "@mui/icons-material";
+import { Box, Button, Container, TextField, Typography } from "../../MuiImports";
+import { buttonStyle } from "../../style/style";
 
 function UpdateDetails() {
   const dispatch = useDispatch<AppDispatch>();
@@ -112,7 +113,8 @@ function UpdateDetails() {
         <TextField fullWidth label="New Password" name="passwordHash" value={user.passwordHash} onChange={handleChange} margin="normal" type="password" error={!!errors.passwordHash} helperText={errors.passwordHash} />
 
         <Box mt={2}>
-          <Button variant="outlined" component="label">
+import Spinner from "../Spinner"
+          <Button variant="outlined" component="label" sx={buttonStyle}>
             Upload Resume
             <input type="file" hidden onChange={handleResumeChange} />
           </Button>

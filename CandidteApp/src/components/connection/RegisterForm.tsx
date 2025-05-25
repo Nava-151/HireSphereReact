@@ -1,27 +1,7 @@
 
 
 import { useEffect,  useState } from "react"
-import {
-    Modal,
-    Box,
-    TextField,
-    Button,
-    FormHelperText,
-    InputAdornment,
-    Typography,
-    Paper,
-    Divider,
-    IconButton,
-} from "@mui/material"
-import { styled } from "@mui/material/styles"
-import AddIcon from "@mui/icons-material/Add"
-import EmailIcon from "@mui/icons-material/Email"
-import LockIcon from "@mui/icons-material/Lock"
-import PersonIcon from "@mui/icons-material/Person"
-import PhoneIcon from "@mui/icons-material/Phone"
-import CloseIcon from "@mui/icons-material/Close"
-import VisibilityIcon from "@mui/icons-material/Visibility"
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
+
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
@@ -30,8 +10,9 @@ import { object, string } from "yup"
 import User, { UserRole } from "../../models/User"
 import { AppDispatch } from "../../store/store"
 import { addUser } from "../../store/UserSlice"
-import Spinner from "../Spinner"
 import { buttonStyle } from "../../style/style"
+import { AddIcon, Box, Button, CloseIcon, Divider, EmailIcon, FormHelperText, IconButton, InputAdornment, LockIcon, Modal, Paper, PersonIcon, PhoneIcon, styled, TextField, Typography, VisibilityIcon, VisibilityOffIcon } from "../../MuiImports"
+import Spinner from "../CompInAllPages/Spinner"
 
 const RegisterPaper = styled(Paper)(({ theme }) => ({
     width: "100%",

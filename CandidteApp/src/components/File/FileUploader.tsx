@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Paper,
-  Typography,
-  styled,
-  Chip,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material"
-import CloudUploadIcon from "@mui/icons-material/CloudUpload"
-import CheckCircleIcon from "@mui/icons-material/CheckCircle"
+
 import { motion } from "framer-motion"
 import Swal from "sweetalert2"
 import { useState, ChangeEvent, DragEvent } from "react"
@@ -17,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../store/store"
 import { uploadToS3, addFile } from "../../store/FileSlice"
+import { Box, Button, CheckCircleIcon, Chip, CloudUploadIcon, Paper, styled, Typography, useMediaQuery, useTheme } from "../../MuiImports"
 
 const UploadContainer = styled(Box)(({ theme }) => ({
   display: "flex",

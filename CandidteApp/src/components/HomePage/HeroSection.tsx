@@ -1,22 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
-import {
-  Box,
-  Container,
-  Typography,
-  Button,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  Paper,
-  Avatar,
-  Rating,
-  IconButton,
-  Chip,
-} from "@mui/material"
-import { styled } from "@mui/material/styles"
-import { CheckCircle, ChevronRight, People, ArrowForward } from "@mui/icons-material"
+import { ArrowForward, Avatar, Box, Button, Card, CardContent, CardHeader, CheckCircle, ChevronRight, Chip, Container, Grid, IconButton, Paper, People, Rating, styled, Typography } from "../../MuiImports"
+
 
 const GradientText = styled(Typography)(({  }) => ({
   background: `linear-gradient(135 degrees, #00f2fe, #03e7a0)`,

@@ -1,22 +1,9 @@
 
 import React, { useEffect } from "react";
-import { 
-  Container, 
-  Typography, 
-  Button, 
-  Box, 
-  Paper, 
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Avatar,
-  Fade
-} from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
-import { CheckCircle, Home, Email, AccessTime, Star } from "@mui/icons-material";
 import confetti from "canvas-confetti";
+import { AccessTime, Avatar, Box, Button, CheckCircle, Container, Divider, Email, Fade, Home, List, ListItem, ListItemIcon, ListItemText, Paper, Star, Typography } from "../../MuiImports";
 
 const CompletionPage: React.FC = () => {
   const navigate = useNavigate();

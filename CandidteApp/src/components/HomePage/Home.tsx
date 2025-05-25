@@ -10,12 +10,12 @@ import {
   BarChart,
   Speed,
 } from "@mui/icons-material"
-import PricingSection from "./HomePage/PricingSection"
-import StatsSection from "./HomePage/StatSection"
-import TestimonialsSection from "./HomePage/TestimonialsSection"
-import HeroSection from "./HomePage/HeroSection"
-import HowItWorksSection from "./HomePage/HowItWorksSection"
-import FeaturesSection from "./HomePage/FeaturesSection"
+import FeaturesSection from "./FeaturesSection"
+import HeroSection from "./HeroSection"
+import HowItWorksSection from "./HowItWorksSection"
+import PricingSection from "./PricingSection"
+import StatsSection from "./StatSection"
+import TestimonialsSection from "./TestimonialsSection"
 
 
 const Home = () => {

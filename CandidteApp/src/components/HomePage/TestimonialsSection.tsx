@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react"
-import { Box, Container, Typography, Card, CardContent, Avatar, Rating, Chip } from "@mui/material"
-import { styled } from "@mui/material/styles"
 import { motion } from "framer-motion"
-import { FormatQuote } from "@mui/icons-material"
+import { Avatar, Box, Card, CardContent, Chip, Container, FormatQuote, Rating, styled, Typography } from "../../MuiImports"
 
 const GradientText = styled(Typography)(() => ({
   background: `linear-gradient(90deg, #00B894, #0984E3, #00CEC9)`, 

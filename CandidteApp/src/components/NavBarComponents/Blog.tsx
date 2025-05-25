@@ -1,13 +1,6 @@
-import {
-  Button,
-  Container,
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
+
 import { motion } from "framer-motion";
+import { Box, Button, Card, CardContent, Container, Typography,CardMedia } from "../../MuiImports";
 
 const Blog = () => {
   const blogPosts = [

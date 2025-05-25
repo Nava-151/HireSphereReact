@@ -26,9 +26,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppDispatch } from "../../store/store"
 import { login } from "../../store/UserSlice"
 import { useNavigate } from "react-router-dom"
-import Spinner from "../Spinner"
 import { UserLogin } from "../../models/User"
 import { buttonStyle } from "../../style/style"
+import Spinner from "../CompInAllPages/Spinner"
 
 const LoginPaper = styled(Paper)(({ theme }) => ({
   width: "100%",

@@ -1,7 +1,7 @@
-import { Box, Container, Typography, Grid, Card, CardContent, Chip } from "@mui/material"
 import { styled } from "@mui/material/styles"
 import { motion } from "framer-motion"
 import { ReactNode } from "react"
+import { Box, Card, CardContent, Chip, Container, Grid, Typography } from "../../MuiImports"
 
 const primary = "#03e7a0"
 const secondary = "#00f2fe"

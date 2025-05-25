@@ -3,8 +3,8 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { VideoCallService } from '../../services/VideoCallService';
 import { receiveAnswer, receiveOffer, startCall } from '../../store/VideoCallSlice';
-import { Box, Button, Typography, Paper, Grid } from '@mui/material';
 import { RootState } from '../../store/store';
+import { Box, Button, Grid, Paper, Typography } from '../../MuiImports';
 
 const videoCallService = new VideoCallService();
 
@@ -21,9 +21,6 @@ const VideoCall = () => {
     if (videoCallService.localStream && localVideoRef.current) {
       localVideoRef.current.srcObject = videoCallService.localStream;
     }
-    // if (localVideoRef.current) {
-    //     videoCallService.setLocalVideoRef(localVideoRef as React.RefObject<HTMLVideoElement>);
-    // }
     if (remoteVideoRef.current) {
         videoCallService.setRemoteVideoRef(remoteVideoRef as React.RefObject<HTMLVideoElement>);
     }
@@ -73,7 +70,7 @@ const VideoCall = () => {
           <Box>wait until your employer invites you</Box>
         )}
         <Button variant="outlined" color="success" onClick={joinCall} sx={{ mb: 2, ml: 2 }}>
-          📞 join  {isInCall.toString()}  {callerId}
+          📞 join 
         </Button>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>

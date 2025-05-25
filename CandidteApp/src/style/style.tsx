@@ -15,16 +15,7 @@ export const modalStyle = {
     maxHeight: "90vh",
     overflowY: "auto",
 };
-export const listRecipe = {
-    position: 'fixed',
-    right: 0,
-    top: '50%',
-    transform: 'translateY(-50%)',
-    padding: 2,
-    backgroundColor: 'white', 
-    boxShadow: 1, 
-    borderRadius: 1 
-}
+
 export const buttonStyle = {
     background: 'linear-gradient(135deg, #00f2fe, #03e7a0)',
     color: 'white', '&:hover': { background: 'linear-gradient(135deg, #03e7a0, #00f2fe)' },
@@ -115,14 +106,14 @@ export const footer = {
     zIndex: 1300
 }
 
-export const upload = {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "100%",
-    width: "100vw",
-    p: 2,
-    textAlign: "center",
-    px: { xs: 2, sm: 4 },
-    py: { xs: 3, sm: 6 },
-}
+// export const upload = {
+//     flexDirection: "column",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     minHeight: "100%",
+//     width: "100vw",
+//     p: 2,
+//     textAlign: "center",
+//     px: { xs: 2, sm: 4 },
+//     py: { xs: 3, sm: 6 },
+// }

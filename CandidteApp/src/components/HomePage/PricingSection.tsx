@@ -1,17 +1,6 @@
-import {
-    Box,
-    Container,
-    Typography,
-    Grid,
-    Card,
-    CardContent,
-    Button,
-    Divider,
-    Chip,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import { CheckCircle } from "@mui/icons-material";
+import { Box, Button, Card, CardContent, CheckCircle, Chip, Container, Divider, Grid, styled, Typography } from "../../MuiImports";
+
 
 const gradient = "linear-gradient(to right, #00f2fe, #03e7a0)";
 

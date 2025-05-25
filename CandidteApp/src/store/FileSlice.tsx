@@ -2,7 +2,7 @@
 import Swal from 'sweetalert2';
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import Files from "../models/Files";
-import TokenInterceptor from "../components/TokenInterceptor";
+import TokenInterceptor from "./TokenInterceptor";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

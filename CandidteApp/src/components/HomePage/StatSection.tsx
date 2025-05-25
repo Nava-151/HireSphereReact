@@ -1,6 +1,5 @@
-import { Box, Container, Typography, Grid } from "@mui/material"
-import { styled } from "@mui/material/styles"
 import { motion } from "framer-motion"
+import { Box, Container, Grid, styled, Typography } from "../../MuiImports"
 
 const StatsCircle = styled(Box)(({ theme }) => ({
   width: 60,

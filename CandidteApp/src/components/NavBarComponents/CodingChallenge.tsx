@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
 import Editor from "@monaco-editor/react";
 import { useNavigate } from "react-router-dom";
+import { buttonStyle } from "../../style/style";
 
 interface CodingQuestion {
   title: string;
@@ -161,7 +162,7 @@ const CodingChallenge: React.FC = () => {
           )}
 
           <Box sx={{ mt: 3, display: "flex", gap: 2 }}>
-            <Button onClick={handleSubmit} variant="contained" sx={{ background: "linear-gradient(90deg, #00ff99, #00eaff)" }}>
+            <Button onClick={handleSubmit} variant="contained" sx={buttonStyle}>
               Submit
             </Button>
             <Button onClick={handleNextQuestion} variant="outlined" sx={{ color: "#00eaff", borderColor: "#00eaff" }}>

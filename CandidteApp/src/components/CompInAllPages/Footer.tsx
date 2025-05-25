@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Container, Typography, IconButton, TextField, Button } from "@mui/material";
 import { GitHub, LinkedIn, Twitter } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import { buttonStyle } from "../style/style";
+import { buttonStyle } from "../../style/style";
 
 const Footer: React.FC = () => {
   const [formData, setFormData] = useState({ email: "", message: "" });

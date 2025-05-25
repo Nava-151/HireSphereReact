@@ -1,6 +1,5 @@
-import { Box, Container, Typography, Grid, Chip } from "@mui/material"
-import { styled } from "@mui/material/styles"
 import { motion } from "framer-motion"
+import { Box, Chip, Container, Grid, styled, Typography } from "../../MuiImports"
 
 const primary = "#03e7a0"
 const secondary = "#00f2fe"

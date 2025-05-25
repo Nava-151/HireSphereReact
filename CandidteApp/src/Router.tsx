@@ -1,19 +1,19 @@
 
 
 import { createBrowserRouter } from "react-router-dom";
-import RegisterForm from "./components/connection/RegisterForm";
-import LoginForm from "./components/connection/LoginForm";
+import RegisterForm from "./components/Connection/RegisterForm";
+import LoginForm from "./components/Connection/LoginForm";
 import Blog from "./components/NavBarComponents/Blog";
-import Home from "./components/Home";
 import Gallery from "./components/NavBarComponents/Gallery";
 import UploadFile from "./components/File/FileUploader";
 import CodingChallenge from "./components/NavBarComponents/CodingChallenge";
 import CompletionPage from "./components/NavBarComponents/CompletionPage";
 import UpdateDetails from "./components/Candidate/UpdateDetails";
-import ProtectedRoute from "./components/connection/ProtectedRoute";
+import ProtectedRoute from "./components/Connection/ProtectedRoute";
 import AppLayout from "./AppLayout";
 import FileUploadGuard from "./components/File/FileUploadGuard";
 import VideoCall from "./components/NavBarComponents/VideoCall";
+import Home from "./components/HomePage/Home";
 
 
 

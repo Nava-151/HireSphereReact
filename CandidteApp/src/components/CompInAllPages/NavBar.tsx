@@ -3,11 +3,11 @@ import { AppBar, Toolbar, Typography, Button, Avatar, IconButton, Menu, MenuItem
 import {  red } from "@mui/material/colors";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../store/UserSlice";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from "react";
 import { useTheme, useMediaQuery } from '@mui/material';
 import Swal from 'sweetalert2';
+import { logout } from "../../store/UserSlice";
 
 const NavBar = () => {
 
