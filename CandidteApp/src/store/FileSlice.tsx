@@ -187,7 +187,6 @@ const FileSlice = createSlice({
         state.isLoading = false;
         state.files = action.payload;
         console.log("state.files", action.payload);
-        
         console.log(state.files);
         
         state.uploadedOnce = state.files[0]?.ownerId!=0; 

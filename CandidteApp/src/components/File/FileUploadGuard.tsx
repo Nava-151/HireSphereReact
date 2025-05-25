@@ -18,7 +18,7 @@ const FileUploadGuard = ({ children }: { children: JSX.Element }) => {
 
   if (isLoading) return <Spinner />;
   else if (uploadedOnce) return <Navigate to="/" replace />;
-console.log("uploadedOnce", uploadedOnce);
+  console.log("uploadedOnce", uploadedOnce);
 
   return children;
 };

@@ -72,6 +72,9 @@ const HeroSection = () => {
                 Our AI-powered platform matches the right talent with the right opportunities, reducing hiring time by
                 85% and improving candidate quality.
               </Typography>
+              <Typography variant="h6" color="text.secondary" sx={{ mb: 4, maxWidth: 500 }}>
+               to start press the upload button in the top an dupload your resume
+              </Typography>
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 3 }}>
                 <GradientButton
                   variant="contained"

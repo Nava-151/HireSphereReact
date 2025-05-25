@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchUserById, updateUser } from "../../store/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import User from "../../models/User";
+import  { UpdateUser } from "../../models/User";
 import { deleteFile, fetchPresignedUrl, uploadToS3 } from "../../store/FileSlice";
 import { RemoveCircleOutline, Update } from "@mui/icons-material";
 import { Box, Button, Container, TextField, Typography } from "../../MuiImports";
@@ -15,11 +15,10 @@ function UpdateDetails() {
   const presignedUrl = useSelector((state: RootState) => state.files.presignedUrl);
   const isLoading = useSelector((state: RootState) => state.files.isLoading);
 
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<UpdateUser>({
     fullName: "",
     email: "",
     phone: "",
-    passwordHash: "",
   });
 
   const [message, setMessage] = useState("");
@@ -38,7 +37,6 @@ function UpdateDetails() {
         fullName: userFromStore.fullName || "",
         email: userFromStore.email || "",
         phone: userFromStore.phone || "",
-        passwordHash: "",
       });
     }
   }, [userFromStore]);
@@ -51,7 +49,6 @@ function UpdateDetails() {
 
   const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePhone = (phone: string) => /^\d{9,15}$/.test(phone);
-  const validatePassword = (password: string) => password.length === 0 || password.length >= 4;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -61,8 +58,6 @@ function UpdateDetails() {
       ...prevErrors,
       email: name === "email" ? (validateEmail(value) ? "" : "Invalid email format") : prevErrors.email,
       phone: name === "phone" ? (validatePhone(value) ? "" : "Phone must be 9-15 digits") : prevErrors.phone,
-      passwordHash:
-        name === "passwordHash" ? (validatePassword(value) ? "" : "Password must be at least 4 characters") : prevErrors.passwordHash,
     }));
   };
 
@@ -110,10 +105,8 @@ function UpdateDetails() {
         <TextField fullWidth label="Full Name" name="fullName" value={user.fullName} onChange={handleChange} margin="normal" />
         <TextField fullWidth label="Email" name="email" value={user.email} onChange={handleChange} margin="normal" error={!!errors.email} helperText={errors.email} />
         <TextField fullWidth label="Phone" name="phone" value={user.phone} onChange={handleChange} margin="normal" error={!!errors.phone} helperText={errors.phone} />
-        <TextField fullWidth label="New Password" name="passwordHash" value={user.passwordHash} onChange={handleChange} margin="normal" type="password" error={!!errors.passwordHash} helperText={errors.passwordHash} />
 
         <Box mt={2}>
-import Spinner from "../Spinner"
           <Button variant="outlined" component="label" sx={buttonStyle}>
             Upload Resume
             <input type="file" hidden onChange={handleResumeChange} />

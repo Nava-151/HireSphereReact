@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -92,14 +91,23 @@ const LoginForm = () => {
   if (!open) return null
 
   return (
-    <Modal open={open} onClose={() => { setOpen(false); navigate("/") }}>
+    <Modal open={open} onClose={() => { setOpen(false); navigate("/") }} sx={{ width: { xs: "80%", sm: "80%" }, outline: "none" }}> 
       <Box
         sx={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
         onClick={handleClose}
       >
         <Box
           ref={modalRef}
-          sx={{ width: { xs: "90%", sm: 400 }, outline: "none" }}
+          sx={{
+            width: { xs: "80%", sm: "70%" },
+            maxHeight: "90vh",
+            overflowY: "auto",
+            outline: "none",
+            bgcolor: "background.paper",
+            borderRadius: 2,
+            px: { xs: 2, sm: 4 },
+            py: { xs: 3, sm: 4 },
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           <LoginPaper>

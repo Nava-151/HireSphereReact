@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import User, { UserLogin } from "../models/User";
+import User, { UpdateUser, UserLogin } from "../models/User";
 import TokenInterceptor from "./TokenInterceptor";
 import Swal from 'sweetalert2';
 
@@ -54,7 +54,7 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
     }
 );
 
-export const updateUser = createAsyncThunk('users/update', async (user: User, thunkAPI) => {
+export const updateUser = createAsyncThunk('users/update', async (user: UpdateUser, thunkAPI) => {
     try {
         const userId = sessionStorage.getItem('userId');
         console.log("in updateUser", userId);

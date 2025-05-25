@@ -14,6 +14,12 @@ export type UserLogin={
     role:UserRole
 }
 
+export type UpdateUser={
+    fullName:string,
+    email:string,
+    phone:string,
+}
+
 export enum UserRole {
     Candidate=0,
     Employer = 1,
