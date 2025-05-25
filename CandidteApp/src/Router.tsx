@@ -7,13 +7,14 @@ import UploadFile from "./components/File/FileUploader";
 import CodingChallenge from "./components/NavBarComponents/CodingChallenge";
 import CompletionPage from "./components/NavBarComponents/CompletionPage";
 import UpdateDetails from "./components/Candidate/UpdateDetails";
-import ProtectedRoute from "./components/Connection/ProtectedRoute";
 import AppLayout from "./AppLayout";
 import FileUploadGuard from "./components/File/FileUploadGuard";
 import VideoCall from "./components/NavBarComponents/VideoCall";
 import Home from "./components/HomePage/Home";
+
 import RegisterForm from "./components/Connection/RegisterForm";
 import LoginForm from "./components/Connection/LoginForm";
+import ProtectedRoute from "./components/Connection/ProtectedRoute";
 
 
 
