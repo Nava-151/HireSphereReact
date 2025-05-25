@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { AppDispatch } from "../../store/store";
 import { RootState } from '../../store/store';
 import { getFilesByUserId } from "../../store/FileSlice";
-import Spinner from "../Spinner";
+import Spinner from "../CompInAllPages/Spinner";
 
 const FileUploadGuard = ({ children }: { children: JSX.Element }) => {
   const dispatch = useDispatch<AppDispatch>();

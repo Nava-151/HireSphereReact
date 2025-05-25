@@ -1,24 +1,6 @@
 
 import { useState, useRef } from "react"
-import {
-  Modal,
-  Box,
-  TextField,
-  Button,
-  FormHelperText,
-  InputAdornment,
-  Typography,
-  Paper,
-  Divider,
-  IconButton,
-} from "@mui/material"
-import { styled } from "@mui/material/styles"
-import LoginIcon from "@mui/icons-material/Login"
-import EmailIcon from "@mui/icons-material/Email"
-import LockIcon from "@mui/icons-material/Lock"
-import CloseIcon from "@mui/icons-material/Close"
-import VisibilityIcon from "@mui/icons-material/Visibility"
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
+
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -29,6 +11,7 @@ import { useNavigate } from "react-router-dom"
 import { UserLogin } from "../../models/User"
 import { buttonStyle } from "../../style/style"
 import Spinner from "../CompInAllPages/Spinner"
+import { Box, Button, CloseIcon, Divider, EmailIcon, FormHelperText, IconButton, InputAdornment, LockIcon, LoginIcon, Modal, Paper, styled, TextField, Typography, VisibilityIcon, VisibilityOffIcon } from "../../MuiImports"
 
 const LoginPaper = styled(Paper)(({ theme }) => ({
   width: "100%",

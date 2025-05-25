@@ -105,15 +105,3 @@ export const footer = {
     width: "100%",
     zIndex: 1300
 }
-
-// export const upload = {
-//     flexDirection: "column",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     minHeight: "100%",
-//     width: "100vw",
-//     p: 2,
-//     textAlign: "center",
-//     px: { xs: 2, sm: 4 },
-//     py: { xs: 3, sm: 6 },
-// }

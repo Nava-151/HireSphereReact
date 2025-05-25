@@ -1,8 +1,8 @@
 
 import { Outlet } from "react-router";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
 import { Box } from "@mui/material";
+import NavBar from "./components/CompInAllPages/NavBar";
+import Footer from "./components/CompInAllPages/Footer";
 
 const AppLayout = () => {
     return (

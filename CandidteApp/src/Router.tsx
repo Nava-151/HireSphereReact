@@ -1,8 +1,6 @@
 
 
 import { createBrowserRouter } from "react-router-dom";
-import RegisterForm from "./components/Connection/RegisterForm";
-import LoginForm from "./components/Connection/LoginForm";
 import Blog from "./components/NavBarComponents/Blog";
 import Gallery from "./components/NavBarComponents/Gallery";
 import UploadFile from "./components/File/FileUploader";
@@ -14,6 +12,8 @@ import AppLayout from "./AppLayout";
 import FileUploadGuard from "./components/File/FileUploadGuard";
 import VideoCall from "./components/NavBarComponents/VideoCall";
 import Home from "./components/HomePage/Home";
+import RegisterForm from "./components/Connection/RegisterForm";
+import LoginForm from "./components/Connection/LoginForm";
 
 
 
