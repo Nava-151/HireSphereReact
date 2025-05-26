@@ -5,6 +5,7 @@ import { VideoCallService } from '../../services/VideoCallService';
 import { receiveAnswer, receiveOffer, startCall } from '../../store/VideoCallSlice';
 import { RootState } from '../../store/store';
 import { Box, Button, Grid, Paper, Typography } from '../../MuiImports';
+import  Swal  from 'sweetalert2';
 
 const videoCallService = new VideoCallService();
 
@@ -46,6 +47,13 @@ const VideoCall = () => {
   }, []);
 
   const joinCall = async () => {
+    Swal.fire({
+      title: "In development",
+      text: "the feature is still in development, there might be errors, please be patient",
+      icon: "info",
+      confirmButtonText: "OK",
+      showCancelButton: true,
+  })
     if (!callerId) return;
     if (!videoCallService.localStream) {
       videoCallService.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
@@ -59,10 +67,12 @@ const VideoCall = () => {
     videoCallService.setRemoteTrackHandler(remoteVideoRef);
     dispatch(startCall());
   };
-
+  
   return (
     <Box p={4}>
-      <Paper elevation={3} sx={{ padding: 4, borderRadius: 4 }}>
+
+
+            <Paper elevation={3} sx={{ padding: 4, borderRadius: 4 }}>
         <Typography variant="h5" gutterBottom>
           Video Call
         </Typography>

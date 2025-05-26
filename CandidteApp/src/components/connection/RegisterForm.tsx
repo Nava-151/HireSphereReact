@@ -58,7 +58,6 @@ const CloseButton = styled(IconButton)(() => ({
 
 const RegisterForm = () => {
 
-
     const [formData] = useState({
         fullName: "",
         email: "",
