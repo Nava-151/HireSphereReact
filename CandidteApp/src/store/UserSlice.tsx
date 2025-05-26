@@ -43,7 +43,7 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
             if (!response.data || !response.data.id || !response.data.token || !response.data.user) {
                 throw new Error("Invalid response data");
             }
-            
+
             sessionStorage.setItem("name", user.fullName);
             sessionStorage.setItem("userId", response.data.id);
             sessionStorage.setItem("token", response.data.token);
@@ -58,7 +58,7 @@ export const updateUser = createAsyncThunk('users/update', async (user: UpdateUs
     try {
         const userId = sessionStorage.getItem('userId');
         console.log("in updateUser", userId);
-        
+
         const response = await TokenInterceptor.put(`${API_URL}/users/${userId}`, user);
         return response.data as User;
     } catch (e) {
@@ -68,16 +68,16 @@ export const updateUser = createAsyncThunk('users/update', async (user: UpdateUs
 
 export const login = createAsyncThunk('auth/login', async (credentials: UserLogin, thunkAPI) => {
     try {
-        const response = await axios.post<{ token: string , id:number}>(`${API_URL}/auth/login`, credentials);
+        const response = await axios.post<{ token: string, id: number }>(`${API_URL}/auth/login`, credentials);
         sessionStorage.setItem("token", response.data.token);
         sessionStorage.setItem("userId", response.data.id.toString());
         const userResponse = await thunkAPI.dispatch(fetchUserById(response.data.id)).unwrap();
         console.log(userResponse);
-        
+
         sessionStorage.setItem("name", userResponse.fullName);
 
         return { token: response.data.token, email: credentials.email };
-        
+
     } catch (error: any) {
         if (error.response) {
             if (error.response.status === 404) {
@@ -85,7 +85,7 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
                     title: "User not found",
                     text: "please register first",
                     icon: "error"
-                  });
+                });
                 return thunkAPI.rejectWithValue("User not found");
             }
             if (error.response.status === 500) {
@@ -93,7 +93,7 @@ export const login = createAsyncThunk('auth/login', async (credentials: UserLogi
                     title: "There is an error on our side",
                     text: "try again later",
                     icon: "error"
-                  });
+                });
                 return thunkAPI.rejectWithValue("Server error");
             }
         }
@@ -149,7 +149,7 @@ const userSlice = createSlice({
                     title: "Welcome back!",
                     text: "lets continoue",
                     icon: "success"
-                  });
+                });
             })
             .addCase(login.rejected, () => {
                 alert('Login failed, try again later :{');
@@ -162,7 +162,7 @@ const userSlice = createSlice({
                     title: "Did you register?",
                     text: "Please register first",
                     icon: "question"
-                  });
+                });
             })
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.list = state.list.map(user => user.id === action.payload.id ? action.payload : user);
@@ -172,7 +172,7 @@ const userSlice = createSlice({
                     title: "The update failed...",
                     text: "try again later",
                     icon: "error"
-                  });
+                });
             })
             .addCase(logout.fulfilled, (state) => {
                 state.token = null;
@@ -183,7 +183,7 @@ const userSlice = createSlice({
                     title: "The logout failled",
                     text: "try again soon",
                     icon: "error"
-                  });
+                });
             });
     }
 });

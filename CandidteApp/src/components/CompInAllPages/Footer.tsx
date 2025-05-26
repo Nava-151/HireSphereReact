@@ -39,7 +39,6 @@ const Footer: React.FC = () => {
             alignItems="center"
             gap={1}
           >
-            {/* Contact Form */}
             <Box flex={1} textAlign="left">
               <Typography variant="body2" sx={{ mb: 0.5, color: "#ccc", fontSize: "12px" }}>
                 Contact Us
@@ -53,7 +52,7 @@ const Footer: React.FC = () => {
                   display: "flex",
                   flexDirection: "column",
                   gap: "6px",
-                  maxWidth: "250px", 
+                  maxWidth: "250px",
                 }}
               >
                 <TextField
@@ -100,7 +99,7 @@ const Footer: React.FC = () => {
                     type="submit"
                     variant="contained"
                     sx={{
-                     ...buttonStyle,
+                      ...buttonStyle,
                       "&:hover": {
                         background: "linear-gradient(90deg, #00eaff, #00ff99)",
                       },
@@ -112,7 +111,6 @@ const Footer: React.FC = () => {
               </motion.form>
             </Box>
 
-            {/* Social Links */}
             <Box flex={1} textAlign="right">
               <Typography variant="body2" sx={{ mb: 0.5, color: "#ccc", fontSize: "12px" }}>
                 Follow Us

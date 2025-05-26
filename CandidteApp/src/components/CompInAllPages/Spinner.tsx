@@ -11,7 +11,7 @@ const Spinner = () => {
       }}
     >
       <Typography variant="h6" sx={{ mb: 2 }}>
-        loading,please wait...
+        loading...
       </Typography>
       <CircularProgress color="inherit" />
     </Backdrop>

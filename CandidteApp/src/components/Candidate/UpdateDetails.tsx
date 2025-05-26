@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchUserById, updateUser } from "../../store/UserSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import  { UpdateUser } from "../../models/User";
+import { UpdateUser } from "../../models/User";
 import { deleteFile, fetchPresignedUrl, uploadToS3 } from "../../store/FileSlice";
 import { RemoveCircleOutline, Update } from "@mui/icons-material";
 import { Box, Button, Container, TextField, Typography } from "../../MuiImports";
@@ -107,26 +107,26 @@ function UpdateDetails() {
         <TextField fullWidth label="Phone" name="phone" value={user.phone} onChange={handleChange} margin="normal" error={!!errors.phone} helperText={errors.phone} />
 
         <Box mt={2}>
-          <Button variant="outlined" component="label" sx={buttonStyle}>
+          <Button component="label" sx={buttonStyle}>
             Upload Resume
             <input type="file" hidden onChange={handleResumeChange} />
           </Button>
 
           {resume && (
-            <Button color="error" startIcon={<RemoveCircleOutline />} onClick={handleResumeRemove} sx={{ ml: 2 }}>
+            <Button color="error" sx={{ ...buttonStyle, m1: 2 }} startIcon={<RemoveCircleOutline />} onClick={handleResumeRemove} >
               Remove Resume
             </Button>
           )}
         </Box>
 
         <Box mt={2}>
-          <Button variant="contained" onClick={handleDownload} disabled={isLoading}>
+          <Button sx={buttonStyle} onClick={handleDownload} disabled={isLoading}>
             {isLoading ? "Loading..." : "Download Resume"}
           </Button>
         </Box>
 
         <Box mt={3}>
-          <Button type="submit" variant="contained" color="primary" startIcon={<Update />}>
+          <Button type="submit" sx={buttonStyle} startIcon={<Update />}>
             Save Changes
           </Button>
         </Box>

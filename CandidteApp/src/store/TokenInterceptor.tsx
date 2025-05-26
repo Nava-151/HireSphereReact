@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const TokenInterceptor = axios.create({
-  baseURL: "https://hiresphereapi.onrender.com", 
-  
+  baseURL: "https://hiresphereapi.onrender.com",
+
 });
 
 TokenInterceptor.interceptors.request.use(

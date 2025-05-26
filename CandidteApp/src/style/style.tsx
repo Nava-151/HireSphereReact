@@ -87,7 +87,7 @@ export const paperStyle = {
     backgroundColor: "#ffffff"
 }
 export const formBox = {
-    display: 'flex', flexDirection: 'column', gap: '3rem' ,
+    display: 'flex', flexDirection: 'column', gap: '3rem',
     bgcolor: 'background.paper',
     borderRadius: 2,
     boxShadow: 24,

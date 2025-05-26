@@ -54,7 +54,7 @@ const CodingChallenge: React.FC = () => {
   const [score, setScore] = useState<number>(0);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [output, setOutput] = useState<any>(null);
-  const [timeLeft, setTimeLeft] = useState<number>(180); 
+  const [timeLeft, setTimeLeft] = useState<number>(180);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -80,10 +80,11 @@ const CodingChallenge: React.FC = () => {
     }
 
     try {
+
       const userFunction = new Function("return " + code)();
       const { testCases } = codingQuestions[currentQuestion];
 
-      let isCorrect = true;
+      let isCorrect = false;
       let lastOutput = null;
 
       for (const testCase of testCases) {
@@ -92,14 +93,21 @@ const CodingChallenge: React.FC = () => {
           isCorrect = false;
           break;
         }
+        else {
+          isCorrect = true;
+        }
       }
 
       setOutput(lastOutput);
       if (isCorrect) {
         setScore((prev) => prev + 1);
         setFeedback("✅ Correct!");
+        setTimeout(() => {
+          handleNextQuestion();
+        }, 1000);
       } else {
         setFeedback("❌ Incorrect. Try again or skip.");
+        setOutput(output);
       }
     } catch (error) {
       setFeedback("⚠️ Error executing your code.");
@@ -155,27 +163,24 @@ const CodingChallenge: React.FC = () => {
             </Typography>
           )}
 
-          {output !== null && (
-            <Typography sx={{ mt: 1, color: "#bbb" }}>
-              🧪 Last Output: {JSON.stringify(output)}
-            </Typography>
-          )}
 
           <Box sx={{ mt: 3, display: "flex", gap: 2 }}>
             <Button onClick={handleSubmit} variant="contained" sx={buttonStyle}>
               Submit
             </Button>
             <Button onClick={handleNextQuestion} variant="outlined" sx={{ color: "#00eaff", borderColor: "#00eaff" }}>
-              Skip
+              Next
             </Button>
           </Box>
         </>
       ) : (
         <Box textAlign="center">
           <Typography variant="h3" sx={{ color: "#00ff99" }}>🎉 Well Done!</Typography>
+
           <Typography variant="h6" sx={{ color: "#bbb", mt: 2 }}>Your score: {(score / codingQuestions.length) * 100}%</Typography>
           <Button onClick={() => {
             setCurrentQuestion(0);
+            setFeedback(null);
             setScore(0);
             setCode(codingQuestions[0].starterCode);
             setTimeLeft(180);

@@ -183,13 +183,13 @@ const FileSlice = createSlice({
         state.error = null;
       })
       .addCase(getFilesByUserId.fulfilled, (state, action: PayloadAction<Files[]>) => {
-        console.log("in fullified getFilesByUserId", action.payload+"action.payload");
+        console.log("in fullified getFilesByUserId", action.payload + "action.payload");
         state.isLoading = false;
         state.files = action.payload;
         console.log("state.files", action.payload);
         console.log(state.files);
-        
-        state.uploadedOnce = state.files[0]?.ownerId!=0; 
+
+        state.uploadedOnce = state.files[0]?.ownerId != 0;
       })
       .addCase(getFilesByUserId.rejected, (state, action) => {
         state.isLoading = false;

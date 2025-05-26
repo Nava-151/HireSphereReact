@@ -91,7 +91,7 @@ const LoginForm = () => {
   if (!open) return null
 
   return (
-    <Modal open={open} onClose={() => { setOpen(false); navigate("/") }} sx={{ width: { xs: "80%", sm: "80%" }, outline: "none" }}> 
+    <Modal open={open} onClose={() => { setOpen(false); navigate("/") }} sx={{ width: { xs: "80%", sm: "80%" }, outline: "none" }}>
       <Box
         sx={{ width: "100%", height: "100%", display: "flex" }}
         onClick={handleClose}
@@ -103,7 +103,7 @@ const LoginForm = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            backgroundColor:'none',
+            backgroundColor: 'none',
             width: { xs: "90%", sm: "400px" },
             maxWidth: "90%",
             p: 3,
@@ -172,12 +172,12 @@ const LoginForm = () => {
               <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
 
               <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
-               <Button type="submit" variant="contained" fullWidth startIcon={<LoginIcon />} sx={buttonStyle}>
-                Login
-              </Button>
+                <Button type="submit" variant="contained" fullWidth startIcon={<LoginIcon />} sx={buttonStyle}>
+                  Login
+                </Button>
               </Box>
 
-              
+
 
               <Divider sx={{ my: 3 }}>
                 <Typography variant="body2" sx={{ color: "#888" }}>

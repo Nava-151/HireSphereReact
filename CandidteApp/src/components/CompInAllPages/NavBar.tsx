@@ -1,6 +1,6 @@
 
 import { AppBar, Toolbar, Typography, Button, Avatar, IconButton, Menu, MenuItem } from "@mui/material";
-import {  red } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';

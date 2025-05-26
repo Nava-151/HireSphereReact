@@ -5,7 +5,7 @@ import { VideoCallService } from '../../services/VideoCallService';
 import { receiveAnswer, receiveOffer, startCall } from '../../store/VideoCallSlice';
 import { RootState } from '../../store/store';
 import { Box, Button, Grid, Paper, Typography } from '../../MuiImports';
-import  Swal  from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 const videoCallService = new VideoCallService();
 
@@ -23,7 +23,7 @@ const VideoCall = () => {
       localVideoRef.current.srcObject = videoCallService.localStream;
     }
     if (remoteVideoRef.current) {
-        videoCallService.setRemoteVideoRef(remoteVideoRef as React.RefObject<HTMLVideoElement>);
+      videoCallService.setRemoteVideoRef(remoteVideoRef as React.RefObject<HTMLVideoElement>);
     }
 
   }, [isInCall]);
@@ -53,7 +53,7 @@ const VideoCall = () => {
       icon: "info",
       confirmButtonText: "OK",
       showCancelButton: true,
-  })
+    })
     if (!callerId) return;
     if (!videoCallService.localStream) {
       videoCallService.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
@@ -67,12 +67,12 @@ const VideoCall = () => {
     videoCallService.setRemoteTrackHandler(remoteVideoRef);
     dispatch(startCall());
   };
-  
+
   return (
     <Box p={4}>
 
 
-            <Paper elevation={3} sx={{ padding: 4, borderRadius: 4 }}>
+      <Paper elevation={3} sx={{ padding: 4, borderRadius: 4 }}>
         <Typography variant="h5" gutterBottom>
           Video Call
         </Typography>
@@ -80,7 +80,7 @@ const VideoCall = () => {
           <Box>wait until your employer invites you</Box>
         )}
         <Button variant="outlined" color="success" onClick={joinCall} sx={{ mb: 2, ml: 2 }}>
-          📞 join 
+          📞 join
         </Button>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>

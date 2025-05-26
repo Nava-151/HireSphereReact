@@ -60,7 +60,6 @@ const HeroSection = () => {
         <Grid container  alignItems="center">
           <Grid item xs={12} md={6}>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              {/* <FeatureChip label="AI-Powered Hiring Platform" sx={{ mb: 2 }} /> */}
               <Typography variant="h1" component="h1" gutterBottom>
                 <GradientText>Smarter Hiring,</GradientText>
                 <br />
