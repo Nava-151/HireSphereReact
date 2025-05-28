@@ -21,6 +21,7 @@ export class VideoCallService {
     this.localVideoRef = ref;
   }
   constructor() {
+    
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(`${import.meta.env.VITE_API_URL}/videoCallHub`, { withCredentials: true })
       .withAutomaticReconnect()
@@ -77,7 +78,11 @@ export class VideoCallService {
     this.peerConnection = new RTCPeerConnection({
       iceServers: [
         { urls: "stun:stun.l.google.com:19302" },
-        { urls: "stun:stun1.l.google.com:19302" },
+        {
+          urls: 'turn:numb.viagenie.ca:3478',
+          username: 'guest',
+          credential: 'guest'
+        }
       ]
     });
 
