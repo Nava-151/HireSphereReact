@@ -20,12 +20,12 @@ const initialState: ChatState = {
 
 export const sendMessage = createAsyncThunk(
   "chat/sendMessage",
-  async (dto: { Message: string }, thunkAPI) => {
+  async (message: string, thunkAPI) => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/ai/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dto),
+        body: JSON.stringify({ Message: message }),
       });
 
       if (!response.ok) {

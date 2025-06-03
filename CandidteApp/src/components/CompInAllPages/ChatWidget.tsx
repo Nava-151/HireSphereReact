@@ -26,7 +26,7 @@ const ChatWidget=()=> {
   const handleSend = () => {
     if (!input.trim()) return;
     dispatch(addUserMessage(input));
-    dispatch(sendMessage({ Message: input }) as any);
+    dispatch(sendMessage(input) as any);
     setInput("");
   };
 
