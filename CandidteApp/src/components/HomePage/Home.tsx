@@ -54,46 +54,51 @@ const Home = () => {
     { value: "1M+", label: "Candidates", icon: <People fontSize="large" /> },
   ]
 
+  
   const plans = [
     {
       name: "Starter",
       price: "$49",
-      description: "Perfect for small businesses",
-      features: ["Up to 5 job postings", "Basic AI matching", "Email support", "7-day candidate history"],
-      cta: "Start Free Trial",
+      description: "Ideal for teams just starting their hiring journey.",
+      features: [
+        "Up to 50 resumes per month",
+        "AI-powered resume analysis",
+        "Basic coding test",
+        "Summary report per candidate",
+      ],
+      cta: "Get Started",
       popular: false,
     },
     {
-      name: "Professional",
+      name: "Pro",
       price: "$99",
-      description: "Ideal for growing teams",
+      description: "For growing teams hiring developers efficiently.",
       features: [
-        "Up to 20 job postings",
-        "Advanced AI matching",
-        "Code quality assessment",
-        "Priority support",
-        "30-day candidate history",
+        "Unlimited resume uploads",
+        "Automated resume analysis + technical scoring",
+        "Code assessments with AI review",
+        "Schedule video interviews",
+        "Access to candidate dashboard",
       ],
-      cta: "Start Free Trial",
+      cta: "Start Hiring",
       popular: true,
     },
     {
       name: "Enterprise",
       price: "Custom",
-      description: "For large organizations",
+      description: "Custom solution for enterprise-scale recruitment.",
       features: [
-        "Unlimited job postings",
-        "Custom AI training",
-        "API access",
-        "Dedicated account manager",
-        "Advanced analytics",
-        "Custom integrations",
+        "Custom-tailored resume analysis",
+        "Integration with existing systems (API)",
+        "Dedicated support & service",
+        "Advanced code evaluation + GitHub review",
+        "Real-time video interview platform",
       ],
-      cta: "Contact Sales",
+      cta: "Contact Us",
       popular: false,
     },
-  ]
-
+  ];
+  
   const steps = [
     {
       title: "Upload Your file",
