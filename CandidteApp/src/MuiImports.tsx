@@ -18,6 +18,7 @@ import {
      Card, 
      CardContent,
      CardHeader,
+     CircularProgress,
     Avatar,
     Rating,
     Fade, List, ListItem, ListItemIcon, ListItemText
@@ -82,8 +83,5 @@ import { Home, Email, AccessTime, Star } from "@mui/icons-material";
     Email,
     AccessTime,
     Star,
-    Fade, List, ListItem, ListItemIcon, ListItemText
-
-
-
-  }
+    Fade, List, ListItem, ListItemIcon, ListItemText, CircularProgress
+}

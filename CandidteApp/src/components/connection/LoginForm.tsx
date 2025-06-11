@@ -87,7 +87,6 @@ const LoginForm = () => {
     }
   }
 
-  if (isLoading) return <Spinner />
   if (!open) return null
 
   return (
@@ -172,9 +171,17 @@ const LoginForm = () => {
               <FormHelperText error>{errors.passwordHash?.message}</FormHelperText>
 
               <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
-                <Button type="submit" variant="contained" fullWidth startIcon={<LoginIcon />} sx={buttonStyle}>
-                  Login
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={buttonStyle}
+                  startIcon={!isLoading ? <LoginIcon /> : null}
+                  disabled={isLoading}
+                >
+                  {isLoading ? <Spinner/> : "Login"}
                 </Button>
+
               </Box>
 
 
