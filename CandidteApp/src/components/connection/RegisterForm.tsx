@@ -71,7 +71,7 @@ const RegisterForm = () => {
 
 
     if (isLoading) return <Spinner />;
-   
+
 
     useEffect(() => {
         if (open) {
@@ -144,7 +144,7 @@ const RegisterForm = () => {
                     width: { xs: "90%", sm: "400px" },
                     maxWidth: "100%",
                     outline: "none",
-                    
+
                 }}
             >
                 <RegisterPaper>
