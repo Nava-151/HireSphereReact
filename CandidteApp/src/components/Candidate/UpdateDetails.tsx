@@ -106,21 +106,18 @@ function UpdateDetails() {
         <TextField fullWidth label="Email" name="email" value={user.email} onChange={handleChange} margin="normal" error={!!errors.email} helperText={errors.email} />
         <TextField fullWidth label="Phone" name="phone" value={user.phone} onChange={handleChange} margin="normal" error={!!errors.phone} helperText={errors.phone} />
 
-        <Box mt={2}>
-          <Button component="label" sx={buttonStyle}>
+        <Box mt={2} gap={1}>
+          <Button component="label" sx={{ m1: 2 }} variant="outlined" startIcon={<Update />} color="primary">
             Upload Resume
             <input type="file" hidden onChange={handleResumeChange} />
           </Button>
 
           {resume && (
-            <Button color="error" sx={{ ...buttonStyle, m1: 2 }} startIcon={<RemoveCircleOutline />} onClick={handleResumeRemove} >
+            <Button component="label"  sx={{ m1: 2  , border: '1px solid #1976d2',}} startIcon={<RemoveCircleOutline />} onClick={handleResumeRemove}  variant="outlined" color="primary">
               Remove Resume
             </Button>
           )}
-        </Box>
-
-        <Box mt={2}>
-          <Button sx={buttonStyle} onClick={handleDownload} disabled={isLoading}>
+          <Button sx={{ m1: 2 }} onClick={handleDownload} disabled={isLoading}  variant="outlined" color="primary">
             {isLoading ? "Loading..." : "Download Resume"}
           </Button>
         </Box>

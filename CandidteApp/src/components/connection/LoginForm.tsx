@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -8,8 +9,26 @@ import { login } from "../../store/UserSlice"
 import { useNavigate } from "react-router-dom"
 import { UserLogin } from "../../models/User"
 import { buttonStyle } from "../../style/style"
-import Spinner from "../CompInAllPages/Spinner"
-import { Box, Button, CloseIcon, Divider, EmailIcon, FormHelperText, IconButton, InputAdornment, LockIcon, LoginIcon, Modal, Paper, styled, TextField, Typography, VisibilityIcon, VisibilityOffIcon } from "../../MuiImports"
+import {
+  Box,
+  Button,
+  CircularProgress,
+  CloseIcon,
+  Divider,
+  EmailIcon,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  LockIcon,
+  LoginIcon,
+  Modal,
+  Paper,
+  styled,
+  TextField,
+  Typography,
+  VisibilityIcon,
+  VisibilityOffIcon,
+} from "../../MuiImports"
 
 const LoginPaper = styled(Paper)(({ theme }) => ({
   width: "100%",
@@ -91,10 +110,7 @@ const LoginForm = () => {
 
   return (
     <Modal open={open} onClose={() => { setOpen(false); navigate("/") }} sx={{ width: { xs: "80%", sm: "80%" }, outline: "none" }}>
-      <Box
-        sx={{ width: "100%", height: "100%", display: "flex" }}
-        onClick={handleClose}
-      >
+      <Box sx={{ width: "100%", height: "100%", display: "flex" }} onClick={handleClose}>
         <Box
           ref={modalRef}
           sx={{
@@ -114,13 +130,7 @@ const LoginForm = () => {
               <CloseIcon />
             </CloseButton>
 
-            <Typography
-              variant="h4"
-              component="h2"
-              align="center"
-              className="gradient-text"
-              sx={{ fontWeight: 700, mb: 3 }}
-            >
+            <Typography variant="h4" component="h2" align="center" className="gradient-text" sx={{ fontWeight: 700, mb: 3 }}>
               Welcome Back
             </Typography>
 
@@ -179,12 +189,9 @@ const LoginForm = () => {
                   startIcon={!isLoading ? <LoginIcon /> : null}
                   disabled={isLoading}
                 >
-                  {isLoading ? <Spinner/> : "Login"}
+                  {isLoading ?<CircularProgress size={24} sx={{ color: "#fff" }} /> : "Login"}
                 </Button>
-
               </Box>
-
-
 
               <Divider sx={{ my: 3 }}>
                 <Typography variant="body2" sx={{ color: "#888" }}>
